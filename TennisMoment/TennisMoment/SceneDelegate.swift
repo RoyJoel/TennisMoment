@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 
         window.backgroundColor = .white
-        window.rootViewController = ViewController()
+        window.rootViewController = TabViewController()
         window.makeKeyAndVisible()
         window.windowScene = windowScene
 
