@@ -11,10 +11,8 @@
 		A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D90299E77CB0011F37A /* AppDelegate.swift */; };
 		A8C19D93299E77CB0011F37A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D92299E77CB0011F37A /* SceneDelegate.swift */; };
 		A8C19D95299E77CB0011F37A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D94299E77CB0011F37A /* ViewController.swift */; };
-		A8C19D98299E77CB0011F37A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C19D96299E77CB0011F37A /* Main.storyboard */; };
 		A8C19D9B299E77CB0011F37A /* TennisMoment.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D99299E77CB0011F37A /* TennisMoment.xcdatamodeld */; };
 		A8C19D9D299E77CC0011F37A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C19D9C299E77CC0011F37A /* Assets.xcassets */; };
-		A8C19DA0299E77CC0011F37A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C19D9E299E77CC0011F37A /* LaunchScreen.storyboard */; };
 		A8C19DAB299E77CC0011F37A /* TennisMomentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DAA299E77CC0011F37A /* TennisMomentTests.swift */; };
 		A8C19DB5299E77CC0011F37A /* TennisMomentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DB4299E77CC0011F37A /* TennisMomentUITests.swift */; };
 		A8C19DB7299E77CC0011F37A /* TennisMomentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DB6299E77CC0011F37A /* TennisMomentUITestsLaunchTests.swift */; };
@@ -49,10 +47,8 @@
 		A8C19D90299E77CB0011F37A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8C19D92299E77CB0011F37A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A8C19D94299E77CB0011F37A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A8C19D97299E77CB0011F37A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A8C19D9A299E77CB0011F37A /* TennisMoment.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TennisMoment.xcdatamodel; sourceTree = "<group>"; };
 		A8C19D9C299E77CC0011F37A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A8C19D9F299E77CC0011F37A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C19DA1299E77CC0011F37A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8C19DA6299E77CC0011F37A /* TennisMomentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TennisMomentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8C19DAA299E77CC0011F37A /* TennisMomentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TennisMomentTests.swift; sourceTree = "<group>"; };
@@ -113,7 +109,6 @@
 				70751DC2EB6DDD2A1654B4D2 /* Pods-TennisMomentTests.debug.xcconfig */,
 				EED5B9AC38D87C2BA70E8CEA /* Pods-TennisMomentTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -145,9 +140,7 @@
 				A8C19D90299E77CB0011F37A /* AppDelegate.swift */,
 				A8C19D92299E77CB0011F37A /* SceneDelegate.swift */,
 				A8C19D94299E77CB0011F37A /* ViewController.swift */,
-				A8C19D96299E77CB0011F37A /* Main.storyboard */,
 				A8C19D9C299E77CC0011F37A /* Assets.xcassets */,
-				A8C19D9E299E77CC0011F37A /* LaunchScreen.storyboard */,
 				A8C19DA1299E77CC0011F37A /* Info.plist */,
 				A8C19D99299E77CB0011F37A /* TennisMoment.xcdatamodeld */,
 			);
@@ -182,6 +175,7 @@
 				A8C19D89299E77CB0011F37A /* Sources */,
 				A8C19D8A299E77CB0011F37A /* Frameworks */,
 				A8C19D8B299E77CB0011F37A /* Resources */,
+				033E8EBFF1DD7396ACB3BBE0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,6 +213,7 @@
 				A8C19DAC299E77CC0011F37A /* Sources */,
 				A8C19DAD299E77CC0011F37A /* Frameworks */,
 				A8C19DAE299E77CC0011F37A /* Resources */,
+				6A919CF1216BDA2F3E8A4F6E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -278,9 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8C19DA0299E77CC0011F37A /* LaunchScreen.storyboard in Resources */,
 				A8C19D9D299E77CC0011F37A /* Assets.xcassets in Resources */,
-				A8C19D98299E77CB0011F37A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +294,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		033E8EBFF1DD7396ACB3BBE0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TennisMoment/Pods-TennisMoment-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TennisMoment/Pods-TennisMoment-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TennisMoment/Pods-TennisMoment-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		216F9D56359B8DBDD6B5BC8F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,6 +353,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A919CF1216BDA2F3E8A4F6E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		916235090199B5D66F90225C /* [CP] Check Pods Manifest.lock */ = {
@@ -412,25 +439,6 @@
 			targetProxy = A8C19DB1299E77CC0011F37A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A8C19D96299E77CB0011F37A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8C19D97299E77CB0011F37A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A8C19D9E299E77CC0011F37A /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8C19D9F299E77CC0011F37A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A8C19DB8299E77CC0011F37A /* Debug */ = {
@@ -560,7 +568,6 @@
 				INFOPLIST_FILE = TennisMoment/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -589,7 +596,6 @@
 				INFOPLIST_FILE = TennisMoment/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
