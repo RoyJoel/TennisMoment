@@ -30,8 +30,6 @@ class TMInfoView: TMView {
 
     private func setupUI() {
         clipsToBounds = false
-        backgroundColor = .clear
-        setCorner(radii: 15)
         addSubview(iconImage)
         addSubview(nameView)
 
@@ -43,7 +41,6 @@ class TMInfoView: TMView {
             make.right.equalToSuperview().offset(-8)
             make.width.equalToSuperview().offset(-16)
             make.top.equalToSuperview().offset(8)
-            make.bottom.equalTo(nameView.snp.top).offset(-8)
         }
         nameView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-8)
