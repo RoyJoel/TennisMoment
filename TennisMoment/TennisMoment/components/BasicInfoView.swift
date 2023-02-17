@@ -9,11 +9,12 @@ import Foundation
 import SnapKit
 import UIKit
 
-class HomeBasicInfoView: TMView {
+class TMInfoView: TMView {
+    
     private lazy var iconImage: UIImageView = {
         var image = UIImageView()
         image.setCorner(radii: 15)
-        image.drawBorder()
+        image.drawBorder(color: .white, width: 5)
         return image
     }()
 
@@ -21,15 +22,16 @@ class HomeBasicInfoView: TMView {
         var view = UILabel()
         return view
     }()
-
-    func setup(config: HomeBasicInfoViewConfig) {
+    
+    func setup(with config: TMInfoViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
 
-    func setupUI() {
+    private func setupUI() {
         clipsToBounds = false
         backgroundColor = .clear
+        setCorner(radii: 15)
         addSubview(iconImage)
         addSubview(nameView)
 
@@ -50,11 +52,12 @@ class HomeBasicInfoView: TMView {
         }
     }
 
-    func setupEvent(config: HomeBasicInfoViewConfig) {
+    private func setupEvent(config: TMInfoViewConfig) {
         if config.iconName == nil {
             iconImage.image = UIImage(systemName: "person")
         } else {
-            iconImage.image = UIImage(systemName: "person.fill")
+            iconImage.image = UIImage(named: config.iconName ?? "person")
+            iconImage.contentMode = .scaleAspectFill
         }
         if config.name == "" {
             nameView.isHidden = true

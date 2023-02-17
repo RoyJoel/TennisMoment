@@ -23,9 +23,9 @@ extension UIView {
         layer.masksToBounds = masksToBounds
     }
 
-    func drawBorder() {
-        layer.borderColor = UIColor.gray.cgColor
-        layer.borderWidth = 5
+    func drawBorder(color: UIColor,width: CGFloat) {
+        layer.borderColor = color.cgColor
+        layer.borderWidth = width
     }
 
     func addTapGesture(_ target: Any, _ action: Selector?) {
@@ -41,9 +41,6 @@ extension UIView {
         animation.toValue = toValue
 //        animation.isRemovedOnCompletion = false
         animation.fillMode = .forwards
-        
-        print(animation.fromValue)
-        print(animation.toValue)
 
         layer.add(animation, forKey: forKey)
     }

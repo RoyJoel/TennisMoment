@@ -32,21 +32,19 @@ class TMView: UIView {
     }
     
     func scaleTo(_ isEnlarge: Bool) {
-        if isEnlarge {
-            self.toggle = isEnlarge
+        if !isEnlarge {
+            self.toggle.toggle()
             addAnimation(self.originalPoint, self.newPoint, self.duration, "position")
             addAnimation(self.originalBounds, self.newBounds, self.duration, "bounds")
             self.bounds = self.newBounds
             self.layer.position = newPoint
         } else {
-            self.toggle = isEnlarge
+            self.toggle.toggle()
             addAnimation(self.newBounds, self.originalBounds, self.duration, "bounds")
             addAnimation(self.newPoint, self.originalPoint, self.duration, "position")
             self.bounds = self.originalBounds
             self.layer.position = self.originalPoint
         }
-        print(self.originalBounds)
-        print(self.newBounds)
     }
     
     func addGroupAnimation(with views: [UIView], isEnlarge: Bool) {

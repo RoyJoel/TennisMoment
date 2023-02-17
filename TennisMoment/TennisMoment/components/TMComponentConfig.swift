@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol TMConfig {
-    func defaultConfig() -> TMConfig
+protocol TMComponentConfig {
+    static func defaultConfig() -> TMComponentConfig
 }

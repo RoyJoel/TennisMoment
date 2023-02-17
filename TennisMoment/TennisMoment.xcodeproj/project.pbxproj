@@ -15,15 +15,15 @@
 		A8C19DB5299E77CC0011F37A /* TennisMomentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DB4299E77CC0011F37A /* TennisMomentUITests.swift */; };
 		A8C19DB7299E77CC0011F37A /* TennisMomentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DB6299E77CC0011F37A /* TennisMomentUITestsLaunchTests.swift */; };
 		A8C19DFD299E854E0011F37A /* TMNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF2299E854D0011F37A /* TMNavigationItem.swift */; };
-		A8C19DFE299E854E0011F37A /* TMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF3299E854D0011F37A /* TMConfig.swift */; };
+		A8C19DFE299E854E0011F37A /* TMComponentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF3299E854D0011F37A /* TMComponentConfig.swift */; };
 		A8C19DFF299E854E0011F37A /* TMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF4299E854D0011F37A /* TMViewController.swift */; };
 		A8C19E00299E854E0011F37A /* TMViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF5299E854D0011F37A /* TMViewDelegate.swift */; };
-		A8C19E01299E854E0011F37A /* HomeBasicInfoViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF6299E854D0011F37A /* HomeBasicInfoViewConfig.swift */; };
+		A8C19E01299E854E0011F37A /* BasicInfoViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF6299E854D0011F37A /* BasicInfoViewConfig.swift */; };
 		A8C19E02299E854E0011F37A /* TrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF7299E854D0011F37A /* TrackingEvents.swift */; };
 		A8C19E03299E854E0011F37A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF8299E854D0011F37A /* UIViewExtension.swift */; };
 		A8C19E04299E854E0011F37A /* TMNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DF9299E854E0011F37A /* TMNavigationBar.swift */; };
 		A8C19E05299E854E0011F37A /* TMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DFA299E854E0011F37A /* TMView.swift */; };
-		A8C19E06299E854E0011F37A /* HomeBasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DFB299E854E0011F37A /* HomeBasicInfoView.swift */; };
+		A8C19E06299E854E0011F37A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DFB299E854E0011F37A /* BasicInfoView.swift */; };
 		A8C19E07299E854E0011F37A /* TMNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19DFC299E854E0011F37A /* TMNavigationController.swift */; };
 		A8C19E12299E8CE50011F37A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E0A299E8CE40011F37A /* HomeViewController.swift */; };
 		A8C19E13299E8CE50011F37A /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E0B299E8CE40011F37A /* RecordViewController.swift */; };
@@ -32,6 +32,15 @@
 		A8C19E16299E8CE50011F37A /* TennisMoment.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E0E299E8CE40011F37A /* TennisMoment.xcdatamodeld */; };
 		A8C19E17299E8CE50011F37A /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E10299E8CE40011F37A /* TabViewController.swift */; };
 		A8C19E18299E8CE50011F37A /* UIStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E11299E8CE50011F37A /* UIStandard.swift */; };
+		A8C19E1A299E8EAC0011F37A /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E19299E8EAC0011F37A /* TMButton.swift */; };
+		A8C19E1C299E926E0011F37A /* TMComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E1B299E926E0011F37A /* TMComponent.swift */; };
+		A8C19E1E299E95400011F37A /* TMButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E1D299E95400011F37A /* TMButtonConfig.swift */; };
+		A8C19E20299F1A0F0011F37A /* TMPointRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E1F299F1A0F0011F37A /* TMPointRecordView.swift */; };
+		A8C19E22299F1D120011F37A /* TMPointRecordViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E21299F1D120011F37A /* TMPointRecordViewConfig.swift */; };
+		A8C19E24299F823E0011F37A /* TMVSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E23299F823E0011F37A /* TMVSView.swift */; };
+		A8C19E26299F83070011F37A /* TMVSViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E25299F83070011F37A /* TMVSViewConfig.swift */; };
+		A8C19E28299F83FA0011F37A /* TMBasicPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E27299F83FA0011F37A /* TMBasicPointView.swift */; };
+		A8C19E2A299F84720011F37A /* TMBasicPointViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19E29299F84720011F37A /* TMBasicPointViewConfig.swift */; };
 		BF721965EBEFBDB57557183D /* Pods_TennisMomentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE32A669BC0E45DB9864A8C /* Pods_TennisMomentTests.framework */; };
 		CEE86F428D93CEBF4A8173B5 /* Pods_TennisMoment_TennisMomentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C9541D0C33D53915F1AD3E /* Pods_TennisMoment_TennisMomentUITests.framework */; };
 /* End PBXBuildFile section */
@@ -70,15 +79,15 @@
 		A8C19DB4299E77CC0011F37A /* TennisMomentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TennisMomentUITests.swift; sourceTree = "<group>"; };
 		A8C19DB6299E77CC0011F37A /* TennisMomentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TennisMomentUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A8C19DF2299E854D0011F37A /* TMNavigationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNavigationItem.swift; sourceTree = "<group>"; };
-		A8C19DF3299E854D0011F37A /* TMConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMConfig.swift; sourceTree = "<group>"; };
+		A8C19DF3299E854D0011F37A /* TMComponentConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMComponentConfig.swift; sourceTree = "<group>"; };
 		A8C19DF4299E854D0011F37A /* TMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMViewController.swift; sourceTree = "<group>"; };
 		A8C19DF5299E854D0011F37A /* TMViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMViewDelegate.swift; sourceTree = "<group>"; };
-		A8C19DF6299E854D0011F37A /* HomeBasicInfoViewConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBasicInfoViewConfig.swift; sourceTree = "<group>"; };
+		A8C19DF6299E854D0011F37A /* BasicInfoViewConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoViewConfig.swift; sourceTree = "<group>"; };
 		A8C19DF7299E854D0011F37A /* TrackingEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingEvents.swift; sourceTree = "<group>"; };
 		A8C19DF8299E854D0011F37A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A8C19DF9299E854E0011F37A /* TMNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNavigationBar.swift; sourceTree = "<group>"; };
 		A8C19DFA299E854E0011F37A /* TMView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMView.swift; sourceTree = "<group>"; };
-		A8C19DFB299E854E0011F37A /* HomeBasicInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBasicInfoView.swift; sourceTree = "<group>"; };
+		A8C19DFB299E854E0011F37A /* BasicInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
 		A8C19DFC299E854E0011F37A /* TMNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNavigationController.swift; sourceTree = "<group>"; };
 		A8C19E0A299E8CE40011F37A /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = "../../../.Trash/TennisMoments-UI/TennisMoment/TennisMoment/HomeViewController.swift"; sourceTree = "<group>"; };
 		A8C19E0B299E8CE40011F37A /* RecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordViewController.swift; path = "../../../.Trash/TennisMoments-UI/TennisMoment/TennisMoment/RecordViewController.swift"; sourceTree = "<group>"; };
@@ -87,6 +96,15 @@
 		A8C19E0F299E8CE40011F37A /* TennisMoment.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TennisMoment.xcdatamodel; sourceTree = "<group>"; };
 		A8C19E10299E8CE40011F37A /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabViewController.swift; path = "../../../.Trash/TennisMoments-UI/TennisMoment/TennisMoment/TabViewController.swift"; sourceTree = "<group>"; };
 		A8C19E11299E8CE50011F37A /* UIStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIStandard.swift; path = "../../../.Trash/TennisMoments-UI/TennisMoment/TennisMoment/UIStandard.swift"; sourceTree = "<group>"; };
+		A8C19E19299E8EAC0011F37A /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMButton.swift; path = ../../../../Documents/TMButton.swift; sourceTree = "<group>"; };
+		A8C19E1B299E926E0011F37A /* TMComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMComponent.swift; path = ../../../../Documents/TMComponent.swift; sourceTree = "<group>"; };
+		A8C19E1D299E95400011F37A /* TMButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMButtonConfig.swift; path = ../../../../Documents/TMButtonConfig.swift; sourceTree = "<group>"; };
+		A8C19E1F299F1A0F0011F37A /* TMPointRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMPointRecordView.swift; path = ../../../../Documents/TMPointRecordView.swift; sourceTree = "<group>"; };
+		A8C19E21299F1D120011F37A /* TMPointRecordViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMPointRecordViewConfig.swift; path = ../../../../Documents/TMPointRecordViewConfig.swift; sourceTree = "<group>"; };
+		A8C19E23299F823E0011F37A /* TMVSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMVSView.swift; path = ../../../../Documents/TMVSView.swift; sourceTree = "<group>"; };
+		A8C19E25299F83070011F37A /* TMVSViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMVSViewConfig.swift; path = ../../../../Documents/TMVSViewConfig.swift; sourceTree = "<group>"; };
+		A8C19E27299F83FA0011F37A /* TMBasicPointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMBasicPointView.swift; path = ../../../../Documents/TMBasicPointView.swift; sourceTree = "<group>"; };
+		A8C19E29299F84720011F37A /* TMBasicPointViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMBasicPointViewConfig.swift; path = ../../../../Documents/TMBasicPointViewConfig.swift; sourceTree = "<group>"; };
 		B0A11709E7959DE7A6D6F31F /* Pods-TennisMoment-TennisMomentUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TennisMoment-TennisMomentUITests.release.xcconfig"; path = "Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E57F2E2674891AAD410CFB89 /* Pods-TennisMoment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TennisMoment.release.xcconfig"; path = "Target Support Files/Pods-TennisMoment/Pods-TennisMoment.release.xcconfig"; sourceTree = "<group>"; };
 		EED5B9AC38D87C2BA70E8CEA /* Pods-TennisMomentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TennisMomentTests.release.xcconfig"; path = "Target Support Files/Pods-TennisMomentTests/Pods-TennisMomentTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,7 +196,6 @@
 				A8C19E10299E8CE40011F37A /* TabViewController.swift */,
 				A8C19E11299E8CE50011F37A /* UIStandard.swift */,
 				A8C19DF7299E854D0011F37A /* TrackingEvents.swift */,
-				A8C19DF3299E854D0011F37A /* TMConfig.swift */,
 				A8C19DF9299E854E0011F37A /* TMNavigationBar.swift */,
 				A8C19DFC299E854E0011F37A /* TMNavigationController.swift */,
 				A8C19DFA299E854E0011F37A /* TMView.swift */,
@@ -214,8 +231,18 @@
 		A8C19E08299E85A50011F37A /* components */ = {
 			isa = PBXGroup;
 			children = (
-				A8C19DFB299E854E0011F37A /* HomeBasicInfoView.swift */,
-				A8C19DF6299E854D0011F37A /* HomeBasicInfoViewConfig.swift */,
+				A8C19DFB299E854E0011F37A /* BasicInfoView.swift */,
+				A8C19DF6299E854D0011F37A /* BasicInfoViewConfig.swift */,
+				A8C19E19299E8EAC0011F37A /* TMButton.swift */,
+				A8C19E1D299E95400011F37A /* TMButtonConfig.swift */,
+				A8C19E1F299F1A0F0011F37A /* TMPointRecordView.swift */,
+				A8C19E21299F1D120011F37A /* TMPointRecordViewConfig.swift */,
+				A8C19E23299F823E0011F37A /* TMVSView.swift */,
+				A8C19E25299F83070011F37A /* TMVSViewConfig.swift */,
+				A8C19E27299F83FA0011F37A /* TMBasicPointView.swift */,
+				A8C19E29299F84720011F37A /* TMBasicPointViewConfig.swift */,
+				A8C19DF3299E854D0011F37A /* TMComponentConfig.swift */,
+				A8C19E1B299E926E0011F37A /* TMComponent.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -466,24 +493,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8C19E05299E854E0011F37A /* TMView.swift in Sources */,
-				A8C19DFE299E854E0011F37A /* TMConfig.swift in Sources */,
+				A8C19DFE299E854E0011F37A /* TMComponentConfig.swift in Sources */,
 				A8C19E15299E8CE50011F37A /* AccountViewController.swift in Sources */,
-				A8C19E06299E854E0011F37A /* HomeBasicInfoView.swift in Sources */,
+				A8C19E1C299E926E0011F37A /* TMComponent.swift in Sources */,
+				A8C19E26299F83070011F37A /* TMVSViewConfig.swift in Sources */,
+				A8C19E06299E854E0011F37A /* BasicInfoView.swift in Sources */,
 				A8C19E17299E8CE50011F37A /* TabViewController.swift in Sources */,
 				A8C19E02299E854E0011F37A /* TrackingEvents.swift in Sources */,
 				A8C19E18299E8CE50011F37A /* UIStandard.swift in Sources */,
 				A8C19E14299E8CE50011F37A /* recordView.swift in Sources */,
+				A8C19E20299F1A0F0011F37A /* TMPointRecordView.swift in Sources */,
+				A8C19E22299F1D120011F37A /* TMPointRecordViewConfig.swift in Sources */,
 				A8C19E04299E854E0011F37A /* TMNavigationBar.swift in Sources */,
 				A8C19E13299E8CE50011F37A /* RecordViewController.swift in Sources */,
 				A8C19E12299E8CE50011F37A /* HomeViewController.swift in Sources */,
 				A8C19E00299E854E0011F37A /* TMViewDelegate.swift in Sources */,
 				A8C19DFF299E854E0011F37A /* TMViewController.swift in Sources */,
+				A8C19E2A299F84720011F37A /* TMBasicPointViewConfig.swift in Sources */,
+				A8C19E28299F83FA0011F37A /* TMBasicPointView.swift in Sources */,
 				A8C19DFD299E854E0011F37A /* TMNavigationItem.swift in Sources */,
 				A8C19E03299E854E0011F37A /* UIViewExtension.swift in Sources */,
 				A8C19E07299E854E0011F37A /* TMNavigationController.swift in Sources */,
 				A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */,
+				A8C19E24299F823E0011F37A /* TMVSView.swift in Sources */,
+				A8C19E1A299E8EAC0011F37A /* TMButton.swift in Sources */,
 				A8C19E16299E8CE50011F37A /* TennisMoment.xcdatamodeld in Sources */,
-				A8C19E01299E854E0011F37A /* HomeBasicInfoViewConfig.swift in Sources */,
+				A8C19E01299E854E0011F37A /* BasicInfoViewConfig.swift in Sources */,
+				A8C19E1E299E95400011F37A /* TMButtonConfig.swift in Sources */,
 				A8C19D93299E77CB0011F37A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,7 +607,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -625,7 +661,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -648,7 +684,7 @@
 				INFOPLIST_FILE = TennisMoment/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -659,7 +695,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -676,7 +712,7 @@
 				INFOPLIST_FILE = TennisMoment/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -687,7 +723,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

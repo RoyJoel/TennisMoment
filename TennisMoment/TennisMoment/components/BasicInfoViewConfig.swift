@@ -7,15 +7,15 @@
 
 import Foundation
 
-class HomeBasicInfoViewConfig: TMConfig {
+class TMInfoViewConfig: TMComponentConfig {
     var iconName: String?
     var name: String
-    init(iconName: String? = nil, name: String) {
+    init(iconName: String?, name: String) {
         self.iconName = iconName
         self.name = name
     }
 
-    func defaultConfig() -> TMConfig {
-        return HomeBasicInfoViewConfig(name: "")
+    static func defaultConfig() -> TMComponentConfig {
+        return TMInfoViewConfig(iconName: nil, name: "")
     }
 }
