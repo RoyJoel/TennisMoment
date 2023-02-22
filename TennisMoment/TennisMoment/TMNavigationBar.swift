@@ -14,7 +14,7 @@ class TMNavigationBar: UINavigationBar {
 //        if view == self {
 //            return nil
 //        }else {
-//            
+//
 //        }
 //    }
 }

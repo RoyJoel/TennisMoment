@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class TMPointRecordView: TMView {
+open class TMPointRecordView: TMView {
     private lazy var setView: TMVSView = {
         var label = TMVSView()
         return label
     }()
-    
+
     private lazy var gameView: TMVSView = {
         var label = TMVSView()
         return label
@@ -23,47 +23,61 @@ class TMPointRecordView: TMView {
         var label = TMVSView()
         return label
     }()
-    
-    func setup(with config: TMPointRecordViewConfig) {
+
+    public func setup(with config: TMPointRecordViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
-    
-    func setupUI() {
+
+    public func setupUI() {
         addSubview(setView)
         addSubview(gameView)
         addSubview(pointView)
-        
+
         setView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(49)
             make.centerX.equalToSuperview()
         }
         gameView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(49)
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
         pointView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(49)
             make.centerX.equalToSuperview()
         }
     }
-    
-    func setupEvent(config: TMPointRecordViewConfig) {
-        setView.setUp(with: config.setViewConfig)
-        gameView.setUp(with: config.gameViewConfig)
-        pointView.setUp(with: config.pointViewConfig)
+
+    public func setupEvent(config: TMPointRecordViewConfig) {
+        setView.setup(with: config.setViewConfig)
+        gameView.setup(with: config.gameViewConfig)
+        pointView.setup(with: config.pointViewConfig)
+        setView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(config.rowHeight)
+        }
+        gameView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalTo(config.rowHeight)
+        }
+        pointView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(config.rowHeight)
+        }
     }
-    
-    override func scaleTo(_ isEnlarge: Bool) {
+
+    override public func scaleTo(_ isEnlarge: Bool) {
         super.scaleTo(isEnlarge)
         if !isEnlarge {
-            
 //            setLabel.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
 //            gameLabel.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
 //            pointLabel.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
@@ -71,7 +85,7 @@ class TMPointRecordView: TMView {
 //            setLabel.isHidden = false
 //            gameLabel.isHidden = false
 //            pointLabel.isHidden = false
-            
+
 //            setView.snp.makeConstraints { make in
 //                make.centerX.equalToSuperview()
 //            }
@@ -83,7 +97,7 @@ class TMPointRecordView: TMView {
 //                make.top.equalTo(gameView.snp.bottom).offset(32)
 //                make.centerX.equalToSuperview()
 //            }
-            
+
 //            let setNumFont = UIFont.systemFont(ofSize: 36, weight: .semibold)
 //            setNumLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: setNumFont)
 //            let gameNumFont = UIFont.systemFont(ofSize: 32, weight: .regular)
@@ -91,9 +105,8 @@ class TMPointRecordView: TMView {
 //            let pointNumFont = UIFont.systemFont(ofSize: 28, weight: .light)
 //            pointNumLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: pointNumFont)
 //
-            
-        }else {
-            
+
+        } else {
 //            setView.snp.makeConstraints { make in
 //                make.centerX.equalToSuperview()
 //            }
@@ -105,7 +118,7 @@ class TMPointRecordView: TMView {
 //                make.top.equalTo(gameView.snp.bottom).offset(8)
 //                make.centerX.equalToSuperview()
 //            }
-            
+
 //            setLabel.isHidden = true
 //            gameLabel.isHidden = true
 //            pointLabel.isHidden = true
@@ -143,5 +156,4 @@ class TMPointRecordView: TMView {
 //            pointNumLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: font)
         }
     }
-    
 }

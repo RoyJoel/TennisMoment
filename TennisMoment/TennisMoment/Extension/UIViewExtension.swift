@@ -6,11 +6,9 @@
 //
 
 import Foundation
-import SnapKit
 import UIKit
 
 extension UIView {
-    
     func setShadow(_ shadowRadius: CGFloat, _ shadowOffset: CGSize, _ shadowColor: CGColor = UIColor.black.cgColor, _ shadowOpacity: Float = 0.5) {
         layer.shadowRadius = shadowRadius
         layer.shadowOffset = shadowOffset
@@ -23,7 +21,7 @@ extension UIView {
         layer.masksToBounds = masksToBounds
     }
 
-    func drawBorder(color: UIColor,width: CGFloat) {
+    func drawBorder(color: UIColor, width: CGFloat) {
         layer.borderColor = color.cgColor
         layer.borderWidth = width
     }
@@ -32,7 +30,6 @@ extension UIView {
         let tap = UITapGestureRecognizer(target: target, action: action)
         addGestureRecognizer(tap)
     }
-
 
     func addAnimation(_ fromValue: Any?, _ toValue: Any?, _ duration: CFTimeInterval, _ forKey: String?) {
         let animation = CABasicAnimation()
@@ -44,8 +41,7 @@ extension UIView {
 
         layer.add(animation, forKey: forKey)
     }
-    
-    
+
 //    func addAnimation(_ fromValue: Any?, _ ratio: CGFloat?, _ distance: CGFloat?, _ duration: CFTimeInterval, _ forKey: String?) {
 //        let animation = CABasicAnimation()
 //        animation.duration = duration
@@ -58,8 +54,7 @@ extension UIView {
 //        }
 //        animation.isRemovedOnCompletion = false
 //        animation.fillMode = .forwards
-//        
+//
 //        layer.add(animation, forKey: forKey)
 //    }
 }
-

@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/TABAnimated/TABAnimated.framework
+${BUILT_PRODUCTS_DIR}/TMComponent/TMComponent.framework

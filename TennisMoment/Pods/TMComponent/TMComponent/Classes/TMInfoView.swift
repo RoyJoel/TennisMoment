@@ -9,8 +9,8 @@ import Foundation
 import SnapKit
 import UIKit
 
-class TMInfoView: TMView {
-    
+/// 基本信息视图，使用时需设置宽高，图片大小将随之变化
+open class TMInfoView: TMView {
     private lazy var iconImage: UIImageView = {
         var image = UIImageView()
         image.setCorner(radii: 15)
@@ -20,10 +20,11 @@ class TMInfoView: TMView {
 
     private lazy var nameView: UILabel = {
         var view = UILabel()
+        view.textColor = .black
         return view
     }()
-    
-    func setup(with config: TMInfoViewConfig) {
+
+    public func setup(with config: TMInfoViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
@@ -45,6 +46,7 @@ class TMInfoView: TMView {
         nameView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-8)
             make.top.equalTo(iconImage.snp.bottom).offset(8)
+            make.height.equalTo(30)
             make.centerX.equalTo(self.iconImage.snp.centerX)
         }
     }
@@ -64,8 +66,8 @@ class TMInfoView: TMView {
             nameView.textColor = .blue
         }
     }
-    
-    override func scaleTo(_ isEnlarge: Bool) {
+
+    override public func scaleTo(_ isEnlarge: Bool) {
         super.scaleTo(isEnlarge)
 //        UIView.animate(withDuration: 0.3) {
 //            self.iconImage.snp.updateConstraints { make in
@@ -90,7 +92,7 @@ class TMInfoView: TMView {
 //        super.didScaleTo(isEnlarge)
 //        print(iconImage.layer.position)
 //        print(iconImage.layer.bounds)
-////        iconImage.scaleTo(isEnlarge)
-////        nameView.scaleTo(isEnlarge)
+    ////        iconImage.scaleTo(isEnlarge)
+    ////        nameView.scaleTo(isEnlarge)
 //    }
 }

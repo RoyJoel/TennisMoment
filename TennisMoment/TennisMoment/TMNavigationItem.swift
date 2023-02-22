@@ -8,6 +8,4 @@
 import Foundation
 import UIKit
 
-class TMNavigationItem: UINavigationItem {
-    
-}
+class TMNavigationItem: UINavigationItem {}

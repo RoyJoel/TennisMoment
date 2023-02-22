@@ -8,47 +8,47 @@
 import Foundation
 import UIKit
 
-class TMVSView: TMView {
+/// 双方得分视图，使用时仅需设置宽度
+open class TMVSView: TMView {
     private lazy var titleView: UILabel = {
         let label = UILabel()
         return label
     }()
+
     private lazy var leftPointView: TMBasicPointView = {
         let pointView = TMBasicPointView()
         return pointView
     }()
+
     private lazy var rightPointView: TMBasicPointView = {
         let pointView = TMBasicPointView()
         return pointView
     }()
-    
-    
-    func setUp(with config: TMVSViewConfig) {
+
+    func setup(with config: TMVSViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
-    
+
     func setupUI() {
         addSubview(titleView)
         addSubview(leftPointView)
         addSubview(rightPointView)
-        
 
-        
         leftPointView.snp.makeConstraints { make in
             make.left.equalToSuperview()
         }
         rightPointView.snp.makeConstraints { make in
             make.right.equalToSuperview()
         }
-        
+
         titleView.isHidden = true
     }
-    
+
     func setupEvent(config: TMVSViewConfig) {
-        leftPointView.setUp(with: config.leftConfig)
-        rightPointView.setUp(with: config.rightConfig)
-        
+        leftPointView.setup(with: config.leftConfig)
+        rightPointView.setup(with: config.rightConfig)
+
         if config.title != nil {
             titleView.text = config.title
             titleView.isHidden = false
@@ -59,19 +59,27 @@ class TMVSView: TMView {
                 }
                 leftPointView.snp.remakeConstraints { make in
                     make.left.equalToSuperview()
-                    make.top.equalTo(titleView.snp.bottom).offset(8)
+                    make.bottom.equalToSuperview()
                 }
                 rightPointView.snp.remakeConstraints { make in
                     make.right.equalToSuperview()
-                    make.top.equalTo(titleView.snp.bottom).offset(8)
+                    make.bottom.equalToSuperview()
                 }
-            }else {
+            } else {
                 titleView.snp.remakeConstraints { make in
-                    make.centerY.equalToSuperview()
                     make.centerX.equalToSuperview()
+                    make.centerY.equalToSuperview()
+                }
+                leftPointView.snp.remakeConstraints { make in
+                    make.left.equalToSuperview()
+                    make.centerY.equalToSuperview()
+                }
+                rightPointView.snp.remakeConstraints { make in
+                    make.right.equalToSuperview()
+                    make.centerY.equalToSuperview()
                 }
             }
-        }else {
+        } else {
             titleView.isHidden = true
         }
     }

@@ -10,6 +10,7 @@ target 'TennisMoment' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'TABAnimated', '2.5.1'
   pod 'SwiftFormat/CLI', '~> 0.49'
+  pod 'TMComponent', :git => 'https://github.com/RoyJoel/TMComponent.git'
 
   target 'TennisMomentTests' do
     inherit! :search_paths
