@@ -6,25 +6,25 @@
 //
 
 import Foundation
-import UIKit
 import TMComponent
+import UIKit
 
 class TMUserInteractionUnabledView: TMView {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
         let tmview = view as? TMUserInteractionUnabledView
-        
+
         if tmview?.toggle == false {
             return tmview
-        }else {
+        } else {
             if tmview == self {
                 return nil
             }
             return view
         }
     }
-    
 }
+
 //            if tmview == nil {
 //                for childView in view!.subviews {
 //                    let point = self.convert(point, to: childView)

@@ -14,4 +14,3 @@ class UIStandard {
     var screenHeight = UIScreen.main.bounds.height
     private init() {}
 }
-
