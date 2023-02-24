@@ -11,7 +11,6 @@ import UIKit
 open class TMBasicPointView: TMView {
     private lazy var highLightImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Jason Zhang")
         imageView.setCorner(radii: 10)
         return imageView
     }()
@@ -21,40 +20,77 @@ open class TMBasicPointView: TMView {
         return label
     }()
 
-    func setup(with config: TMBasicPointViewConfig) {
+    public func setup(with config: TMBasicPointViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
 
-    func setupUI() {
+    public func updateView(isServing: Bool, newNum: String) {
+        if !isServing {
+            highLightImage.isHidden = true
+        } else {
+            highLightImage.isHidden = false
+        }
+        pointLabel.text = newNum
+    }
+
+    private func setupUI() {
         addSubview(highLightImage)
         addSubview(pointLabel)
         highLightImage.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(pointLabel.snp.centerY)
             make.left.equalToSuperview()
             make.width.equalTo(20)
             make.height.equalTo(20)
         }
         pointLabel.snp.makeConstraints { make in
             make.left.equalTo(highLightImage.snp.right).offset(8)
-            make.centerY.equalTo(highLightImage.snp.centerY)
+            make.centerY.equalToSuperview()
         }
     }
 
-    func setupEvent(config: TMBasicPointViewConfig) {
-        if !config.isLeft {
-            highLightImage.snp.remakeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.right.equalToSuperview()
-                make.width.equalTo(20)
-                make.height.equalTo(20)
+    private func setupEvent(config: TMBasicPointViewConfig) {
+        highLightImage.image = UIImage(named: config.iconName)
+        if !config.isServing {
+            highLightImage.isHidden = true
+            if !config.isLeft {
+                pointLabel.snp.remakeConstraints { make in
+                    make.right.equalToSuperview().offset(-28)
+                    make.centerY.equalToSuperview()
+                }
+            } else {
+                pointLabel.snp.remakeConstraints { make in
+                    make.left.equalToSuperview().offset(28)
+                    make.centerY.equalToSuperview()
+                }
             }
-            pointLabel.snp.remakeConstraints { make in
-                make.right.equalTo(highLightImage.snp.left).offset(-8)
-                make.centerY.equalTo(highLightImage.snp.centerY)
+        } else {
+            highLightImage.isHidden = false
+            if !config.isLeft {
+                highLightImage.snp.remakeConstraints { make in
+                    make.centerY.equalTo(pointLabel.snp.centerY)
+                    make.right.equalToSuperview()
+                    make.width.equalTo(20)
+                    make.height.equalTo(20)
+                }
+                pointLabel.snp.remakeConstraints { make in
+                    make.right.equalTo(highLightImage.snp.left).offset(-8)
+                    make.centerY.equalToSuperview()
+                }
+            } else {
+                highLightImage.snp.remakeConstraints { make in
+                    make.centerY.equalTo(pointLabel.snp.centerY)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(20)
+                    make.height.equalTo(20)
+                }
+                pointLabel.snp.remakeConstraints { make in
+                    make.left.equalTo(highLightImage.snp.right).offset(8)
+                    make.centerY.equalToSuperview()
+                }
             }
         }
-        pointLabel.text = "\(config.num)"
+        pointLabel.text = config.num
         pointLabel.font = config.font
     }
 }

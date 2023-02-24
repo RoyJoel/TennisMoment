@@ -1,6 +1,6 @@
 PODS:
   - SnapKit (5.0.1)
-  - SwiftFormat/CLI (0.50.7)
+  - SwiftFormat/CLI (0.50.9)
   - TABAnimated (2.5.1)
   - TMComponent (0.1.0):
     - SnapKit
@@ -23,12 +23,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TMComponent:
-    :commit: 19f626ae753dca84118b13dfa9fcaec8b202379e
+    :commit: 0969da5e6fce0ac05437dac303e4cfd9396c8554
     :git: https://github.com/RoyJoel/TMComponent.git
 
 SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftFormat: 4fcf72ee44c7198255108c22ed7135c38a36ba6b
+  SwiftFormat: 823c799054862ecd9143ff00de06997f5e68967c
   TABAnimated: f0bfba5c5c7d279b43cda503d9a5328e7e9891c8
   TMComponent: 6b100f06dddd9ece8eee1eaa6ca16bc22ed5f5db
 

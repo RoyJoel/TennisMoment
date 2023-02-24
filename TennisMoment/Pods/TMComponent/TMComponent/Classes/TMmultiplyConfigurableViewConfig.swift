@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
-open class TMPointRecordViewConfig {
-    public var rowHeight: Int
-    public var setViewConfig: TMVSViewConfig
-    public var gameViewConfig: TMVSViewConfig
-    public var pointViewConfig: TMVSViewConfig
+open class TMmultiplyConfigurableViewConfig {
+    public var rowHeight: CGFloat
+    public var rowSpacing: CGFloat
+    public var numberOfRow: Int
+    public var configs: [TMPointComparingViewConfig]
 
-    public init(rowHeight: Int, setViewConfig: TMVSViewConfig, gameViewConfig: TMVSViewConfig, pointViewConfig: TMVSViewConfig) {
+    public init(rowHeight: CGFloat, rowSpacing: CGFloat, numberOfRow: Int, configs: [TMPointComparingViewConfig]) {
         self.rowHeight = rowHeight
-        self.setViewConfig = setViewConfig
-        self.gameViewConfig = gameViewConfig
-        self.pointViewConfig = pointViewConfig
+        self.rowSpacing = rowSpacing
+        self.numberOfRow = numberOfRow
+        self.configs = configs
     }
 
 //    static func defaultConfig() -> TMComponentConfig {

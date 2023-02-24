@@ -9,17 +9,25 @@ import Foundation
 import UIKit
 
 class TMButton: UIButton {
+    var config = TMButtonConfig(title: "", action: #selector(method), actionTarget: TMButton.self, relatedView: TMPointRecordView())
+
     func setUp(with config: TMButtonConfig) {
         setupUI()
         setupEvent(config: config)
     }
 
     func setupUI() {
-        setCorner(radii: 20)
+        setTitleColor(.black, for: .normal)
+        setTitleColor(UIColor(named: "TennisBlur"), for: .selected)
+        backgroundColor = .white
+        titleLabel?.numberOfLines = 2
+        titleLabel?.textAlignment = .center
+        setCorner(radii: 15)
         drawBorder(color: .black, width: 2)
     }
 
     func setupEvent(config: TMButtonConfig) {
+        self.config = config
         setTitle(config.title, for: .normal)
         addTapGesture(config.actionTarget, config.action)
     }

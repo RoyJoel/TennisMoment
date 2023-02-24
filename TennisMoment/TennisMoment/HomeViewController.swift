@@ -11,77 +11,94 @@ import UIKit
 
 class HomeViewController: UIViewController {
     var isRecordViewFullScreen = false
-    var homeViewAttributeTitle: NSMutableAttributedString = .init(string: "Home")
+    var homeViewAttributeTitle: NSMutableAttributedString = .init(string: "")
 
     lazy var titleView: UILabel = {
         var label = UILabel()
-        homeViewAttributeTitle.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .largeTitle)], range: NSMakeRange(0, 4))
         label.attributedText = homeViewAttributeTitle
         return label
     }()
 
     lazy var recordView: TMUserInteractionUnabledView = {
         var view = TMUserInteractionUnabledView()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor(named: "TennisBlur")
         view.setCorner(radii: 15)
         return view
     }()
 
     lazy var leftBasicInfoView: TMInfoView = {
         var view = TMInfoView()
+        view.isUserInteractionEnabled = false
         return view
     }()
 
     lazy var rightBasicInfoView: TMInfoView = {
         var view = TMInfoView()
+        view.isUserInteractionEnabled = false
         return view
     }()
 
-    lazy var leftPointUpButton: TMButton = {
-        var button = TMButton()
+    lazy var leftScoreControllerView: scoreControllerView = {
+        var button = scoreControllerView()
+        return button
+    }()
+
+    lazy var rightScoreControllerView: scoreControllerView = {
+        var button = scoreControllerView()
         return button
     }()
 
     lazy var recordPointView: TMPointRecordView = {
         let view = TMPointRecordView()
+        view.isUserInteractionEnabled = false
         return view
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        homeViewAttributeTitle = .init(string: "Home")
+        homeViewAttributeTitle.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .largeTitle)], range: NSRange(location: 0, length: homeViewAttributeTitle.string.count))
+        titleView.attributedText = homeViewAttributeTitle
+        titleView.sizeToFit()
+
         navigationItem.titleView = titleView
         navigationItem.hidesBackButton = true
 
         view.addSubview(recordView)
-        recordView.addSubview(recordPointView)
         recordView.addSubview(leftBasicInfoView)
         recordView.addSubview(rightBasicInfoView)
-        recordView.addSubview(leftPointUpButton)
+        recordView.addSubview(recordPointView)
+        recordView.addSubview(leftScoreControllerView)
+        recordView.addSubview(rightScoreControllerView)
 
-        recordPointView.frame = CGRect(x: 24 + UIStandard.shared.screenWidth * 0.12, y: 27 + ((UIStandard.shared.screenHeight * 0.24 - 163) / 2), width: UIStandard.shared.screenWidth * 0.12, height: 180)
         recordView.frame = CGRect(x: 12, y: 72, width: UIStandard.shared.screenWidth * 0.4, height: UIStandard.shared.screenHeight * 0.3)
         leftBasicInfoView.frame = CGRect(x: 12, y: 27, width: UIStandard.shared.screenWidth * 0.12, height: UIStandard.shared.screenHeight * 0.24)
         rightBasicInfoView.frame = CGRect(x: recordView.bounds.width - leftBasicInfoView.bounds.width - 12, y: 27, width: UIStandard.shared.screenWidth * 0.12, height: UIStandard.shared.screenHeight * 0.24)
+        recordPointView.frame = CGRect(x: 24 + UIStandard.shared.screenWidth * 0.12, y: 27 + ((UIStandard.shared.screenHeight * 0.24 - 190) / 2), width: UIStandard.shared.screenWidth * 0.12, height: 190)
 
         recordView.addTapGesture(self, #selector(jump))
 
         let leftInfoConfig = TMInfoViewConfig(iconName: "Jason Zhang", name: "Jason Zhang")
         let rightInfoConfig = TMInfoViewConfig(iconName: "Nick Kyrgios", name: "Nick Kyrgios")
-        let leftButtonConfig = TMButtonConfig(title: "得一分", action: #selector(backToHome), actionTarget: self)
-        let setConfig = TMVSViewConfig(isTitleViewAbovePointView: true, title: "SET", leftConfig: TMBasicPointViewConfig(isLeft: true, font: UIFont.systemFont(ofSize: 20), num: 100), rightConfig: TMBasicPointViewConfig(isLeft: false, font: UIFont.systemFont(ofSize: 20), num: 100))
-        let gameConfig = TMVSViewConfig(isTitleViewAbovePointView: true, title: "GAME", leftConfig: TMBasicPointViewConfig(isLeft: true, font: UIFont.systemFont(ofSize: 20), num: 100), rightConfig: TMBasicPointViewConfig(isLeft: false, font: UIFont.systemFont(ofSize: 20), num: 100))
-        let pointConfig = TMVSViewConfig(isTitleViewAbovePointView: true, title: "POINT", leftConfig: TMBasicPointViewConfig(isLeft: true, font: UIFont.systemFont(ofSize: 20), num: 100), rightConfig: TMBasicPointViewConfig(isLeft: false, font: UIFont.systemFont(ofSize: 20), num: 100))
-        let config = TMPointRecordViewConfig(rowHeight: 60, setViewConfig: setConfig, gameViewConfig: gameConfig, pointViewConfig: pointConfig)
+        let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 50, rowSpacing: 20, font: UIFont.systemFont(ofSize: 17), isTitleHidden: true, isServingOnLeft: true, setLeftNum: "0", setRightNum: "0", gameLeftNum: "0", gameRightNum: "0", pointLeftNum: "0", pointRightNum: "0")
 
         leftBasicInfoView.setup(with: leftInfoConfig)
         rightBasicInfoView.setup(with: rightInfoConfig)
-        leftPointUpButton.setUp(with: leftButtonConfig)
-        recordPointView.setup(with: config)
+        recordPointView.setup(with: pointRecordViewConfig)
+
+//        leftScoreControllerView.aceBtn.addTapGesture(self.leftScoreControllerView.aceBtn, #selector(leftScoreControllerView.aceBtnTap(view: recordPointView, isLeft: true, originalServing: pointRecordViewConfig.isServingOnLeft, originalLeftNum: pointRecordViewConfig.pointLeftNum, originalRightNum: pointRecordViewConfig.pointRightNum)))
+//        leftScoreControllerView.aceBtn.addTapGesture(self, #selector(backToHome))
     }
 
     @objc private func jump() {
-        titleView.text = "Record"
+        homeViewAttributeTitle = .init(string: "Record")
+        homeViewAttributeTitle.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .largeTitle)], range: NSRange(location: 0, length: homeViewAttributeTitle.string.count))
+        titleView.attributedText = homeViewAttributeTitle
+        titleView.sizeToFit()
+
         navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backToHome)), animated: true)
+        navigationItem.leftBarButtonItem?.tintColor = .black
 
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
         leftBasicInfoView.setup(leftBasicInfoView.bounds, leftBasicInfoView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenHeight * 0.3, height: UIStandard.shared.screenWidth * 0.3), CGPoint(x: 24 + UIStandard.shared.screenWidth * 0.15, y: 124 + UIStandard.shared.screenHeight * 0.15), 0.3)
@@ -93,18 +110,40 @@ class HomeViewController: UIViewController {
         rightBasicInfoView.scaleTo(rightBasicInfoView.toggle)
         recordPointView.scaleTo(recordPointView.toggle)
 
-        leftPointUpButton.frame = CGRect(x: 36, y: 124 + leftBasicInfoView.bounds.height, width: 80, height: 50)
-        leftPointUpButton.isHidden = false
+        let newPointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 70, rowSpacing: 40, font: UIFont.systemFont(ofSize: 24), isTitleHidden: false, isServingOnLeft: true, setLeftNum: "0", setRightNum: "0", gameLeftNum: "0", gameRightNum: "0", pointLeftNum: "0", pointRightNum: "0")
+        recordPointView.reset(with: newPointRecordViewConfig)
+
+        leftScoreControllerView.setupUI(isLeft: true)
+        rightScoreControllerView.setupUI(isLeft: false)
+
+        leftScoreControllerView.frame = CGRect(x: 40, y: 88 + leftBasicInfoView.bounds.height, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
+        rightScoreControllerView.frame = CGRect(x: UIStandard.shared.screenHeight - 40, y: 88 + leftBasicInfoView.bounds.height, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
+
+        leftScoreControllerView.isHidden = false
+        rightScoreControllerView.isHidden = false
     }
 
     @objc private func backToHome() {
-        titleView.text = "Home"
+        homeViewAttributeTitle = .init(string: "Home")
+        homeViewAttributeTitle.addAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .largeTitle)], range: NSRange(location: 0, length: homeViewAttributeTitle.string.count))
+        titleView.attributedText = homeViewAttributeTitle
+        titleView.sizeToFit()
+
         navigationItem.leftBarButtonItem = nil
+
         recordView.scaleTo(recordView.toggle)
         leftBasicInfoView.scaleTo(leftBasicInfoView.toggle)
         rightBasicInfoView.scaleTo(rightBasicInfoView.toggle)
         recordPointView.scaleTo(recordPointView.toggle)
 
-        leftPointUpButton.isHidden = true
+        let newPointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 50, rowSpacing: 20, font: UIFont.systemFont(ofSize: 17), isTitleHidden: true, isServingOnLeft: true, setLeftNum: "0", setRightNum: "0", gameLeftNum: "0", gameRightNum: "0", pointLeftNum: "0", pointRightNum: "0")
+        recordPointView.reset(with: newPointRecordViewConfig)
+
+        leftScoreControllerView.isHidden = true
+        rightScoreControllerView.isHidden = true
+    }
+
+    @objc func a(_ sender: scoreControllerView) {
+        print(sender)
     }
 }

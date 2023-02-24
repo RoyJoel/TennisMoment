@@ -8,71 +8,100 @@
 import Foundation
 import UIKit
 
-open class TMPointRecordView: TMView {
-    private lazy var setView: TMVSView = {
-        var label = TMVSView()
+open class TMmultiplyConfigurableView: TMView {
+    private lazy var view: TMPointComparingView = {
+        var label = TMPointComparingView()
         return label
     }()
 
-    private lazy var gameView: TMVSView = {
-        var label = TMVSView()
-        return label
-    }()
+    var vsViews: [TMPointComparingView] = []
 
-    private lazy var pointView: TMVSView = {
-        var label = TMVSView()
-        return label
-    }()
-
-    public func setup(with config: TMPointRecordViewConfig) {
+    public func setup(with config: TMmultiplyConfigurableViewConfig) {
         setupUI()
         setupEvent(config: config)
     }
 
-    public func setupUI() {
-        addSubview(setView)
-        addSubview(gameView)
-        addSubview(pointView)
-
-        setView.snp.makeConstraints { make in
+    public func reset(with config: TMmultiplyConfigurableViewConfig) {
+        var lastView = view
+        view.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.height.equalTo(config.rowHeight)
         }
-        gameView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+        view.setup(with: config.configs[0])
+        for i in 1 ..< vsViews.count {
+            vsViews[i].setup(with: config.configs[i])
+            vsViews[i].snp.remakeConstraints { make in
+                make.top.equalTo(lastView.snp.bottom).offset(config.rowSpacing)
+                make.width.equalToSuperview()
+                make.height.equalTo(config.rowHeight)
+            }
+            lastView = vsViews[i]
         }
-        pointView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
+    }
+
+    public func updateLeftDate(at index: Int, isServingOnLeft: Bool, newNum: String) {
+        vsViews[index].updateLeftViewData(isServingOnLeft: isServingOnLeft, newNum: newNum)
+    }
+
+    public func updateRightDate(at index: Int, isServingOnRight: Bool, newNum: String) {
+        vsViews[index].updateRightViewData(isServingOnRight: !isServingOnRight, newNum: newNum)
+    }
+
+    private func setupUI() {
+        addSubview(view)
+
+        view.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }
     }
 
-    public func setupEvent(config: TMPointRecordViewConfig) {
-        setView.setup(with: config.setViewConfig)
-        gameView.setup(with: config.gameViewConfig)
-        pointView.setup(with: config.pointViewConfig)
-        setView.snp.makeConstraints { make in
+    private func setupEvent(config: TMmultiplyConfigurableViewConfig) {
+        var lastView = view
+        vsViews.append(view)
+        view.snp.remakeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
             make.height.equalTo(config.rowHeight)
         }
-        gameView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.height.equalTo(config.rowHeight)
+        view.setup(with: config.configs[0])
+        for i in 1 ..< config.configs.count {
+            lazy var nextView: TMPointComparingView = {
+                let label = TMPointComparingView()
+                return label
+            }()
+            nextView.setup(with: config.configs[i])
+            addSubview(nextView)
+            nextView.snp.makeConstraints { make in
+                make.top.equalTo(lastView.snp.bottom).offset(config.rowSpacing)
+                make.width.equalToSuperview()
+                make.height.equalTo(config.rowHeight)
+            }
+            lastView = nextView
+            vsViews.append(nextView)
         }
-        pointView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.height.equalTo(config.rowHeight)
-        }
+//        setView.setup(with: config.setViewConfig)
+//        gameView.setup(with: config.gameViewConfig)
+//        pointView.setup(with: config.pointViewConfig)
+//        setView.snp.makeConstraints { make in
+//            make.top.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
+//        gameView.snp.makeConstraints { make in
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.centerY.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
+//        pointView.snp.makeConstraints { make in
+//            make.bottom.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
     }
 
     override public func scaleTo(_ isEnlarge: Bool) {

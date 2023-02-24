@@ -12,10 +12,10 @@ class TabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.backgroundColor = .gray
+        tabBar.backgroundColor = UIColor(named: "blurGray")
         tabBar.tintColor = UIColor(named: "Tennis")
         tabBar.unselectedItemTintColor = .white
-        tabBar.setCorner(radii: 30)
+        tabBar.setCorner(radii: 10)
 
         addViewController()
     }

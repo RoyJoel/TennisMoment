@@ -20,7 +20,6 @@ open class TMInfoView: TMView {
 
     private lazy var nameView: UILabel = {
         var view = UILabel()
-        view.textColor = .black
         return view
     }()
 
@@ -63,7 +62,6 @@ open class TMInfoView: TMView {
         } else {
             nameView.isHidden = false
             nameView.text = config.name
-            nameView.textColor = .blue
         }
     }
 

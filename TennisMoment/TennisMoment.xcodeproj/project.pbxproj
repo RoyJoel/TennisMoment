@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		61D2F5EA2AAC5A77FE365BE8 /* Pods_TennisMoment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8F5AB1C62345BB55F8C49C /* Pods_TennisMoment.framework */; };
+		A83AAA1C29A7670D0020483A /* TMPointRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83AAA1B29A7670D0020483A /* TMPointRecordView.swift */; };
+		A83AAA1E29A769870020483A /* TMPointRecordViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83AAA1D29A769870020483A /* TMPointRecordViewConfig.swift */; };
+		A83AAA2029A7820C0020483A /* scoreControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83AAA1F29A7820C0020483A /* scoreControllerView.swift */; };
 		A87D6B4E29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87D6B4D29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift */; };
 		A89BAD54299FEE0600C057CB /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89BAD53299FEE0600C057CB /* TMButton.swift */; };
 		A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D90299E77CB0011F37A /* AppDelegate.swift */; };
@@ -55,6 +58,9 @@
 		65C9541D0C33D53915F1AD3E /* Pods_TennisMoment_TennisMomentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TennisMoment_TennisMomentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70751DC2EB6DDD2A1654B4D2 /* Pods-TennisMomentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TennisMomentTests.debug.xcconfig"; path = "Target Support Files/Pods-TennisMomentTests/Pods-TennisMomentTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D4B98FD99B9D3132560067F /* Pods-TennisMoment-TennisMomentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TennisMoment-TennisMomentUITests.debug.xcconfig"; path = "Target Support Files/Pods-TennisMoment-TennisMomentUITests/Pods-TennisMoment-TennisMomentUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A83AAA1B29A7670D0020483A /* TMPointRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPointRecordView.swift; sourceTree = "<group>"; };
+		A83AAA1D29A769870020483A /* TMPointRecordViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMPointRecordViewConfig.swift; sourceTree = "<group>"; };
+		A83AAA1F29A7820C0020483A /* scoreControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scoreControllerView.swift; sourceTree = "<group>"; };
 		A87D6B4D29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMUserInteractionUnabledView.swift; sourceTree = "<group>"; };
 		A89BAD53299FEE0600C057CB /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMButton.swift; sourceTree = "<group>"; };
 		A8C19D8D299E77CB0011F37A /* TennisMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TennisMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,7 +172,10 @@
 				A8C19E0D299E8CE40011F37A /* AccountViewController.swift */,
 				A8C19E0A299E8CE40011F37A /* HomeViewController.swift */,
 				A8C19E0B299E8CE40011F37A /* RecordViewController.swift */,
+				A83AAA1B29A7670D0020483A /* TMPointRecordView.swift */,
+				A83AAA1D29A769870020483A /* TMPointRecordViewConfig.swift */,
 				A8C19E10299E8CE40011F37A /* TabViewController.swift */,
+				A83AAA1F29A7820C0020483A /* scoreControllerView.swift */,
 				A8C19E11299E8CE50011F37A /* UIStandard.swift */,
 				A87D6B4D29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift */,
 				A8C19DF7299E854D0011F37A /* TrackingEvents.swift */,
@@ -468,6 +477,9 @@
 				A8C19E17299E8CE50011F37A /* TabViewController.swift in Sources */,
 				A8C19E02299E854E0011F37A /* TrackingEvents.swift in Sources */,
 				A8C19E18299E8CE50011F37A /* UIStandard.swift in Sources */,
+				A83AAA2029A7820C0020483A /* scoreControllerView.swift in Sources */,
+				A83AAA1C29A7670D0020483A /* TMPointRecordView.swift in Sources */,
+				A83AAA1E29A769870020483A /* TMPointRecordViewConfig.swift in Sources */,
 				A8C19E04299E854E0011F37A /* TMNavigationBar.swift in Sources */,
 				A8C19E13299E8CE50011F37A /* RecordViewController.swift in Sources */,
 				A89BAD54299FEE0600C057CB /* TMButton.swift in Sources */,
