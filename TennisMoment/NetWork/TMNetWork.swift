@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 class TMNetWork {
     static func get(_ parameters: String, completionHandler: @escaping (JSON?) -> Void) {
-        AF.request(URL(string: "http://169.254.128.174:8888" + parameters)!).response { response in
+        AF.request(URL(string: "http://202.117.128.112:8888" + parameters)!).response { response in
             guard let jsonData = response.data else {
                 completionHandler(nil)
                 return
@@ -21,7 +21,7 @@ class TMNetWork {
     }
 
     static func post(_ URLParameters: String, dataParameters: Parameters, completionHandler: @escaping (JSON?) -> Void) {
-        AF.request(URL(string: "http://169.254.128.174:8080" + URLParameters)!, method: .post, parameters: dataParameters, encoding: JSONEncoding.default).response { response in
+        AF.request(URL(string: "http://202.117.128.112:8080" + URLParameters)!, method: .post, parameters: dataParameters, encoding: JSONEncoding.default).response { response in
             guard let jsonData = response.data else {
                 completionHandler(nil)
                 return

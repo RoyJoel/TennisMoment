@@ -12,9 +12,29 @@ import UIKit
 
 class TMRecordView: TMUserInteractionUnabledView {
     var game = Game(json: JSON())
-    var isChangeStats: Bool = false
-    var isChangePosition: Bool = false
-    var originalPositionOnleft: Bool = true
+
+    /*
+     这块逻辑有点复杂，此作详细说明：
+     此页面有两个控制器，两个球员的信息，得分，但存储时一组数据
+     所以控制器与UI更改相互绑定，数据作处理后存储到后端中
+     有三个开关，分别控制发球，交换场地和交换数据
+     每局结束后发球轮换一次 game.isPlayer1Serving.toggle()
+     每单数局结束后交换场地，所以每单数局结束后开关应为true  交换场地应该在除二余二为0时为true
+     每次交换完场地均会导致数据错乱，所以每次交换完场地的后两局都要交换数据 也就是当原始位置
+     */
+
+    /// player1发球
+    /// game.isPlayer1Serving
+
+    /// 交换场地
+    var willChangePosition: Bool = false
+    /// 交换数据
+    var hasChangeStats: Bool = false
+    /// 球员1是否在左侧
+    var isPlayer1Left: Bool = true
+    /// 控制抢七发球的开关
+    var isServingChange: Bool = true
+
     var player1Stats = Stats(json: JSON())
     var player2Stats = Stats(json: JSON())
     var livePoint: [Int] = [0, 0]
@@ -117,18 +137,16 @@ class TMRecordView: TMUserInteractionUnabledView {
     func setupEvent(game: Game) {
         self.game = game
 
-        print(game.result)
-        print(game.isPlayer1Serving)
-
-        let count = game.result[game.result.count - 1].count
-        isChangePosition = count % 2 == 0
-        originalPositionOnleft = (count / 2) % 2 == 0
-
-        if game.isPlayer1Serving != isChangePosition {
-            recordPointView.config.isPlayer1Serving = false
-        } else {
-            recordPointView.config.isPlayer1Serving = true
+        var count = 0
+        for set in game.result {
+            for game in set {
+                count += 1
+            }
         }
+
+        willChangePosition = ((count / 2) % 2) == 0
+        isPlayer1Left = ((count / 2) % 2) == 0
+        hasChangeStats = ((count / 2) % 2) == 0
 
         DispatchQueue.global(qos: .userInitiated).async {
             TMPlayerRequest.searchPlayer(loginName: game.player1LoginName) { player1 in
@@ -140,14 +158,14 @@ class TMRecordView: TMUserInteractionUnabledView {
                         return
                     }
                     // 说明player1在左侧⬅️
-                    if self.originalPositionOnleft {
+                    if self.isPlayer1Left {
                         self.leftBasicInfoView.updateInfo(with: player1.icon, named: player1.name)
                         self.rightBasicInfoView.updateInfo(with: player2.icon, named: player2.name)
                     } else {
                         self.leftBasicInfoView.updateInfo(with: player2.icon, named: player2.name)
                         self.rightBasicInfoView.updateInfo(with: player1.icon, named: player1.name)
                     }
-                    self.recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isChangePosition: (count / 2) % 2 != 0, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+                    self.recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: self.isPlayer1Left, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
                     self.livePoint = self.game.result[game.result.count - 1].removeLast()
                     self.leftBasicInfoView.tab_endAnimationEaseOut()
                     self.rightBasicInfoView.tab_endAnimationEaseOut()
@@ -175,7 +193,7 @@ class TMRecordView: TMUserInteractionUnabledView {
             rightBasicInfoView.scaleTo(rightBasicInfoView.toggle)
             recordPointView.scaleTo(recordPointView.toggle)
 
-            recordPointView.scaleTo(newRowHeight: 50, newRowSpacing: 20, newFont: UIFont.systemFont(ofSize: 17), isTitleHidden: true, originalPositionOnleft: originalPositionOnleft)
+            recordPointView.scaleTo(newRowHeight: 50, newRowSpacing: 20, newFont: UIFont.systemFont(ofSize: 17), isTitleHidden: true)
 
             leftScoreControllerView.isHidden = true
             rightScoreControllerView.isHidden = true
@@ -188,7 +206,7 @@ class TMRecordView: TMUserInteractionUnabledView {
             rightBasicInfoView.scaleTo(rightBasicInfoView.toggle)
             recordPointView.scaleTo(recordPointView.toggle)
 
-            recordPointView.scaleTo(newRowHeight: 70, newRowSpacing: 40, newFont: UIFont.systemFont(ofSize: 24), isTitleHidden: false, originalPositionOnleft: originalPositionOnleft)
+            recordPointView.scaleTo(newRowHeight: 70, newRowSpacing: 40, newFont: UIFont.systemFont(ofSize: 24), isTitleHidden: false)
 
             leftScoreControllerView.setupUI(isLeft: true)
             rightScoreControllerView.setupUI(isLeft: false)
@@ -807,7 +825,11 @@ class TMRecordView: TMUserInteractionUnabledView {
                 dealWithPosition(isGameDone: true)
             } else if recordPointView.config.player1GameNum == game.gameNum - 1, recordPointView.config.player2GameNum == game.gameNum || recordPointView.config.player2GameNum == game.gameNum - 1 {
                 recordPointView.config.player1GameNum = game.gameNum
-                dealWithPosition(isGameDone: true)
+                if recordPointView.config.player2GameNum == game.gameNum {
+                    enterTieBreak()
+                } else {
+                    dealWithPosition(isGameDone: true)
+                }
             } else {
                 recordPointView.config.player1GameNum = 0
                 recordPointView.config.player2GameNum = 0
@@ -821,7 +843,11 @@ class TMRecordView: TMUserInteractionUnabledView {
                 dealWithPosition(isGameDone: true)
             } else if gameNum == game.gameNum - 1, recordPointView.config.player1GameNum == game.gameNum || recordPointView.config.player1GameNum == game.gameNum - 1 {
                 recordPointView.config.player2GameNum = game.gameNum
-                dealWithPosition(isGameDone: true)
+                if recordPointView.config.player1GameNum == game.gameNum {
+                    enterTieBreak()
+                } else {
+                    dealWithPosition(isGameDone: true)
+                }
             } else {
                 recordPointView.config.player1GameNum = 0
                 recordPointView.config.player2GameNum = 0
@@ -848,34 +874,34 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func dealWithPosition(isGameDone: Bool) {
-        isChangePosition.toggle()
-        game.isPlayer1Serving.toggle()
-        recordPointView.config.isPlayer1Serving.toggle()
-
-        if isChangeStats {
-            livePoint.swapAt(0, 1)
-        }
-
-        game.result[game.result.count - 1].append(livePoint)
-        livePoint = [0, 0]
-
+        /// 一盘结束，需要换边，把将要换边开关变成true，将要交换数据开关变成true，发球轮换
         if !isGameDone {
             game.result.append([])
-            isChangePosition = false
             changeInfoViewPosition()
             TMDataConvert.changePosition(with: &recordPointView.config.player1GameNum, and: &recordPointView.config.player2GameNum)
             TMDataConvert.changePosition(with: &recordPointView.config.player1SetNum, and: &recordPointView.config.player2SetNum)
+            willChangePosition = true
+            game.isPlayer1Serving.toggle()
+            isPlayer1Left.toggle()
         } else {
-            if isChangePosition {
-                isChangeStats.toggle()
-                recordPointView.config.isPlayer1Serving.toggle()
+            if willChangePosition {
                 changeInfoViewPosition()
                 TMDataConvert.changePosition(with: &recordPointView.config.player1GameNum, and: &recordPointView.config.player2GameNum)
                 TMDataConvert.changePosition(with: &recordPointView.config.player1SetNum, and: &recordPointView.config.player2SetNum)
+                if isPlayer1Left {
+                    hasChangeStats = false
+                } else {
+                    hasChangeStats = true
+                }
+                if !hasChangeStats {
+                    livePoint.swapAt(0, 1)
+                }
+                isPlayer1Left.toggle()
             }
+            game.isPlayer1Serving.toggle()
+            willChangePosition.toggle()
         }
-        print(game.isPlayer1Serving)
-        print(game.result)
+
         updateDate()
     }
 
@@ -888,23 +914,48 @@ class TMRecordView: TMUserInteractionUnabledView {
         rightBasicInfoView.config.name = tempName
     }
 
+    func enterTieBreak() {
+        game.isPlayer1Serving.toggle()
+        isPlayer1Left.toggle()
+        isServingChange = true
+        willChangePosition = true
+        changeInfoViewPosition()
+        TMDataConvert.changePosition(with: &recordPointView.config.player1GameNum, and: &recordPointView.config.player2GameNum)
+        TMDataConvert.changePosition(with: &recordPointView.config.player1SetNum, and: &recordPointView.config.player2SetNum)
+        if isPlayer1Left {
+            hasChangeStats = false
+        } else {
+            hasChangeStats = true
+        }
+        if !hasChangeStats {
+            livePoint.swapAt(0, 1)
+        }
+        updateDate()
+    }
+
     func changePositionInTieBreak() {
         var leftNum = (Int(recordPointView.config.player1PointNum) ?? 0)
         var rightNum = (Int(recordPointView.config.player2PointNum) ?? 0)
-        isChangePosition.toggle()
-        if isChangePosition {
+        if isServingChange {
             game.isPlayer1Serving.toggle()
-            recordPointView.config.isPlayer1Serving.toggle()
         }
         if ((leftNum + rightNum) % 6) == 0 {
-            changeInfoViewPosition()
+            isPlayer1Left.toggle()
+            if isPlayer1Left {
+                hasChangeStats = false
+            } else {
+                hasChangeStats = true
+            }
             livePoint.swapAt(0, 1)
+
+            changeInfoViewPosition()
             TMDataConvert.changePosition(with: &leftNum, and: &rightNum)
             TMDataConvert.changePosition(with: &recordPointView.config.player1GameNum, and: &recordPointView.config.player2GameNum)
             TMDataConvert.changePosition(with: &recordPointView.config.player1SetNum, and: &recordPointView.config.player2SetNum)
+            recordPointView.config.player1PointNum = "\(leftNum)"
+            recordPointView.config.player2PointNum = "\(rightNum)"
         }
-        recordPointView.config.player1PointNum = "\(leftNum)"
-        recordPointView.config.player2PointNum = "\(rightNum)"
+        isServingChange.toggle()
         updateDate()
     }
 
@@ -946,148 +997,148 @@ class TMRecordView: TMUserInteractionUnabledView {
         }
     }
 
-    func recordStats(scoreType: scoreType, isLeft: Bool) {
+    func recordStats(scoreType: scoreType, isLeft _: Bool) {
         switch scoreType {
         case .aces:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.aces += 1
             } else {
                 player2Stats.aces += 1
             }
         case .doubleFaults:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.doubleFaults += 1
             } else {
                 player2Stats.doubleFaults += 1
             }
         case .firstServePoints:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.firstServePoints += 1
             } else {
                 player2Stats.firstServePoints += 1
             }
         case .firstServePointsIn:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.firstServePointsIn += 1
             } else {
                 player2Stats.firstServePointsIn += 1
             }
         case .firstServePointsWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.firstServePointsWon += 1
             } else {
                 player2Stats.firstServePointsWon += 1
             }
         case .secondServePointsWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.secondServePointsWon += 1
             } else {
                 player2Stats.secondServePointsWon += 1
             }
         case .breakPointsFaced:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.breakPointsFaced += 1
             } else {
                 player2Stats.breakPointsFaced += 1
             }
         case .breakPointsSaved:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.breakPointsSaved += 1
             } else {
                 player2Stats.breakPointsSaved += 1
             }
         case .serveGamesPlayed:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.serveGamesPlayed += 1
             } else {
                 player2Stats.serveGamesPlayed += 1
             }
         case .serveGamesWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.serveGamesWon += 1
             } else {
                 player2Stats.serveGamesWon += 1
             }
         case .firstServeReturnPoints:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.firstServeReturnPoints += 1
             } else {
                 player2Stats.firstServeReturnPoints += 1
             }
         case .firstServeReturnPointsWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.firstServeReturnPointsWon += 1
             } else {
                 player2Stats.firstServeReturnPointsWon += 1
             }
         case .secondServeReturnPointsWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.secondServeReturnPointsWon += 1
             } else {
                 player2Stats.secondServeReturnPointsWon += 1
             }
         case .breakPointsOpportunities:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.breakPointsOpportunities += 1
             } else {
                 player2Stats.breakPointsOpportunities += 1
             }
         case .breakPointsConverted:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.breakPointsConverted += 1
             } else {
                 player2Stats.breakPointsConverted += 1
             }
         case .returnGamesPlayed:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.returnGamesPlayed += 1
             } else {
                 player2Stats.returnGamesPlayed += 1
             }
         case .returnGamesWon:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.returnGamesWon += 1
             } else {
                 player2Stats.returnGamesWon += 1
             }
         case .netPoints:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.netPoints += 1
             } else {
                 player2Stats.netPoints += 1
             }
         case .unforcedErrors:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.unforcedErrors += 1
             } else {
                 player2Stats.unforcedErrors += 1
             }
         case .forehandWinners:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.forehandWinners += 1
             } else {
                 player2Stats.forehandWinners += 1
             }
         case .backhandWinners:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.backhandWinners += 1
             } else {
                 player2Stats.backhandWinners += 1
             }
         case .servePoints:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.servePoints += 1
             } else {
                 player2Stats.servePoints += 1
             }
         case .returnAces:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.returnAces += 1
             } else {
                 player2Stats.returnAces += 1
             }
         case .returnServePoints:
-            if isChangePosition != isLeft {
+            if isPlayer1Left {
                 player1Stats.returnServePoints += 1
             } else {
                 player2Stats.returnServePoints += 1
@@ -1096,7 +1147,7 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func saveGame(isCompleted: Bool) {
-        if isChangeStats {
+        if !hasChangeStats {
             livePoint.swapAt(0, 1)
         }
         if !isCompleted {
