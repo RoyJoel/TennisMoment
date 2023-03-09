@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// TM可配置多条比分视图
 open class TMmultiplyConfigurableView: TMView {
     private lazy var view: TMPointComparingView = {
         var label = TMPointComparingView()
@@ -45,7 +46,7 @@ open class TMmultiplyConfigurableView: TMView {
     }
 
     public func updateRightDate(at index: Int, isServingOnRight: Bool, newNum: String) {
-        vsViews[index].updateRightViewData(isServingOnRight: !isServingOnRight, newNum: newNum)
+        vsViews[index].updateRightViewData(isServingOnRight: isServingOnRight, newNum: newNum)
     }
 
     private func setupUI() {

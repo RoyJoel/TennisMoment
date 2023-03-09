@@ -10,13 +10,10 @@ import UIKit
 
 enum ToastNotification: String {
     case HomeViewToast
-
-    var stringValue: String {
-        return rawValue
-    }
+    case AddGAmeToast
 
     /// 通知名称
     var notificationName: NSNotification.Name {
-        return NSNotification.Name(stringValue)
+        return NSNotification.Name(rawValue)
     }
 }

@@ -23,7 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         window.windowScene = windowScene
 
-        // Step 5. 告诉APP，这就是你的window
         self.window = window
     }
 

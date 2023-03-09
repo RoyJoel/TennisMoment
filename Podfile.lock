@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TMComponent:
-    :commit: 8415646475b6c85489de2ca76025150e479e40e2
+    :commit: 9aea249839880a2c9af13fec1255e2eaf0c6e6e2
     :git: https://github.com/RoyJoel/TMComponent.git
 
 SPEC CHECKSUMS:
@@ -44,6 +44,6 @@ SPEC CHECKSUMS:
   TMComponent: 6b100f06dddd9ece8eee1eaa6ca16bc22ed5f5db
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: ea0c72a79194330c0ca95b034e7350ef5fcb22ae
+PODFILE CHECKSUM: 01bb397be55633de7c866f1c65e3219ec4600546
 
 COCOAPODS: 1.11.3

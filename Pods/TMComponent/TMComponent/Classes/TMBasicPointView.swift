@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// TM基础分数视图
 open class TMBasicPointView: TMView {
     private lazy var highLightImage: UIImageView = {
         let imageView = UIImageView()

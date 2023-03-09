@@ -9,10 +9,9 @@ import Foundation
 import SwiftyJSON
 
 struct Player {
-    var id: Int
     var loginName: String
     var name: String
-    var icon: UIImage
+    var icon: String
     var sex: Sex
     var age: Int
     var yearsPlayed: Int
@@ -22,12 +21,10 @@ struct Player {
     var backhand: Backhand
     var points: Int
     var isAdult: Bool
-    var careerStats: Stats
-    var friends: [Player]
-    var gamesPlayed: [Game]
+    var careerStatsId: Int
+    var friends: String
 
-    init(id: Int, loginName: String, name: String, icon: UIImage, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], gamesPlayed: [Game]) {
-        self.id = id
+    init(loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStatsId: Int, friends: String) {
         self.loginName = loginName
         self.name = name
         self.icon = icon
@@ -40,16 +37,14 @@ struct Player {
         self.backhand = backhand
         self.points = points
         self.isAdult = isAdult
-        self.careerStats = careerStats
+        self.careerStatsId = careerStatsId
         self.friends = friends
-        self.gamesPlayed = gamesPlayed
     }
 
     init(json: JSON) {
-        id = json["id"].intValue
         loginName = json["loginName"].stringValue
         name = json["name"].stringValue
-        icon = UIImage(data: json["icon"].stringValue.data(using: .utf8) ?? Data()) ?? UIImage(systemName: "person")!
+        icon = json["icon"].stringValue
         sex = Sex(rawValue: json["sex"].stringValue) ?? .Man
         age = json["age"].intValue
         yearsPlayed = json["yearsPlayed"].intValue
@@ -59,17 +54,15 @@ struct Player {
         backhand = Backhand(rawValue: json["backhand"].stringValue) ?? .TwoHandedBackhand
         points = json["points"].intValue
         isAdult = json["isAdult"].boolValue
-        careerStats = Stats(json: json["careerStats"])
-        friends = json["friends"].arrayValue.map { Player(json: $0) }
-        gamesPlayed = json["gamesPlayed"].arrayValue.map { Game(json: $0) }
+        careerStatsId = json["careerStatsId"].intValue
+        friends = json["friends"].stringValue
     }
 
     func toJSON() -> JSON {
         return JSON([
-            "id": self.id,
             "loginName": self.loginName,
             "name": self.name,
-            "icon": self.icon.pngData() ?? Data(),
+            "icon": self.icon,
             "sex": self.sex.rawValue,
             "age": self.age,
             "yearsPlayed": self.yearsPlayed,
@@ -79,9 +72,8 @@ struct Player {
             "backhand": self.backhand.rawValue,
             "points": self.points,
             "isAdult": self.isAdult,
-            "careerStats": self.careerStats,
-            "friends": self.friends,
-            "gamesPlayed": self.gamesPlayed,
+            "careerStatsId": self.careerStatsId,
+            "friendLoginNames": self.friends,
         ])
     }
 }

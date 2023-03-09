@@ -10,7 +10,7 @@ import TMComponent
 import UIKit
 
 class TMButton: UIButton {
-    var config = TMButtonConfig(title: "", action: #selector(method), actionTarget: TMButton.self, relatedPointRecordView: TMPointRecordView(), relatedInfoView: TMInfoView())
+    var config = TMButtonConfig(title: "", action: #selector(method), actionTarget: TMButton.self)
 
     func setUp(with config: TMButtonConfig) {
         setupUI()

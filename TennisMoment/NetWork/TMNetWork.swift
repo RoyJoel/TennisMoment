@@ -9,25 +9,25 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 class TMNetWork {
-    static func get(_ parameters: String, completionHandler: @escaping (JSON?, Error?) -> Void) {
-        AF.request(URL(string: "http://localhost:8080" + parameters)!).response { response in
-            switch response.result {
-            case let .success(json):
-                completionHandler(JSON(json ?? JSON()), nil)
-            case let .failure(error):
-                completionHandler(nil, error)
+    static func get(_ parameters: String, completionHandler: @escaping (JSON?) -> Void) {
+        AF.request(URL(string: "http://169.254.128.174:8888" + parameters)!).response { response in
+            guard let jsonData = response.data else {
+                completionHandler(nil)
+                return
             }
+            let json = try! JSON(data: jsonData)
+            completionHandler(json["data"])
         }
     }
 
-    static func post(_ URLParameters: String, dataParameters: Parameters, completionHandler: @escaping (JSON?, Error?) -> Void) {
-        AF.request(URL(string: "http://localhost:8080" + URLParameters)!, parameters: dataParameters).response { response in
-            switch response.result {
-            case let .success(json):
-                completionHandler(JSON(json ?? JSON()), nil)
-            case let .failure(error):
-                completionHandler(nil, error)
+    static func post(_ URLParameters: String, dataParameters: Parameters, completionHandler: @escaping (JSON?) -> Void) {
+        AF.request(URL(string: "http://169.254.128.174:8080" + URLParameters)!, method: .post, parameters: dataParameters, encoding: JSONEncoding.default).response { response in
+            guard let jsonData = response.data else {
+                completionHandler(nil)
+                return
             }
+            let json = try! JSON(data: jsonData)
+            completionHandler(json["data"])
         }
     }
 }

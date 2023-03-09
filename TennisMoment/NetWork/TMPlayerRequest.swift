@@ -10,54 +10,69 @@ import Foundation
 import SwiftyJSON
 
 class TMPlayerRequest {
-    static func searchPlayer(loginName: String, completionHandler: @escaping (Player) -> Void) {
-        TMNetWork.post("/player/search", dataParameters: [
-            "loginName": loginName,
-        ]) { data, error in
-            guard error == nil else {
-                print(error!)
-                return
-            }
-            guard data != nil else {
-                return
-            }
-            completionHandler(Player(json: data!))
-        }
-    }
-
-    static func updatePlayerInfo(player: Player) {
-        TMNetWork.post("/player/update", dataParameters: [
-            "id": player.id,
+    static func addPlayer(player: Player, completionHandler: @escaping (Player) -> Void) {
+        let para = [
             "loginName": player.loginName,
             "name": player.name,
             "icon": player.icon,
-            "sex": player.sex,
+            "sex": player.sex.rawValue,
             "age": player.age,
             "yearsPlayed": player.yearsPlayed,
             "height": player.height,
             "width": player.width,
-            "grip": player.grip,
-            "backhand": player.backhand,
-            "careerStats": player.careerStats,
+            "grip": player.grip.rawValue,
+            "backhand": player.backhand.rawValue,
+            "points": player.points,
+            "isAdult": player.isAdult,
+            "careerStatsId": player.careerStatsId,
             "friends": player.friends,
-            "gamesPlayed": player.gamesPlayed,
-        ]) { data, error in
-            guard error == nil else {
-                print(error!)
+        ] as! [String: Any]
+
+        TMNetWork.post("/player/add", dataParameters: para) { json in
+            guard let json = json else {
                 return
             }
-            UserDefault.user = Player(json: data ?? JSON())
+            TMUser.user = Player(json: json)
+            completionHandler(TMUser.user)
         }
     }
 
-    static func addGame(data: Date, place: String, user: Player, userStats: Stats, opponent: Player, opponentStats: Stats) {
-        TMNetWork.post("/game/add", dataParameters: [
-            "data": data,
-            "place": place,
-            "user": user,
-            "userStats": userStats,
-            "opponent": opponent,
-            "opponentStats": opponentStats,
-        ], completionHandler: { _, _ in })
+    static func searchPlayer(loginName: String, completionHandler: @escaping (Player?) -> Void) {
+        let para = [
+            "loginName": loginName,
+        ]
+        TMNetWork.post("/player/search", dataParameters: para) { json in
+            guard let json = json else {
+                completionHandler(nil)
+                return
+            }
+            completionHandler(Player(json: json))
+        }
+    }
+
+    static func updatePlayerInfo(player: Player, completionHandler: @escaping (Player) -> Void) {
+        let para = [
+            "loginName": player.loginName,
+            "name": player.name,
+            "icon": player.icon,
+            "sex": player.sex.rawValue,
+            "age": player.age,
+            "yearsPlayed": player.yearsPlayed,
+            "height": player.height,
+            "width": player.width,
+            "grip": player.grip.rawValue,
+            "backhand": player.backhand.rawValue,
+            "points": player.points,
+            "isAdult": player.isAdult,
+            "careerStatsId": player.careerStatsId,
+            "friends": player.friends,
+        ] as! [String: Any]
+
+        TMNetWork.post("/player/update", dataParameters: para) { json in
+            guard let json = json else {
+                return
+            }
+            completionHandler(Player(json: json))
+        }
     }
 }

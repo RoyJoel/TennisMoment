@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// TM基础VC
 open class TMViewController: UIViewController {
 //    open var tmNavigationController: TMNavigationController?
 //    open var tmNavigationItem:

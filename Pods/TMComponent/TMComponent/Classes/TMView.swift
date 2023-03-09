@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// TM基础视图，基于uiview扩展了缩放动画
 open class TMView: UIView {
     public var originalBounds: CGRect = .init()
 
