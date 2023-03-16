@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Player {
+struct Player: Codable {
     var loginName: String
     var name: String
     var icon: String
@@ -57,40 +57,21 @@ struct Player {
         careerStatsId = json["careerStatsId"].intValue
         friends = json["friends"].stringValue
     }
-
-    func toJSON() -> JSON {
-        return JSON([
-            "loginName": self.loginName,
-            "name": self.name,
-            "icon": self.icon,
-            "sex": self.sex.rawValue,
-            "age": self.age,
-            "yearsPlayed": self.yearsPlayed,
-            "height": self.height,
-            "width": self.width,
-            "grip": self.grip.rawValue,
-            "backhand": self.backhand.rawValue,
-            "points": self.points,
-            "isAdult": self.isAdult,
-            "careerStatsId": self.careerStatsId,
-            "friendLoginNames": self.friends,
-        ])
-    }
 }
 
-enum Sex: String {
+enum Sex: String, Codable {
     case Man
     case Woman
 }
 
-enum Grip: String {
+enum Grip: String, Codable {
     case Continented
     case Eastern
     case SemiWestern
     case Western
 }
 
-enum Backhand: String {
+enum Backhand: String, Codable {
     case OneHandedBackhand
     case TwoHandedBackhand
 }

@@ -19,8 +19,18 @@ class TMDataConvert {
         for set in result.indices {
             for game in result[set].indices {
                 if set == (result.count - 1), game == (result[set].count - 1), leftGameNum != gameConfigNum, rightGameNum != gameConfigNum {
-                    leftPointNum = result[set][game][0]
-                    rightPointNum = result[set][game][1]
+                    if result[set][game][0] == 5 {
+                        leftGameNum += 1
+                        leftPointNum = 0
+                        rightPointNum = 0
+                    } else if result[set][game][1] == 5 {
+                        rightGameNum += 1
+                        leftPointNum = 0
+                        rightPointNum = 0
+                    } else {
+                        leftPointNum = result[set][game][0]
+                        rightPointNum = result[set][game][1]
+                    }
                 } else {
                     if result[set][game][0] > result[set][game][1] {
                         leftGameNum += 1
@@ -50,8 +60,16 @@ class TMDataConvert {
     }
 
     static func changePosition(with value1: inout Int, and value2: inout Int) {
-        var t = value1
+        let t = value1
         value1 = value2
         value2 = t
+    }
+
+    static func Divide(_ dividend: Int, by divisor: Int) -> Double {
+        if divisor == 0 {
+            return 0
+        } else {
+            return Double(dividend) / Double(divisor)
+        }
     }
 }

@@ -47,7 +47,7 @@ class TMLocationManager: NSObject {
             locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager?.startUpdatingLocation()
             let location = locationManager?.location
-            getLocationDescription(location: location!, completionHandler: { string in
+            getLocationDescription(location: location ?? CLLocation(), completionHandler: { string in
                 completionHandler(string)
             })
         }

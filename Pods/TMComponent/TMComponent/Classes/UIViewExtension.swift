@@ -31,13 +31,18 @@ extension UIView {
         addGestureRecognizer(tap)
     }
 
-    func addAnimation(_ fromValue: Any?, _ toValue: Any?, _ duration: CFTimeInterval, _ forKey: String?) {
+    func addAnimation(_ fromValue: Any?, _ toValue: Any?, _ duration: CFTimeInterval, _ forKey: String?, completionHandler: @escaping () -> Void) {
         let animation = CABasicAnimation()
         animation.duration = duration
         animation.fromValue = fromValue
         animation.toValue = toValue
         animation.fillMode = .forwards
 
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            completionHandler()
+        }
         layer.add(animation, forKey: forKey)
+        CATransaction.commit()
     }
 }

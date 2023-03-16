@@ -36,6 +36,7 @@ class TMServerView: TMView {
             make.width.equalToSuperview()
         }
 
+        textLabel.textAlignment = .center
         if isServing {
             selectionView.image = UIImage(systemName: "tennisball.fill")?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
             textLabel.text = "To serve"

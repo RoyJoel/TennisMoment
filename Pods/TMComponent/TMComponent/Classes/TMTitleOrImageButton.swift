@@ -28,8 +28,8 @@ open class TMTitleOrImageButton: UIButton {
     }
 
     private func setupUI() {
-        setTitleColor(.black, for: .normal)
-        backgroundColor = .white
+        setTitleColor(UIColor(named: "ContentBackground"), for: .normal)
+        backgroundColor = UIColor(named: "ComponentBackground")
         setCorner(radii: 15)
         drawBorder(color: .black, width: 2)
 

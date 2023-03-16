@@ -82,27 +82,6 @@ open class TMmultiplyConfigurableView: TMView {
             lastView = nextView
             vsViews.append(nextView)
         }
-//        setView.setup(with: config.setViewConfig)
-//        gameView.setup(with: config.gameViewConfig)
-//        pointView.setup(with: config.pointViewConfig)
-//        setView.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//            make.width.equalToSuperview()
-//            make.centerX.equalToSuperview()
-//            make.height.equalTo(config.rowHeight)
-//        }
-//        gameView.snp.makeConstraints { make in
-//            make.width.equalToSuperview()
-//            make.centerX.equalToSuperview()
-//            make.centerY.equalToSuperview()
-//            make.height.equalTo(config.rowHeight)
-//        }
-//        pointView.snp.makeConstraints { make in
-//            make.bottom.equalToSuperview()
-//            make.width.equalToSuperview()
-//            make.centerX.equalToSuperview()
-//            make.height.equalTo(config.rowHeight)
-//        }
     }
 
     public override func scaleTo(_ isEnlarge: Bool) {

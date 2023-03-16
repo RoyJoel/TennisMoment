@@ -12,7 +12,7 @@ import UIKit
 
 class TMUser {
     // 未登录时为默认信息
-    static var user = Player(loginName: "p", name: "Nick Kyrgios", icon: "Nick Kyrgios", sex: .Man, age: 21, yearsPlayed: 1, height: 1, width: 1, grip: .Western, backhand: .TwoHandedBackhand, points: 1000, isAdult: true, careerStatsId: 1, friends: "aaa")
+    static var user = Player(loginName: "Jason Zhang", name: "Jason Zhang", icon: "Jason Zhang", sex: .Man, age: 21, yearsPlayed: 1, height: 171, width: 1, grip: .Western, backhand: .TwoHandedBackhand, points: 1000, isAdult: true, careerStatsId: 3, friends: "Jason Zhang")
 
     static func updateUserInfo(completionHandler: @escaping (Player) -> Void) {
         TMPlayerRequest.updatePlayerInfo(player: TMUser.user) { player in

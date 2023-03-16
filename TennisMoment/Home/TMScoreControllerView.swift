@@ -10,50 +10,60 @@ import TMComponent
 import Toast_Swift
 import UIKit
 
-class TMScoreControllerView: UIView {
+class TMScoreControllerView: TMUserInteractionUnabledView {
     var isLeft: Bool = true
 
     lazy var aceBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var serveScoreBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var serveFaultBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var returnAceBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var unforcedErrorBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var forehandWinnersBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var backhandWinnersBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     lazy var netPointBtn: TMButton = {
         let button = TMButton()
+        button.backgroundColor = UIColor(named: "BackgroundGray")
         return button
     }()
 
     func setupUI(isLeft: Bool) {
+        toggle = true
+
         self.isLeft = isLeft
 
         addSubview(aceBtn)

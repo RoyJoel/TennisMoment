@@ -12,25 +12,33 @@ class TabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.backgroundColor = UIColor(named: "blurGray")
+        tabBar.backgroundColor = UIColor(named: "TabBarBackground")
         tabBar.tintColor = UIColor(named: "Tennis")
-        tabBar.unselectedItemTintColor = .white
+        tabBar.unselectedItemTintColor = UIColor(named: "ContentBackground")
         tabBar.setCorner(radii: 15)
+
+        if #available(iOS 15.0, *) {
+            let appearnce = UITabBarAppearance()
+            appearnce.configureWithOpaqueBackground()
+            appearnce.backgroundColor = UIColor(named: "TabBarBackground")
+            tabBar.standardAppearance = appearnce
+            tabBar.scrollEdgeAppearance = appearnce
+        }
 
         addViewController()
     }
 
     override func viewDidLayoutSubviews() {
         var frame = tabBar.frame
-        frame.size.width = view.frame.size.width - 24
-        frame.origin.x = 12
+        frame.size.width = view.frame.size.width - 88
+        frame.origin.x = 44
         frame.origin.y = view.frame.size.height - frame.size.height - 18
         tabBar.frame = frame
     }
 
     private func addViewController() {
         setChildViewController(HomeViewController(), "Home", "tennisball.fill")
-        setChildViewController(RecordViewController(), "Rankings", "trophy.fill")
+        setChildViewController(EventViewController(), "Event", "trophy.fill")
         setChildViewController(AccountViewController(), "Me", "figure.tennis")
     }
 

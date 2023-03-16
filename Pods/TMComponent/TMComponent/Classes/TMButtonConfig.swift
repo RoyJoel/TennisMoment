@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import TMComponent
 
-class TMButtonConfig {
-    var title: String
-    var action: Selector
-    var actionTarget: Any
+open class TMButtonConfig {
+    public var title: String
+    public var action: Selector
+    public var actionTarget: Any
 
-    init(title: String, action: Selector, actionTarget: Any) {
+    public init(title: String, action: Selector, actionTarget: Any) {
         self.title = title
         self.action = action
         self.actionTarget = actionTarget

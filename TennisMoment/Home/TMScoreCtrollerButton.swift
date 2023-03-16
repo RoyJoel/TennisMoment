@@ -10,8 +10,8 @@ import TMComponent
 
 class TMScoreCtrollerButton: TMButton {
     var relatedPointRecordView = TMPointRecordView()
-    var relatedInfoView = TMInfoView()
-    var controllerConfig = TMScoreCtrollerButtonConfig(title: "", action: #selector(method), actionTarget: TMScoreCtrollerButton.self, relatedPointRecordView: TMPointRecordView(), relatedInfoView: TMInfoView())
+    var relatedInfoView = TMIconView()
+    var controllerConfig = TMScoreCtrollerButtonConfig(title: "", action: #selector(method), actionTarget: TMScoreCtrollerButton.self, relatedPointRecordView: TMPointRecordView(), relatedInfoView: TMIconView())
     func setUp(with config: TMScoreCtrollerButtonConfig) {
         controllerConfig = config
         setupUI()
@@ -21,9 +21,9 @@ class TMScoreCtrollerButton: TMButton {
 
 class TMScoreCtrollerButtonConfig: TMButtonConfig {
     var relatedPointRecordView: TMPointRecordView
-    var relatedInfoView: TMInfoView
+    var relatedInfoView: TMIconView
 
-    init(title: String, action: Selector, actionTarget: Any, relatedPointRecordView: TMPointRecordView, relatedInfoView: TMInfoView) {
+    init(title: String, action: Selector, actionTarget: Any, relatedPointRecordView: TMPointRecordView, relatedInfoView: TMIconView) {
         self.relatedPointRecordView = relatedPointRecordView
         self.relatedInfoView = relatedInfoView
         super.init(title: title, action: action, actionTarget: actionTarget)

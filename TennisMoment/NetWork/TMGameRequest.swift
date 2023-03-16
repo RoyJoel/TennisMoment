@@ -5,34 +5,36 @@
 //  Created by Jason Zhang on 2023/3/2.
 //
 
+import Alamofire
 import CoreLocation
 import Foundation
+import SwiftyJSON
 
 class TMGameRequest {
-    static func addGame(game: Game, completionHandler: @escaping (Bool) -> Void) {
-        TMLocationManager.shared.startPositioning { location in
-            TMNetWork.post("/game/add", dataParameters: [
-                "date": game.date,
-                "place": location,
-                "surface": game.surface.rawValue,
-                "setNum": game.setNum,
-                "gameNum": game.gameNum,
-                "isGoldenGoal": game.isGoldenGoal,
-                "isPlayer1Serving": game.isPlayer1Serving,
-                "isCompleted": false,
-                "player1LoginName": game.player1LoginName,
-                "player1StatsId": 0,
-                "player2LoginName": game.player2LoginName,
-                "player2StatsId": 0,
-                "isPlayer1FirstServe": true,
-                "isPlayer2FirstServe": true,
-                "result": [[[0, 0]]],
-            ]) { json in
-                guard let json = json else {
-                    return
-                }
-                completionHandler(json.boolValue)
+    static func addGame(game: Game, completionHandler: @escaping (Game?) -> Void) {
+        TMNetWork.post("/game/add", dataParameters: [
+            "date": game.date,
+            "place": game.place,
+            "surface": game.surface.rawValue,
+            "setNum": game.setNum,
+            "gameNum": game.gameNum,
+            "isGoldenGoal": game.isGoldenGoal,
+            "isPlayer1Serving": game.isPlayer1Serving,
+            "isPlayer1Left": game.isPlayer1Left,
+            "isChangePosition": game.isChangePosition,
+            "isCompleted": game.isCompleted,
+            "player1LoginName": game.player1LoginName,
+            "player1StatsId": game.player1StatsId,
+            "player2LoginName": game.player2LoginName,
+            "player2StatsId": game.player2StatsId,
+            "isPlayer1FirstServe": game.isPlayer1FirstServe,
+            "isPlayer2FirstServe": game.isPlayer2FirstServe,
+            "result": game.result,
+        ]) { json in
+            guard let json = json else {
+                return
             }
+            completionHandler(Game(json: json))
         }
     }
 
@@ -54,6 +56,31 @@ class TMGameRequest {
                 return
             }
             completionHandler(Game(json: json))
+        }
+    }
+
+    static func updateGameAndStats(game: Game, stats1: Stats, stats2: Stats, completionHandler: @escaping ((Game, Stats, Stats)) -> Void) {
+        let param = updateGameRequest(game: game, stats1: stats1, stats2: stats2)
+
+        TMNetWork.post("/game/update", dataParameters: param, responseBindingType: updateGameResponse.self) { response in
+            guard let res = response else {
+                return
+            }
+            completionHandler((res.data.game, res.data.stats1, res.data.stats2))
+        }
+    }
+
+    static func SearchRecentGames(playerLoginName: String, num: Int, completionHandler: @escaping (gameAndStatsArray) -> Void) {
+        TMNetWork.post("/game/searchRecent", dataParameters: [
+            "loginName": playerLoginName,
+            "limit": num,
+        ], responseBindingType: searchRecentGamesResponse.self) { response in
+            guard let res = response else {
+                let gameAndStatsArray = gameAndStatsArray(datas: [])
+                completionHandler(gameAndStatsArray)
+                return
+            }
+            completionHandler(res.data)
         }
     }
 

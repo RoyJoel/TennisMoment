@@ -14,6 +14,7 @@ class TMPointRecordViewConfig {
     var font: UIFont
     var isTitleHidden: Bool
     var isPlayer1Serving: Bool
+    var isPlayer1Left: Bool
     var player1SetNum: Int
     var player2SetNum: Int
     var player1GameNum: Int
@@ -21,12 +22,13 @@ class TMPointRecordViewConfig {
     var player1PointNum: String
     var player2PointNum: String
 
-    init(rowHeight: CGFloat, rowSpacing: CGFloat, font: UIFont, isTitleHidden: Bool, isPlayer1Serving: Bool, player1SetNum: Int, player2SetNum: Int, player1GameNum: Int, player2GameNum: Int, player1PointNum: String, player2PointNum: String) {
+    init(rowHeight: CGFloat, rowSpacing: CGFloat, font: UIFont, isTitleHidden: Bool, isPlayer1Serving: Bool, isPlayer1Left: Bool, player1SetNum: Int, player2SetNum: Int, player1GameNum: Int, player2GameNum: Int, player1PointNum: String, player2PointNum: String) {
         self.rowHeight = rowHeight
         self.rowSpacing = rowSpacing
         self.font = font
         self.isTitleHidden = isTitleHidden
         self.isPlayer1Serving = isPlayer1Serving
+        self.isPlayer1Left = isPlayer1Left
         self.player1SetNum = player1SetNum
         self.player2SetNum = player2SetNum
         self.player1GameNum = player1GameNum
