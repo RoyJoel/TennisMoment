@@ -17,8 +17,6 @@ class TMPointRecordView: TMView {
     }()
 
     func setup(with config: TMPointRecordViewConfig) {
-        setupUI()
-
         self.config = config
 
         let setConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: config.isTitleHidden, title: "SET", iconName: "TennisBall", isServingOnLeft: true, areBothServing: false, isComparing: false, font: config.font, leftNum: "\(config.player1SetNum)", rightNum: "\(config.player2SetNum)")
@@ -74,9 +72,10 @@ class TMPointRecordView: TMView {
         pointRecordView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        pointRecordView.setupUI()
     }
 
     func setupEvent(config: TMmultiplyConfigurableViewConfig) {
-        pointRecordView.setup(with: config)
+        pointRecordView.setupEvent(config: config)
     }
 }

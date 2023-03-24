@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 class TMNetWork {
-    static let tennisMomentURL = "http://169.254.42.75:8080"
+    static let tennisMomentURL = "http://169.254.81.8:8080"
     static func get(_ parameters: String, completionHandler: @escaping (JSON?) -> Void) {
         AF.request(URL(string: tennisMomentURL + parameters)!).response { response in
             guard let jsonData = response.data else {
@@ -33,7 +33,7 @@ class TMNetWork {
         AF.request(URL(string: tennisMomentURL + URLParameters)!, method: .post, parameters: dictionary, encoding: JSONEncoding.default).responseDecodable(of: responseBindingType.self) { response in
             switch response.result {
             case let .success(T):
-                // 成功解码，处理 UpdateGameResponse 对象
+                // 成功解码，处理 Response 对象
                 completionHandler(T)
             case .failure:
                 // 解码失败，处理错误
@@ -46,7 +46,7 @@ class TMNetWork {
         AF.request(URL(string: tennisMomentURL + URLParameters)!, method: .post, parameters: dataParameters, encoding: JSONEncoding.default).responseDecodable(of: responseBindingType.self) { response in
             switch response.result {
             case let .success(T):
-                // 成功解码，处理 UpdateGameResponse 对象
+                // 成功解码，处理 Response 对象
                 completionHandler(T)
             case .failure:
                 // 解码失败，处理错误

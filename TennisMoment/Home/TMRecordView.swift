@@ -126,11 +126,11 @@ class TMRecordView: TMUserInteractionUnabledView {
         rightBasicInfoView.frame = CGRect(x: bounds.width - leftBasicInfoView.bounds.width - 12, y: 64, width: UIStandard.shared.screenWidth * 0.12, height: UIStandard.shared.screenHeight * 0.24)
         recordPointView.frame = CGRect(x: (bounds.width / 2) - UIStandard.shared.screenWidth * 0.06, y: 64 + ((UIStandard.shared.screenHeight * 0.24 - 190) / 2), width: UIStandard.shared.screenWidth * 0.12, height: 190)
 
-        let leftInfoConfig = TMIconViewConfig(icon: "person", name: "player")
-        let rightInfoConfig = TMIconViewConfig(icon: "person", name: "player")
+        leftBasicInfoView.setupUI()
+        rightBasicInfoView.setupUI()
+        recordPointView.setupUI()
+
         let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 50, rowSpacing: 20, font: UIFont.systemFont(ofSize: 17), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
-        leftBasicInfoView.setup(with: leftInfoConfig)
-        rightBasicInfoView.setup(with: rightInfoConfig)
         recordPointView.setup(with: pointRecordViewConfig)
     }
 
@@ -165,55 +165,30 @@ class TMRecordView: TMUserInteractionUnabledView {
         recordPointView.isHidden = false
         alartView.isHidden = true
         setupEvent(game: game)
-        setNewGame()
     }
 
     func setupEvent(game: Game) {
         self.game = game
-
         isServingOnLeft = game.isPlayer1Left == game.isPlayer1Serving
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            TMPlayerRequest.searchPlayer(loginName: game.player1LoginName) { player1 in
-                guard let player1 = player1 else {
-                    return
-                }
-                TMPlayerRequest.searchPlayer(loginName: game.player2LoginName) { player2 in
-                    guard let player2 = player2 else {
-                        return
-                    }
-                    // 说明player1在左侧⬅️
-                    if game.isPlayer1Left {
-                        self.leftBasicInfoView.updateInfo(with: player1.icon, named: player1.name)
-                        self.rightBasicInfoView.updateInfo(with: player2.icon, named: player2.name)
-                    } else {
-                        self.leftBasicInfoView.updateInfo(with: player2.icon, named: player2.name)
-                        self.rightBasicInfoView.updateInfo(with: player1.icon, named: player1.name)
-                    }
-                    self.recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
-                    let lastGame = self.game.result[game.result.count - 1].last ?? [0, 0]
-                    if lastGame[0] == 5 || lastGame[1] == 5 {
-                        self.livePoint = [0, 0]
-                    } else {
-                        self.livePoint = lastGame
-                    }
-                }
-            }
-
-            TMStatsRequest.searchStats(id: game.player1StatsId) { player1Stats in
-                TMStatsRequest.searchStats(id: game.player2StatsId) { player2Stats in
-                    self.player1Stats = player1Stats
-                    self.player2Stats = player2Stats
-                }
-            }
+        // 说明player1在左侧⬅️
+        if game.isPlayer1Left {
+            leftBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
+            rightBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
+        } else {
+            leftBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
+            rightBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
         }
-    }
-
-    func setNewGame() {
-        let lastGame = game.result[game.result.count - 1].removeLast()
+        recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+        let lastGame = self.game.result[game.result.count - 1].last ?? [0, 0]
         if lastGame[0] == 5 || lastGame[1] == 5 {
-            game.result[game.result.count - 1].append(lastGame)
+            livePoint = [0, 0]
+        } else {
+            livePoint = lastGame
         }
+
+        player1Stats = game.player1Stats
+        player2Stats = game.player2Stats
     }
 
     func refreshData() {
@@ -227,10 +202,6 @@ class TMRecordView: TMUserInteractionUnabledView {
                 livePoint = lastGame
             }
         }
-    }
-
-    func recordNewGame(game: Game) {
-        setupEvent(game: game)
     }
 
     override func scaleTo(_ isEnlarge: Bool, completionHandler: @escaping () -> Void) {
@@ -569,13 +540,13 @@ class TMRecordView: TMUserInteractionUnabledView {
         if isLeft {
             recordPointView.config.player1SetNum += 1
             if recordPointView.config.player1SetNum == game.setNum {
-                game.isCompleted = true
+                game.endDate = Date().timeIntervalSince1970
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: leftBasicInfoView.config.name)
             }
         } else {
             recordPointView.config.player2SetNum += 1
             if recordPointView.config.player2SetNum == game.setNum {
-                game.isCompleted = true
+                game.endDate = Date().timeIntervalSince1970
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: rightBasicInfoView.config.name)
             }
         }
@@ -712,13 +683,20 @@ class TMRecordView: TMUserInteractionUnabledView {
         }
     }
 
-    func saveGame(isCompleted: Bool) {
-        if !isCompleted {
-            game.result[game.result.count - 1].append(livePoint)
-        } else {
-            game.isCompleted = true
+    func saveGame() {
+        game.result[game.result.count - 1].append(livePoint)
+        game.player1Stats = player1Stats
+        game.player2Stats = player2Stats
+        TMGameRequest.updateGameAndStats(game: game) { _ in
+            self.recordPointView.updateData(liveScore: self.game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, setConfigNum: self.game.setNum, gameConfigNum: self.game.gameNum)
         }
-        TMGameRequest.updateGameAndStats(game: game, stats1: player1Stats, stats2: player2Stats) { _ in
+    }
+
+    func endGame() {
+        game.endDate = Date().timeIntervalSince1970
+        game.player1Stats = player1Stats
+        game.player2Stats = player2Stats
+        TMGameRequest.updateGameAndStats(game: game) { _ in
             self.recordPointView.updateData(liveScore: self.game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, setConfigNum: self.game.setNum, gameConfigNum: self.game.gameNum)
         }
     }

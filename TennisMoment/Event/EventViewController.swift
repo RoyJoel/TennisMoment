@@ -18,8 +18,8 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         return tableView
     }()
 
-    lazy var clubContentView: TMView = {
-        let view = TMView()
+    lazy var clubContentView: TMClubContentView = {
+        let view = TMClubContentView()
         return view
     }()
 
@@ -38,28 +38,30 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         clubListView.dataSource = self
         clubListView.separatorStyle = .none
         clubListView.showsVerticalScrollIndicator = false
+        clubListView.showsHorizontalScrollIndicator = false
         if #available(iOS 15.0, *) {
             clubListView.sectionHeaderTopPadding = 0
         }
         clubListView.register(TMClubTableViewCell.self, forCellReuseIdentifier: "TMClubTableViewCell")
 
-        clubContentView.frame = CGRect(x: 38, y: 44, width: UIStandard.shared.screenWidth * 0.3, height: UIStandard.shared.screenHeight * 0.8)
-        clubContentView.setup(clubContentView.bounds, clubContentView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.6, height: UIStandard.shared.screenHeight * 0.8), CGPoint(x: UIStandard.shared.screenWidth * 0.6 + 62, y: 44 + UIStandard.shared.screenHeight * 0.4), 0.3)
+        clubContentView.frame = CGRect(x: 38, y: 32, width: UIStandard.shared.screenWidth * 0.3, height: UIStandard.shared.screenHeight * 0.85)
+        clubContentView.setup(clubContentView.bounds, clubContentView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.6, height: UIStandard.shared.screenHeight * 0.85), CGPoint(x: UIStandard.shared.screenWidth * 0.6 + 62, y: 32 + UIStandard.shared.screenHeight * 0.425), 0.3)
+        clubContentView.setupUI()
 
         clubListView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(38)
-            make.top.equalToSuperview().offset(44)
+            make.top.equalToSuperview().offset(32)
             make.width.equalTo(UIStandard.shared.screenWidth * 0.3)
-            make.height.equalTo(UIStandard.shared.screenHeight * 0.8)
+            make.height.equalTo(UIStandard.shared.screenHeight * 0.85)
         }
     }
 
     func showContent() {
-        clubContentView.scaleTo(clubContentView.toggle)
+        clubContentView.scaleTo(false)
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        clubs.count
+        TMUser.user.allClubs.count
     }
 
     func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
@@ -77,7 +79,8 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         0
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        clubContentView.setupEvent(club: TMUser.user.allClubs[indexPath.row])
         showContent()
     }
 
@@ -85,7 +88,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = TMClubTableViewCell()
         cell.setupUI()
         cell.selectionStyle = .none
-        cell.setupEvent(clubIcon: clubs[indexPath.row].icon, clubName: clubs[indexPath.row].name)
+        cell.setupEvent(clubIcon: TMUser.user.allClubs[indexPath.row].icon, clubName: TMUser.user.allClubs[indexPath.row].name)
         return cell
     }
 }

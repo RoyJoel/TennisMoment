@@ -52,6 +52,7 @@ class TMClubTableViewCell: UITableViewCell {
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
+        clubIconView.contentMode = .scaleAspectFill
         clubNameView.font = UIFont.systemFont(ofSize: 22)
         clubNameView.textAlignment = .center
         clubNameView.textColor = UIColor(named: "ContentBackground")

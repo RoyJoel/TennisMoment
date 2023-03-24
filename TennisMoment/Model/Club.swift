@@ -13,16 +13,18 @@ struct Club: Codable {
     var icon: String
     var name: String
     var intro: String
-    var ownerId: Int
+    var owner: Player
     var address: String
+    var events: [Event]
 
-    init(id: Int, icon: String, name: String, intro: String, ownerId: Int, address: String) {
+    init(id: Int, icon: String, name: String, intro: String, owner: Player, address: String, events: [Event]) {
         self.id = id
         self.icon = icon
         self.name = name
         self.intro = intro
-        self.ownerId = ownerId
+        self.owner = owner
         self.address = address
+        self.events = events
     }
 
     init(json: JSON) {
@@ -30,7 +32,8 @@ struct Club: Codable {
         icon = json["icon"].stringValue
         name = json["name"].stringValue
         intro = json["intro"].stringValue
-        ownerId = json["ownerId"].intValue
+        owner = Player(json: json["owner"])
         address = json["address"].stringValue
+        events = json["events"].arrayValue.map { Event(json: $0) }
     }
 }

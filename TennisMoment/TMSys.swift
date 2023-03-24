@@ -16,4 +16,10 @@ class TMSys {
         TABAnimated.shared().initWithOnlySkeleton()
         TABAnimated.shared().openLog = true
     }
+
+    func setUserData(completionHandler: @escaping () -> Void) {
+        TMUser.signIn {
+            completionHandler()
+        }
+    }
 }

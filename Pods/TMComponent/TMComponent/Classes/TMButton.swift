@@ -29,5 +29,10 @@ open class TMButton: UIButton {
         self.config = config
         setTitle(config.title, for: .normal)
         addTapGesture(config.actionTarget, config.action)
+        if config.action == nil {
+            isEnabled = false
+        } else {
+            isEnabled = true
+        }
     }
 }

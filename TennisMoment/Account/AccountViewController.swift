@@ -11,7 +11,6 @@ import UIKit
 
 class AccountViewController: UIViewController {
     var games: [Game] = []
-    var stats: [Stats] = []
 
     lazy var settingView: UIImageView = {
         let imageView = UIImageView()
@@ -47,39 +46,20 @@ class AccountViewController: UIViewController {
 
         iconView.setupUI()
         basicInfoView.setupUI()
-        iconView.tab_startAnimation {
-            self.basicInfoView.tab_startAnimation {
-                DispatchQueue.main.async {
-                    TMUser.signIn { user in
-                        guard let user = user else {
-                            return
-                        }
-                        let iconConfig = TMIconViewConfig(icon: user.icon, name: user.name)
-                        self.iconView.setupEvent(config: iconConfig)
-                        self.basicInfoView.setupEvent()
-                        self.iconView.tab_endAnimationEaseOut()
-                    }
-                }
-            }
-        }
+        let iconConfig = TMIconViewConfig(icon: TMUser.user.icon, name: TMUser.user.name)
+        iconView.setupEvent(config: iconConfig)
+        basicInfoView.setupEvent()
         userDataView.setupUI()
         userDataView.setupEventForCareerStatsView()
 
         userDataView.tab_startAnimation {
             DispatchQueue.main.async {
-                TMGameRequest.SearchRecentGames(playerLoginName: TMUser.user.loginName, num: 3) { gameAndStats in
-                    print("page2        \(gameAndStats)")
-                    for gameAndStat in gameAndStats.datas {
-                        self.games.append(gameAndStat.game)
-                        self.stats.append(gameAndStat.stats1)
-                        self.stats.append(gameAndStat.stats2)
-                    }
+                TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 3) { games in
+                    self.games = games
                     if self.games.count != 0 {
-                        self.userDataView.setupEventForGameStatsView(games: self.games, stats: self.stats)
-                        self.userDataView.tab_endAnimationEaseOut()
+                        self.userDataView.setupEventForGameStatsView(games: self.games)
                     } else {
                         self.userDataView.gameStatsView.setupAlart()
-                        self.userDataView.tab_endAnimationEaseOut()
                     }
                 }
             }

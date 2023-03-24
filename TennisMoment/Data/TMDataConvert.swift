@@ -72,4 +72,22 @@ class TMDataConvert {
             return Double(dividend) / Double(divisor)
         }
     }
+
+    static func datesInRangeString(startDate: TimeInterval, endDate: TimeInterval) -> [String] {
+        let calendar = Calendar.current
+        var currentDate = Date(timeIntervalSince1970: startDate)
+        var dates: [String] = []
+        let endDate = Date(timeIntervalSince1970: endDate)
+
+        while currentDate <= endDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd"
+            let dateString = dateFormatter.string(from: currentDate)
+            dates.append(dateString)
+
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+        }
+
+        return dates
+    }
 }

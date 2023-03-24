@@ -64,19 +64,12 @@ class TMUserDataView: TMView {
         }
     }
 
-    func setupEventForGameStatsView(games: [Game], stats: [Stats]) {
-        gameStatsView.setupEvent(games: games, stats: stats)
+    func setupEventForGameStatsView(games: [Game]) {
+        gameStatsView.setupEvent(games: games)
     }
 
     func setupEventForCareerStatsView() {
-        careerStatsView.tab_startAnimation {
-            DispatchQueue.main.async {
-                TMStatsRequest.searchStats(id: TMUser.user.careerStatsId) { stats in
-                    self.careerStatsView.setupEvent(stats: stats)
-                    self.careerStatsView.tab_endAnimationEaseOut()
-                }
-            }
-        }
+        careerStatsView.setupEvent(stats: TMUser.user.careerStats)
     }
 }
 

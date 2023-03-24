@@ -16,10 +16,12 @@ class TMPopUpViewCell: UITableViewCell {
 
     func setupUI() {
         addSubview(label)
-
+        label.backgroundColor = UIColor(named: "ComponentBackground")
         label.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        label.textAlignment = .center
     }
 
     func setupEvent(title: String) {

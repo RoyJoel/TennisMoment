@@ -188,6 +188,8 @@
 		A53BDE589BDD6483F3EEDCE5EA1DCCD3 /* Protected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799CDF3E0C8449F944CD864DC46A64D9 /* Protected.swift */; };
 		A53D3AF15CE8D348306EF11619C5D166 /* ConstraintMakerEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5128BE20E3644765DB6634CCE94DFBAF /* ConstraintMakerEditable.swift */; };
 		A5F72099DE5A69E36CE9946D2122E6CE /* JXSegmentedIndicatorBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1CB49E5A5990C59826B7E060077B3B /* JXSegmentedIndicatorBackgroundView.swift */; };
+		A819F0B229C9AA5E00AEE987 /* TMImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A819F0B129C9AA5E00AEE987 /* TMImageView.swift */; };
+		A819F0B429C9AE8500AEE987 /* TMImageViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A819F0B329C9AE8500AEE987 /* TMImageViewConfig.swift */; };
 		A8B7200B29BAD24800FD6400 /* TMInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7200A29BAD24800FD6400 /* TMInfoView.swift */; };
 		A8B7200D29BAD3C500FD6400 /* TMInfoViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7200C29BAD3C400FD6400 /* TMInfoViewConfig.swift */; };
 		AA8F9DF7AE1482A2BF72A41805901357 /* TABComponentLayer+TABClassicAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 339D6CDCC291CA054FCAE01136190A06 /* TABComponentLayer+TABClassicAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -641,6 +643,8 @@
 		A52A1C2BE37BEF07451DAD9AB00E8002 /* Pods-TennisMoment-TennisMomentUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-TennisMoment-TennisMomentUITests"; path = Pods_TennisMoment_TennisMomentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D0B01C4AEE6C310636F7A07790AD66 /* Pods-TennisMoment-TennisMomentUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TennisMoment-TennisMomentUITests-Info.plist"; sourceTree = "<group>"; };
 		A815FC60432866F88B7BD029842BE35B /* Pods-TennisMoment-TennisMomentUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TennisMoment-TennisMomentUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		A819F0B129C9AA5E00AEE987 /* TMImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMImageView.swift; sourceTree = "<group>"; };
+		A819F0B329C9AE8500AEE987 /* TMImageViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMImageViewConfig.swift; sourceTree = "<group>"; };
 		A89183075BD1784FDF7A63E7DF76A9A0 /* UIScrollView+TABExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+TABExtension.m"; path = "TABAnimatedDemo/TABAnimated/Util/UIScrollView+TABExtension.m"; sourceTree = "<group>"; };
 		A8A7186EE637C5F615D55D5ECEFF00E5 /* Pods-TennisMoment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TennisMoment.debug.xcconfig"; sourceTree = "<group>"; };
 		A8B7200A29BAD24800FD6400 /* TMInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMInfoView.swift; sourceTree = "<group>"; };
@@ -1237,6 +1241,8 @@
 				DCB10AFD854FA21CF12D012346A49622 /* TMBasicPointViewConfig.swift */,
 				133248E855FDB711DCEABF15C4B0E34D /* TMButton.swift */,
 				E3C8818F3CFC24BF4D0EF3D998656874 /* TMButtonConfig.swift */,
+				A819F0B129C9AA5E00AEE987 /* TMImageView.swift */,
+				A819F0B329C9AE8500AEE987 /* TMImageViewConfig.swift */,
 				9F84261532496BDA3AFCE696D9CA0CCE /* TMIconView.swift */,
 				1431B0212B1533A617F41BB8FCFADF26 /* TMIconViewConfig.swift */,
 				A8B7200A29BAD24800FD6400 /* TMInfoView.swift */,
@@ -1953,8 +1959,10 @@
 				D57A2B177011388E9231EB2C55481846 /* TMmultiplyConfigurableViewConfig.swift in Sources */,
 				BE3BF20EF3467B48627C1E2B3D57ACF9 /* TMPointComparingView.swift in Sources */,
 				A8B7200B29BAD24800FD6400 /* TMInfoView.swift in Sources */,
+				A819F0B429C9AE8500AEE987 /* TMImageViewConfig.swift in Sources */,
 				682E41B8A18BBD923419A9AE8A9A3DB0 /* TMPointComparingViewConfig.swift in Sources */,
 				369CCF92D7321C6F8FF31EEAB12A8F00 /* TMTitleOrImageButton.swift in Sources */,
+				A819F0B229C9AA5E00AEE987 /* TMImageView.swift in Sources */,
 				37F06CA74C88F63609712E07160B621F /* TMTitleOrImageButtonConfig.swift in Sources */,
 				434F91EEDE9AB252B90897067B2464ED /* TMView.swift in Sources */,
 				5220F880664C0A3F4D20CB7189915B5C /* TMViewController.swift in Sources */,

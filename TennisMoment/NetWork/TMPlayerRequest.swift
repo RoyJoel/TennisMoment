@@ -12,6 +12,7 @@ import SwiftyJSON
 class TMPlayerRequest {
     static func addPlayer(player: Player, completionHandler: @escaping (Player) -> Void) {
         let para = [
+            "id": player.id,
             "loginName": player.loginName,
             "name": player.name,
             "icon": player.icon,
@@ -24,22 +25,20 @@ class TMPlayerRequest {
             "backhand": player.backhand.rawValue,
             "points": player.points,
             "isAdult": player.isAdult,
-            "careerStatsId": player.careerStatsId,
-            "friends": player.friends,
+            "careerStatsId": player.careerStats.id,
         ] as! [String: Any]
 
         TMNetWork.post("/player/add", dataParameters: para) { json in
             guard let json = json else {
                 return
             }
-            TMUser.user = Player(json: json)
-            completionHandler(TMUser.user)
+            completionHandler(Player(json: json))
         }
     }
 
-    static func searchPlayer(loginName: String, completionHandler: @escaping (Player?) -> Void) {
+    static func searchPlayer(id: Int, completionHandler: @escaping (Player?) -> Void) {
         let para = [
-            "loginName": loginName,
+            "id": id,
         ]
         TMNetWork.post("/player/search", dataParameters: para) { json in
             guard let json = json else {
@@ -50,8 +49,9 @@ class TMPlayerRequest {
         }
     }
 
-    static func updatePlayerInfo(player: Player, completionHandler: @escaping (Player) -> Void) {
+    static func updatePlayer(player: Player, completionHandler: @escaping (Player) -> Void) {
         let para = [
+            "id": player.id,
             "loginName": player.loginName,
             "name": player.name,
             "icon": player.icon,
@@ -64,8 +64,7 @@ class TMPlayerRequest {
             "backhand": player.backhand.rawValue,
             "points": player.points,
             "isAdult": player.isAdult,
-            "careerStatsId": player.careerStatsId,
-            "friends": player.friends,
+            "careerStats": player.careerStats,
         ] as! [String: Any]
 
         TMNetWork.post("/player/update", dataParameters: para) { json in

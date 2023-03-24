@@ -1,14 +1,14 @@
 //
-//  Player.swift
+//  User.swift
 //  TennisMoment
 //
-//  Created by Jason Zhang on 2023/2/25.
+//  Created by Jason Zhang on 2023/3/19.
 //
 
 import Foundation
 import SwiftyJSON
 
-struct Player: Codable {
+struct User: Codable {
     var id: Int
     var loginName: String
     var name: String
@@ -23,8 +23,13 @@ struct Player: Codable {
     var points: Int
     var isAdult: Bool
     var careerStats: Stats
+    var friends: [Player]
+    var allClubs: [Club]
+    var allGames: [Game]
+    var allTourLevelGames: [Game]
+    var allEvents: [Event]
 
-    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats) {
+    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Club], allGames: [Game], allTourLevelGames: [Game], allEvents: [Event]) {
         self.id = id
         self.loginName = loginName
         self.name = name
@@ -39,6 +44,11 @@ struct Player: Codable {
         self.points = points
         self.isAdult = isAdult
         self.careerStats = careerStats
+        self.friends = friends
+        self.allClubs = allClubs
+        self.allGames = allGames
+        self.allTourLevelGames = allTourLevelGames
+        self.allEvents = allEvents
     }
 
     init(json: JSON) {
@@ -56,22 +66,10 @@ struct Player: Codable {
         points = json["points"].intValue
         isAdult = json["isAdult"].boolValue
         careerStats = Stats(json: json["careerStats"])
+        friends = json["friends"].arrayValue.map { Player(json: $0) }
+        allClubs = json["allClubs"].arrayValue.map { Club(json: $0) }
+        allGames = json["allGames"].arrayValue.map { Game(json: $0) }
+        allTourLevelGames = json["allTourLevelGames"].arrayValue.map { Game(json: $0) }
+        allEvents = json["allEvents"].arrayValue.map { Event(json: $0) }
     }
-}
-
-enum Sex: String, Codable {
-    case Man
-    case Woman
-}
-
-enum Grip: String, Codable {
-    case Continented
-    case Eastern
-    case SemiWestern
-    case Western
-}
-
-enum Backhand: String, Codable {
-    case OneHanded = "One-Handed"
-    case TwoHandedBackhand = "Two-Handed"
 }

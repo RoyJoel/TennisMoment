@@ -31,7 +31,7 @@ open class TMmultiplyConfigurableView: TMView {
         }
         view.setup(with: config.configs[0])
         for i in 1 ..< vsViews.count {
-            vsViews[i].setup(with: config.configs[i])
+            vsViews[i].setupEvent(config: config.configs[i])
             vsViews[i].snp.remakeConstraints { make in
                 make.top.equalTo(lastView.snp.bottom).offset(config.rowSpacing)
                 make.width.equalToSuperview()
@@ -49,7 +49,7 @@ open class TMmultiplyConfigurableView: TMView {
         vsViews[index].updateRightViewData(isServingOnRight: isServingOnRight, newNum: newNum)
     }
 
-    private func setupUI() {
+    public func setupUI() {
         addSubview(view)
 
         view.snp.makeConstraints { make in
@@ -58,7 +58,7 @@ open class TMmultiplyConfigurableView: TMView {
         }
     }
 
-    private func setupEvent(config: TMmultiplyConfigurableViewConfig) {
+    public func setupEvent(config: TMmultiplyConfigurableViewConfig) {
         var lastView = view
         vsViews.append(view)
         view.snp.remakeConstraints { make in

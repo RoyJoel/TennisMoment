@@ -10,7 +10,7 @@ import UIKit
 
 class UIStandard {
     static let shared = UIStandard()
+    private init() {}
     var screenWidth = UIScreen.main.bounds.width
     var screenHeight = UIScreen.main.bounds.height
-    private init() {}
 }

@@ -87,7 +87,7 @@ class TMUserActivityView: UIView {
         alartView.textAlignment = .center
     }
 
-    func setupEvent(games: [Game], stats: [Stats]) {
+    func setupEvent(games: [Game]) {
         if games.count >= 3 {
             let width = (UIStandard.shared.screenWidth - 112) / 3
             leftActivityView.snp.remakeConstraints { make in
@@ -111,9 +111,9 @@ class TMUserActivityView: UIView {
             leftActivityView.isHidden = false
             midActivityView.isHidden = false
             rightActivityView.isHidden = false
-            leftActivityView.setupEvent(game: games[0], stats1: stats[0], stats2: stats[1])
-            midActivityView.setupEvent(game: games[1], stats1: stats[2], stats2: stats[3])
-            rightActivityView.setupEvent(game: games[2], stats1: stats[4], stats2: stats[5])
+            leftActivityView.setupEvent(game: games[0])
+            midActivityView.setupEvent(game: games[1])
+            rightActivityView.setupEvent(game: games[2])
         } else if games.count == 2 {
             let width = (UIStandard.shared.screenWidth - 88) / 3
             leftActivityView.snp.remakeConstraints { make in
@@ -131,8 +131,8 @@ class TMUserActivityView: UIView {
             leftActivityView.isHidden = false
             rightActivityView.isHidden = false
             midActivityView.isHidden = true
-            leftActivityView.setupEvent(game: games[0], stats1: stats[0], stats2: stats[1])
-            rightActivityView.setupEvent(game: games[1], stats1: stats[2], stats2: stats[3])
+            leftActivityView.setupEvent(game: games[0])
+            rightActivityView.setupEvent(game: games[1])
         } else if games.count == 1 {
             let width = (UIStandard.shared.screenWidth - 88) / 3
             midActivityView.snp.remakeConstraints { make in
@@ -144,7 +144,7 @@ class TMUserActivityView: UIView {
             leftActivityView.isHidden = true
             rightActivityView.isHidden = true
             midActivityView.isHidden = false
-            midActivityView.setupEvent(game: games[0], stats1: stats[0], stats2: stats[1])
+            midActivityView.setupEvent(game: games[0])
         }
     }
 }

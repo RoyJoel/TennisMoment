@@ -24,19 +24,12 @@ open class TMIconView: TMView {
         return view
     }()
 
-    public func setup(with config: TMIconViewConfig) {
-        self.config = config
-
-        setupUI()
-        setupEvent(config: config)
-    }
-
     public func setupUI() {
         clipsToBounds = false
         addSubview(iconImage)
         addSubview(nameView)
 
-        nameView.isHidden = false
+        iconImage.contentMode = .scaleAspectFill
 
         iconImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -54,14 +47,9 @@ open class TMIconView: TMView {
     }
 
     public func setupEvent(config: TMIconViewConfig) {
+        self.config = config
         iconImage.image = UIImage(named: config.icon)
-        iconImage.contentMode = .scaleAspectFill
-        if config.name == "" {
-            nameView.isHidden = true
-        } else {
-            nameView.isHidden = false
-            nameView.text = config.name
-        }
+        nameView.text = config.name
     }
 
     public func updateInfo(with icon: String, named name: String) {

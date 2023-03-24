@@ -8,12 +8,9 @@
 import Foundation
 import UIKit
 
-open class TMTitleOrImageButton: UIButton {
-    public var config = TMTitleOrImageButtonConfig(action: #selector(method), actionTarget: TMTitleOrImageButton.self)
-
+open class TMTitleOrImageButton: TMButton {
     private lazy var optionalImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.setCorner(radii: 15)
         return imageView
     }()
 
@@ -27,17 +24,14 @@ open class TMTitleOrImageButton: UIButton {
         setupEvent(config: config)
     }
 
-    private func setupUI() {
-        setTitleColor(UIColor(named: "ContentBackground"), for: .normal)
-        backgroundColor = UIColor(named: "ComponentBackground")
-        setCorner(radii: 15)
-        drawBorder(color: .black, width: 2)
-
+    public override func setupUI() {
+        super.setupUI()
         addSubview(optionalImageView)
         addSubview(optionalTitleLabel)
 
         optionalTitleLabel.numberOfLines = 1
         optionalTitleLabel.textAlignment = .center
+        optionalTitleLabel.font = UIFont.systemFont(ofSize: 14)
 
         optionalImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -46,7 +40,7 @@ open class TMTitleOrImageButton: UIButton {
         }
         optionalTitleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-30)
+            make.width.equalToSuperview().offset(-6)
             make.height.equalTo(30)
         }
         optionalImageView.isHidden = true
@@ -54,7 +48,6 @@ open class TMTitleOrImageButton: UIButton {
     }
 
     private func setupEvent(config: TMTitleOrImageButtonConfig) {
-        self.config = config
         addTapGesture(config.actionTarget, config.action)
 
         if let image = config.image {

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
-    var config: TMTableViewConfig = TMTableViewConfig(cells: [], rowHeight: 0, rowNum: 0, rowNumWhenFold: 0, rowNumWhenUnfold: 0)
+    var config: TMTableViewConfig = TMTableViewConfig(cells: [], rowHeight: 0, rowNumWhenFold: 0, rowNumWhenUnfold: 0)
     public var originalBounds: CGRect = .init()
 
     public var originalPoint: CGPoint = .init()
@@ -33,95 +33,68 @@ class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     }
 
     func setupUI() {
-        backgroundColor = UIColor(named: "ComponentBackground")
         dataSource = self
-        delegate = self
         separatorStyle = .none
         showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
+        isScrollEnabled = false
         if #available(iOS 15.0, *) {
             sectionHeaderTopPadding = 0
+            UITableView.appearance().isPrefetchingEnabled = false
         }
         register(TMPopUpViewCell.self, forCellReuseIdentifier: "TMPopUpViewCell")
     }
 
     func setupEvent(config: TMTableViewConfig) {
         self.config = config
+        reloadData()
     }
 
-    @objc func popoverView() {
+    open func unfold() {
         isScrollEnabled = true
-        scaleTo(toggle)
+        toggle = true
+        addAnimation(originalPoint, newPoint, duration, "position", completionHandler: {})
+        addAnimation(originalBounds, newBounds, duration, "bounds", completionHandler: {})
+        bounds = newBounds
+        layer.position = newPoint
     }
 
-    @objc func dismissView() {
+    open func fold() {
         isScrollEnabled = false
-        scaleTo(toggle)
-    }
-
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+        toggle = false
+        addAnimation(newBounds, originalBounds, duration, "bounds", completionHandler: {})
+        addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {})
+        bounds = originalBounds
+        layer.position = originalPoint
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        config.rowNum
+        if toggle == false {
+            return config.rowNumWhenFold
+        } else {
+            return config.cells.count
+        }
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        30
+        return config.rowHeight
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = config.cells[indexPath.row]
+        cell.selectionStyle = .none
         return cell
-    }
-
-    open func scaleTo(_ isEnlarge: Bool) {
-        if !isEnlarge {
-            toggle.toggle()
-            addAnimation(originalPoint, newPoint, duration, "position", completionHandler: {})
-            addAnimation(originalBounds, newBounds, duration, "bounds", completionHandler: {})
-            bounds = newBounds
-            layer.position = newPoint
-        } else {
-            toggle.toggle()
-            addAnimation(newBounds, originalBounds, duration, "bounds", completionHandler: {})
-            addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {})
-            bounds = originalBounds
-            layer.position = originalPoint
-        }
-    }
-
-    open func scaleTo(_ isEnlarge: Bool, completionHandler: @escaping () -> Void) {
-        if !isEnlarge {
-            toggle.toggle()
-            addAnimation(originalPoint, newPoint, duration, "position", completionHandler: {})
-            addAnimation(originalBounds, newBounds, duration, "bounds", completionHandler: {
-                completionHandler()
-            })
-            bounds = newBounds
-            layer.position = newPoint
-        } else {
-            toggle.toggle()
-            addAnimation(newBounds, originalBounds, duration, "bounds", completionHandler: {})
-            addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {
-                completionHandler()
-            })
-            bounds = originalBounds
-            layer.position = originalPoint
-        }
     }
 }
 
 class TMTableViewConfig {
     var cells: [UITableViewCell]
     var rowHeight: CGFloat
-    var rowNum: Int
     var rowNumWhenFold: Int
     var rowNumWhenUnfold: Int
-    init(cells: [UITableViewCell], rowHeight: CGFloat, rowNum: Int, rowNumWhenFold: Int, rowNumWhenUnfold: Int) {
+    init(cells: [UITableViewCell], rowHeight: CGFloat, rowNumWhenFold: Int, rowNumWhenUnfold: Int) {
         self.cells = cells
         self.rowHeight = rowHeight
-        self.rowNum = rowNum
         self.rowNumWhenFold = rowNumWhenFold
         self.rowNumWhenUnfold = rowNumWhenUnfold
     }

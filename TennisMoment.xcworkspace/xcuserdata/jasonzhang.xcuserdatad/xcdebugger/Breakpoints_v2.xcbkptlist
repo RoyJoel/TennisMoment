@@ -39,36 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2DADF27E-E0CA-4ECE-A328-A802E5B53E4D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMGameConfigView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "scaleTo(_:completionHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6F717F2F-508C-4E33-AD9A-DC999C97C3A3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "F0C97107-21B3-44AB-B2E9-8D588393780F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -76,8 +46,8 @@
             filePath = "TennisMoment/Home/TMPointRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "updateData(liveScore:isPlayer1Serving:isPlayer1Left:setConfigNum:gameConfigNum:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -101,22 +71,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E91FA9C0-3CF9-4B4F-B567-E48AC7C87323"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMRecordView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "setupEvent(game:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AD60A71C-E61D-466D-B3CF-F4DC999D9DA6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -124,25 +78,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "725"
-            endingLineNumber = "725"
-            landmarkName = "TMRecordView"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "17F79F45-2CC3-4E8C-9DCD-53C5C5EB6962"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "startGame()"
+            startingLineNumber = "708"
+            endingLineNumber = "708"
+            landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -156,8 +94,8 @@
             filePath = "TennisMoment/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "startRecord()"
             landmarkType = "7">
          </BreakpointContent>
@@ -188,8 +126,8 @@
             filePath = "TennisMoment/Home/TMPointRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "updateData(liveScore:isPlayer1Serving:isPlayer1Left:setConfigNum:gameConfigNum:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -204,8 +142,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "scorePoint(isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -236,8 +174,8 @@
             filePath = "TennisMoment/Account/TMUserDataView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "segmentedView(_:didSelectedItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -252,10 +190,10 @@
             filePath = "TennisMoment/Account/TMUserDataView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "TMUserDataView"
-            landmarkType = "21">
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "listContainerView(_:initListAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -268,10 +206,10 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "687"
-            endingLineNumber = "687"
-            landmarkName = "updateDate()"
-            landmarkType = "7">
+            startingLineNumber = "663"
+            endingLineNumber = "663"
+            landmarkName = "TMRecordView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -284,8 +222,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
             landmarkName = "changePositionInTieBreak()"
             landmarkType = "7">
          </BreakpointContent>
@@ -300,25 +238,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "716"
-            endingLineNumber = "716"
-            landmarkName = "saveGame(isCompleted:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1716335D-F2C8-4942-B57A-FC6CB719D0F7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMRecordView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "setupEvent(game:)"
+            startingLineNumber = "688"
+            endingLineNumber = "688"
+            landmarkName = "saveGame()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -332,8 +254,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "698"
-            endingLineNumber = "698"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "scoreUp(isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -348,8 +270,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "scorePoint(isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -364,8 +286,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "641"
+            endingLineNumber = "641"
             landmarkName = "changePositionInTieBreak()"
             landmarkType = "7">
          </BreakpointContent>
@@ -380,9 +302,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "680"
-            endingLineNumber = "680"
-            landmarkName = "changePositionInTieBreak()"
+            startingLineNumber = "656"
+            endingLineNumber = "656"
+            landmarkName = "updateDate()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -396,8 +318,8 @@
             filePath = "TennisMoment/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "completeGame()"
             landmarkType = "7">
          </BreakpointContent>
@@ -412,8 +334,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "scaleTo(_:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -428,25 +350,9 @@
             filePath = "TennisMoment/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "HomeViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "10657B46-D74E-4D18-8FB3-264F69A06472"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMRecordView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "refreshData()"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "endRecord()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -460,8 +366,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "scorePoint(isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -476,8 +382,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "729"
-            endingLineNumber = "729"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
             landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -492,8 +398,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "728"
-            endingLineNumber = "728"
+            startingLineNumber = "711"
+            endingLineNumber = "711"
             landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -508,8 +414,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1244"
-            endingLineNumber = "1244"
+            startingLineNumber = "1227"
+            endingLineNumber = "1227"
             landmarkName = "recordServeGameStatsUp(isPlayer1:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -524,10 +430,10 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1254"
-            endingLineNumber = "1254"
-            landmarkName = "recordServeGameStatsDown(isPlayer1:)"
-            landmarkType = "7">
+            startingLineNumber = "1237"
+            endingLineNumber = "1237"
+            landmarkName = "TMRecordView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -540,8 +446,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1262"
-            endingLineNumber = "1262"
+            startingLineNumber = "1245"
+            endingLineNumber = "1245"
             landmarkName = "recordReturnGameStatsUp(isPlayer1:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -556,10 +462,10 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1272"
-            endingLineNumber = "1272"
-            landmarkName = "recordReturnGameStatsDown(isPlayer1:)"
-            landmarkType = "7">
+            startingLineNumber = "1255"
+            endingLineNumber = "1255"
+            landmarkName = "TMRecordView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -572,8 +478,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "605"
-            endingLineNumber = "605"
+            startingLineNumber = "581"
+            endingLineNumber = "581"
             landmarkName = "dealWithPosition(isGameDone:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -588,8 +494,8 @@
             filePath = "TennisMoment/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "startGame()"
             landmarkType = "7">
             <Locations>
@@ -684,8 +590,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
             landmarkName = "player2ServeFaultBtnTap()"
             landmarkType = "7">
          </BreakpointContent>
@@ -700,8 +606,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "player1ServeFaultBtnTap()"
             landmarkType = "7">
          </BreakpointContent>
@@ -716,9 +622,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "player1AceBtnTap()"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "player1ServeScoreBtnTap()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -732,9 +638,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "723"
-            endingLineNumber = "723"
-            landmarkName = "saveGame(isCompleted:)"
+            startingLineNumber = "706"
+            endingLineNumber = "706"
+            landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -748,10 +654,10 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "720"
-            endingLineNumber = "720"
-            landmarkName = "saveGame(isCompleted:)"
-            landmarkType = "7">
+            startingLineNumber = "703"
+            endingLineNumber = "703"
+            landmarkName = "TMRecordView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -764,121 +670,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "721"
-            endingLineNumber = "721"
-            landmarkName = "saveGame(isCompleted:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DF0C5E7A-A06D-418D-8E21-63143523E0B4"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AB81DA27-C767-4181-B121-51E1EFD445EE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "AB81DA27-C767-4181-B121-51E1EFD445EE - 58309ec973afb311"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 () -&gt; () in TennisMoment.HomeViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "TennisMoment"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/HomeViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  uuid = "AB81DA27-C767-4181-B121-51E1EFD445EE - fa9d798fca9b580c"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (TennisMoment.gameAndStatsArray) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 () -&gt; () in TennisMoment.HomeViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "TennisMoment"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/HomeViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "60"
-                  endingLineNumber = "60"
-                  offsetFromSymbolStart = "60">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "417AB4C5-0880-4974-8649-8A3BE54E15B6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "19D61F64-0434-4023-8B55-3F58498B4DE0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BF8DABBB-6296-40B8-AC3C-54A9556C16E2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "704"
+            endingLineNumber = "704"
+            landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -892,8 +686,8 @@
             filePath = "TennisMoment/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "startRecord()"
             landmarkType = "7">
          </BreakpointContent>
@@ -908,25 +702,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "scaleTo(_:completionHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FC2F2F27-E76E-4663-AEE5-0441054639EB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMRecordView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "setupEvent(game:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -940,8 +718,8 @@
             filePath = "TennisMoment/Home/TMPointRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "updateData(liveScore:isPlayer1Serving:isPlayer1Left:setConfigNum:gameConfigNum:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -988,25 +766,9 @@
             filePath = "TennisMoment/Home/TMPointRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "updateData(liveScore:isPlayer1Serving:isPlayer1Left:setConfigNum:gameConfigNum:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "425580BC-532B-4061-9DA1-176AFB46BB26"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TennisMoment/Home/TMRecordView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "setupEvent(game:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1020,9 +782,9 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "saveGame(isCompleted:)"
+            startingLineNumber = "705"
+            endingLineNumber = "705"
+            landmarkName = "recordStats(type:isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1052,8 +814,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "refreshData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1068,8 +830,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1182"
-            endingLineNumber = "1182"
+            startingLineNumber = "1165"
+            endingLineNumber = "1165"
             landmarkName = "recordBreakStatsUp(isPlayer1:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1084,8 +846,8 @@
             filePath = "TennisMoment/Home/TMRecordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "696"
-            endingLineNumber = "696"
+            startingLineNumber = "672"
+            endingLineNumber = "672"
             landmarkName = "scoreUp(isLeft:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1100,8 +862,8 @@
             filePath = "TennisMoment/Event/TMTableView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "setupUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1109,32 +871,496 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C5BED630-813D-4EC9-B860-3D29EDCD0F4C"
-            shouldBeEnabled = "Yes"
+            uuid = "4CDB1EC5-FD8A-4AFC-B3EA-75B079AD2179"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TennisMoment/Home/TMGameConfigView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "tapToUnfold(_:)"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "setupEvent(friends:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A3DD1EEE-23C3-47D7-8399-0620ED05785D"
-            shouldBeEnabled = "Yes"
+            uuid = "5176213D-AFDF-4329-A745-2B8B9317C833"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TennisMoment/Home/TMGameConfigView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "setupUI()"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "setupEvent(friends:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "05B78973-FECF-4A54-8144-70ABAD571000"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMGameConfigView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "setupEvent(friends:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2551166B-F1A7-49DE-B2C9-26C8436DDF00"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMGameConfigView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "setupEvent(friends:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C40F976-3A41-4AF8-83D6-3CF1BA7F7738"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMGameConfigView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "setupEvent(friends:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A572360F-D93A-44A3-AC67-3549EDE9E5C5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "TMTableView"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A3D648F8-1913-4429-A5D6-46D77360B720"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "21AC95C5-A83B-401E-8CB5-1CADEA437830"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMGameConfigView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "hitTest(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F75E78FD-31ED-47E9-8AD7-0F92BA556C87"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMGameConfigView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "getData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8804B44B-FC40-46D1-A2B4-E821DBCEA2F5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/SceneDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "scene(_:willConnectTo:options:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "31E7DB2E-DDB2-4E71-B178-C20DD046CE91"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/HomeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "startGame()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "31E7DB2E-DDB2-4E71-B178-C20DD046CE91 - e3b5417764c92137"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TennisMoment.Game&gt;) -&gt; () in closure #1 (Swift.String) -&gt; () in TennisMoment.HomeViewController.startGame() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/HomeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "31E7DB2E-DDB2-4E71-B178-C20DD046CE91 - e3b5417764c92137"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;TennisMoment.Game&gt;) -&gt; () in closure #1 (Swift.String) -&gt; () in TennisMoment.HomeViewController.startGame() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/HomeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED461CEF-6257-4ED1-A9BF-1106F232EC68"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/User/TMUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "signIn(completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94D143BB-BBA7-4C25-9CE4-66924245A262"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "setupEvent(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3E300E47-4EF9-4723-B14F-BD204690B282"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourBackgroundView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "TMTourBackgroundView"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "810C34FB-2527-42D8-9A93-E5DC306F4A4E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "unfold()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "810C34FB-2527-42D8-9A93-E5DC306F4A4E - 71ca1fd8409da34e"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TennisMoment.TMTableView.unfold() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Event/TMTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "149">
+               </Location>
+               <Location
+                  uuid = "810C34FB-2527-42D8-9A93-E5DC306F4A4E - 50367068796297fa"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TennisMoment.TMTableView.unfold() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Event/TMTableView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BCA47BAF-4042-4415-B04A-39649F7DF52F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMClubContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD258C45-EFAB-4114-B644-565C225D81EC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0AB89179-AFC2-4235-B649-179BC3B90F00"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMClubContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F4E60B8-079C-4140-B5B6-25196DB3B557"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTableView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "unfold()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "22D7DAF4-60C4-4439-80D0-2E03C124B175"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMPopUpView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "setupSize()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D6A20BF-D8A7-4435-96DE-F1355A03D606"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMPopUpView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2986AAE7-2162-46CA-B611-EE27411C1AA9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/EventViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4F1BD42E-ABA7-4E8A-935F-1C16525FA47C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMEventGameCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "setupEvent(game:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A06ADAE8-D87C-4FEE-B4E9-11F26C8BB65F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Home/TMPointRecordView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "updateData(liveScore:isPlayer1Serving:isPlayer1Left:setConfigNum:gameConfigNum:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1000A6E5-617F-4C5E-9E72-68CE046BF12B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "layoutSubviews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "29311B90-9C5A-4EB9-B517-458C73EFFE45"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "setupEvent(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACBEFB30-A27C-4AB0-B39C-EE62B4464B1B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/Event/TMTourView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "layoutSubviews()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

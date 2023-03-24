@@ -8,31 +8,51 @@
 import Foundation
 import UIKit
 
-class TMPopUpView: TMTableView {
-    lazy var menuList: TMTableView = {
-        let view = TMTableView()
-        return view
-    }()
+class TMPopUpView: TMUserInteractionUnabledTableView {
+    override func setupUI() {
+        delegate = self
+        setCorner(radii: 8)
+        super.setupUI()
+    }
 
-    func setup(config: TMPopUpViewConfig) {
-        addSubview(menuList)
-        menuList.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    override func setupEvent(config: TMTableViewConfig) {
+        self.config = config
+        setupSize()
+        super.setupEvent(config: config)
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if toggle == false {
+            unfold()
+        } else {
+            UIView.performWithoutAnimation {
+                moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+            }
+            let cell = config.cells[indexPath.row]
+            config.cells.remove(at: indexPath.row)
+            config.cells.insert(cell, at: 0)
+            fold()
         }
-        menuList.setupUI()
-        let config = TMTableViewConfig(cells: config.cells, rowHeight: config.rowHeight, rowNum: config.rowNum, rowNumWhenFold: 1, rowNumWhenUnfold: 4)
-        menuList.setupEvent(config: config)
+    }
+
+    func setupSize() {
+        var scaledNum: CGFloat = 0
+        var scaledHeight: CGFloat = 0
+        if config.cells.count >= 4 {
+            scaledNum = 4
+            scaledHeight = layer.position.y + 1.5 * bounds.height
+        } else {
+            scaledNum = CGFloat(config.cells.count)
+            scaledHeight = layer.position.y + CGFloat(config.cells.count - 1) * 0.5 * bounds.height
+        }
+        setup(bounds, layer.position, CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height * scaledNum), CGPoint(x: layer.position.x, y: scaledHeight), 0.3)
     }
 }
 
-class TMPopUpViewConfig {
-    var cells: [TMPopUpViewCell]
-    var rowHeight: CGFloat
-    var rowNum: Int
-
-    init(cells: [TMPopUpViewCell], rowHeight: CGFloat, rowNum: Int) {
+class TMPopUpViewConfig: TMTableViewConfig {
+    override init(cells: [UITableViewCell], rowHeight: CGFloat, rowNumWhenFold: Int = 1, rowNumWhenUnfold: Int = 4) {
+        super.init(cells: cells, rowHeight: rowHeight, rowNumWhenFold: rowNumWhenFold, rowNumWhenUnfold: rowNumWhenUnfold)
         self.cells = cells
         self.rowHeight = rowHeight
-        self.rowNum = rowNum
     }
 }

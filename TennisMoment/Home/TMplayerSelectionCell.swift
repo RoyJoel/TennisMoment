@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-class TMplayerSelectionCell: TMPopUpViewCell {
+class TMplayerSelectionCell: UITableViewCell {
+    var playerId = 0
     lazy var playerIconView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -23,8 +24,11 @@ class TMplayerSelectionCell: TMPopUpViewCell {
         addSubview(playerIconView)
         addSubview(playerNameView)
 
+        playerIconView.setCorner(radii: 5)
+
         playerIconView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
+            make.width.height.equalTo(32)
             make.left.equalToSuperview().offset(12)
         }
         playerNameView.snp.makeConstraints { make in
@@ -33,8 +37,9 @@ class TMplayerSelectionCell: TMPopUpViewCell {
         }
     }
 
-    func setupEvent(imageName: String, playerName: String) {
-        playerIconView.image = UIImage(systemName: imageName)
+    func setupEvent(imageName: String, playerName: String, playerId: Int) {
+        self.playerId = playerId
+        playerIconView.image = UIImage(named: imageName)
         playerNameView.text = playerName
     }
 }
