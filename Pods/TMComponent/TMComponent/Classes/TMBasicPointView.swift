@@ -51,7 +51,7 @@ open class TMBasicPointView: TMView {
     }
 
     private func setupEvent(config: TMBasicPointViewConfig) {
-        highLightImage.image = UIImage(systemName: config.iconName)
+        highLightImage.image = UIImage(named: config.iconName)
         if !config.isServing {
             highLightImage.isHidden = true
             if !config.isLeft {

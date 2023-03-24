@@ -35,7 +35,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TMComponent:
-    :commit: 582aed8bb3f2f56137d83c977ffaef74a2c4bc36
+    :commit: b7e0af8f094daf2f597faa9ab2cb18caaec690dd
     :git: https://github.com/RoyJoel/TMComponent.git
 
 SPEC CHECKSUMS:

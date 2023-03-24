@@ -31,7 +31,7 @@ open class TMmultiplyConfigurableView: TMView {
         }
         view.setup(with: config.configs[0])
         for i in 1 ..< vsViews.count {
-            vsViews[i].setupEvent(config: config.configs[i])
+            vsViews[i].setup(with: config.configs[i])
             vsViews[i].snp.remakeConstraints { make in
                 make.top.equalTo(lastView.snp.bottom).offset(config.rowSpacing)
                 make.width.equalToSuperview()
@@ -49,7 +49,7 @@ open class TMmultiplyConfigurableView: TMView {
         vsViews[index].updateRightViewData(isServingOnRight: isServingOnRight, newNum: newNum)
     }
 
-    public func setupUI() {
+    private func setupUI() {
         addSubview(view)
 
         view.snp.makeConstraints { make in
@@ -58,7 +58,7 @@ open class TMmultiplyConfigurableView: TMView {
         }
     }
 
-    public func setupEvent(config: TMmultiplyConfigurableViewConfig) {
+    private func setupEvent(config: TMmultiplyConfigurableViewConfig) {
         var lastView = view
         vsViews.append(view)
         view.snp.remakeConstraints { make in
@@ -82,6 +82,27 @@ open class TMmultiplyConfigurableView: TMView {
             lastView = nextView
             vsViews.append(nextView)
         }
+//        setView.setup(with: config.setViewConfig)
+//        gameView.setup(with: config.gameViewConfig)
+//        pointView.setup(with: config.pointViewConfig)
+//        setView.snp.makeConstraints { make in
+//            make.top.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
+//        gameView.snp.makeConstraints { make in
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.centerY.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
+//        pointView.snp.makeConstraints { make in
+//            make.bottom.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(config.rowHeight)
+//        }
     }
 
     public override func scaleTo(_ isEnlarge: Bool) {

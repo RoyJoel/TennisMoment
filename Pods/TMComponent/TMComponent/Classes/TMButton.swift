@@ -16,23 +16,19 @@ open class TMButton: UIButton {
         setupEvent(config: config)
     }
 
-    public func setupUI() {
-        setTitleColor(UIColor(named: "ContentBackground"), for: .normal)
-        backgroundColor = UIColor(named: "ComponentBackground")
+    private func setupUI() {
+        setTitleColor(.black, for: .normal)
+        setTitleColor(UIColor(named: "TennisBlur"), for: .selected)
+        backgroundColor = .white
         titleLabel?.numberOfLines = 2
         titleLabel?.textAlignment = .center
         setCorner(radii: 15)
         drawBorder(color: .black, width: 2)
     }
 
-    public func setupEvent(config: TMButtonConfig) {
+    private func setupEvent(config: TMButtonConfig) {
         self.config = config
         setTitle(config.title, for: .normal)
         addTapGesture(config.actionTarget, config.action)
-        if config.action == nil {
-            isEnabled = false
-        } else {
-            isEnabled = true
-        }
     }
 }

@@ -53,7 +53,7 @@ open class TMPointComparingView: TMView {
         titleView.isHidden = true
     }
 
-    public func setupEvent(config: TMPointComparingViewConfig) {
+    private func setupEvent(config: TMPointComparingViewConfig) {
         titleView.font = config.font
 
         if config.isComparing {
