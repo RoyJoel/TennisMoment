@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 
-class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
-    var config: TMTableViewConfig = TMTableViewConfig(cells: [], rowHeight: 0, rowNumWhenFold: 0, rowNumWhenUnfold: 0)
+open class TMTableView: UITableView {
     public var originalBounds: CGRect = .init()
 
     public var originalPoint: CGPoint = .init()
@@ -32,8 +31,7 @@ class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
         self.duration = duration
     }
 
-    func setupUI() {
-        dataSource = self
+    public func setupUI() {
         separatorStyle = .none
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
@@ -42,12 +40,6 @@ class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
             sectionHeaderTopPadding = 0
             UITableView.appearance().isPrefetchingEnabled = false
         }
-        register(TMPopUpViewCell.self, forCellReuseIdentifier: "TMPopUpViewCell")
-    }
-
-    func setupEvent(config: TMTableViewConfig) {
-        self.config = config
-        reloadData()
     }
 
     open func unfold() {
@@ -66,36 +58,5 @@ class TMTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
         addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {})
         bounds = originalBounds
         layer.position = originalPoint
-    }
-
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        if toggle == false {
-            return config.rowNumWhenFold
-        } else {
-            return config.cells.count
-        }
-    }
-
-    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return config.rowHeight
-    }
-
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = config.cells[indexPath.row]
-        cell.selectionStyle = .none
-        return cell
-    }
-}
-
-class TMTableViewConfig {
-    var cells: [UITableViewCell]
-    var rowHeight: CGFloat
-    var rowNumWhenFold: Int
-    var rowNumWhenUnfold: Int
-    init(cells: [UITableViewCell], rowHeight: CGFloat, rowNumWhenFold: Int, rowNumWhenUnfold: Int) {
-        self.cells = cells
-        self.rowHeight = rowHeight
-        self.rowNumWhenFold = rowNumWhenFold
-        self.rowNumWhenUnfold = rowNumWhenUnfold
     }
 }

@@ -80,6 +80,7 @@ class TMRecordView: TMUserInteractionUnabledView {
         addSubview(recordPointView)
         addSubview(leftScoreControllerView)
         addSubview(rightScoreControllerView)
+        addSubview(alartView)
 
         let player1AceBtnConfig = TMButtonConfig(title: "ACE", action: #selector(player1AceBtnTap), actionTarget: self)
         let player1ServeScoreBtnConfig = TMButtonConfig(title: "SERVE WINNER", action: #selector(player1ServeScoreBtnTap), actionTarget: self)
@@ -126,11 +127,19 @@ class TMRecordView: TMUserInteractionUnabledView {
         rightBasicInfoView.frame = CGRect(x: bounds.width - leftBasicInfoView.bounds.width - 12, y: 64, width: UIStandard.shared.screenWidth * 0.12, height: UIStandard.shared.screenHeight * 0.24)
         recordPointView.frame = CGRect(x: (bounds.width / 2) - UIStandard.shared.screenWidth * 0.06, y: 64 + ((UIStandard.shared.screenHeight * 0.24 - 190) / 2), width: UIStandard.shared.screenWidth * 0.12, height: 190)
 
+        alartView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+        }
+
         leftBasicInfoView.setupUI()
         rightBasicInfoView.setupUI()
         recordPointView.setupUI()
 
+        let basicIconConfig = TMIconViewConfig(icon: "", name: "")
         let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 50, rowSpacing: 20, font: UIFont.systemFont(ofSize: 17), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
+        leftBasicInfoView.setupEvent(config: basicIconConfig)
+        rightBasicInfoView.setupEvent(config: basicIconConfig)
         recordPointView.setup(with: pointRecordViewConfig)
     }
 
@@ -142,12 +151,8 @@ class TMRecordView: TMUserInteractionUnabledView {
         rightScoreControllerView.isHidden = true
         recordPointView.isHidden = true
         alartView.isHidden = false
+        isUserInteractionEnabled = false
 
-        addSubview(alartView)
-        alartView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.height.equalTo(40)
-        }
         let lastGameTime = UserDefaults.standard.double(forKey: "LastGameTime")
         let gap = Date().timeIntervalSince1970 - lastGameTime
         let days = Int(gap / (24 * 3600))
@@ -158,6 +163,7 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func setNewGame(game: Game) {
+        isUserInteractionEnabled = true
         leftBasicInfoView.isHidden = false
         rightBasicInfoView.isHidden = false
         leftScoreControllerView.isHidden = false
@@ -165,6 +171,7 @@ class TMRecordView: TMUserInteractionUnabledView {
         recordPointView.isHidden = false
         alartView.isHidden = true
         setupEvent(game: game)
+        self.game.result = [[]]
     }
 
     func setupEvent(game: Game) {
@@ -205,8 +212,9 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     override func scaleTo(_ isEnlarge: Bool, completionHandler: @escaping () -> Void) {
-        super.scaleTo(isEnlarge, completionHandler: completionHandler)
+        super.scaleTo(isEnlarge)
         if isEnlarge {
+            backgroundColor = UIColor(named: "ComponentBackground")
             titleView.isHidden = false
             leftBasicInfoView.scaleTo(leftBasicInfoView.toggle)
             rightBasicInfoView.scaleTo(rightBasicInfoView.toggle)
@@ -217,6 +225,7 @@ class TMRecordView: TMUserInteractionUnabledView {
             leftScoreControllerView.isHidden = true
             rightScoreControllerView.isHidden = true
         } else {
+            backgroundColor = UIColor(named: "BackgroundGray")
             titleView.isHidden = true
             leftBasicInfoView.setup(leftBasicInfoView.bounds, leftBasicInfoView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenHeight * 0.3, height: UIStandard.shared.screenWidth * 0.3), CGPoint(x: 24 + UIStandard.shared.screenWidth * 0.15, y: 124 + UIStandard.shared.screenHeight * 0.15), 0.3)
             rightBasicInfoView.setup(rightBasicInfoView.bounds, rightBasicInfoView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenHeight * 0.3, height: UIStandard.shared.screenWidth * 0.3), CGPoint(x: UIStandard.shared.screenWidth - 24 - UIStandard.shared.screenWidth * 0.15, y: 124 + UIStandard.shared.screenHeight * 0.15), 0.3)
@@ -231,12 +240,13 @@ class TMRecordView: TMUserInteractionUnabledView {
             leftScoreControllerView.setupUI(isLeft: true)
             rightScoreControllerView.setupUI(isLeft: false)
 
-            leftScoreControllerView.frame = CGRect(x: 40, y: 88 + leftBasicInfoView.bounds.height, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
-            rightScoreControllerView.frame = CGRect(x: UIStandard.shared.screenWidth - 40 - UIStandard.shared.screenHeight * 0.46, y: 88 + leftBasicInfoView.bounds.height, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
+            leftScoreControllerView.frame = CGRect(x: 40, y: UIStandard.shared.screenHeight - 68 - UIStandard.shared.screenWidth * 0.25, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
+            rightScoreControllerView.frame = CGRect(x: UIStandard.shared.screenWidth - 40 - UIStandard.shared.screenHeight * 0.46, y: UIStandard.shared.screenHeight - 68 - UIStandard.shared.screenWidth * 0.25, width: UIStandard.shared.screenHeight * 0.46, height: UIStandard.shared.screenWidth * 0.25)
 
             leftScoreControllerView.isHidden = false
             rightScoreControllerView.isHidden = false
         }
+        completionHandler()
     }
 
     @objc func player1AceBtnTap() {
@@ -356,7 +366,7 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func scorePoint(isLeft: Bool) {
-        if recordPointView.config.player1GameNum == game.gameNum, recordPointView.config.player2GameNum == game.gameNum {
+        if (game.gameNum == 4 && recordPointView.config.player1GameNum == game.gameNum - 1 && recordPointView.config.player2GameNum == game.gameNum - 1) || (game.gameNum == 6 && recordPointView.config.player1GameNum == game.gameNum && recordPointView.config.player2GameNum == game.gameNum) {
             scoreTieBreakPoint(isLeft: isLeft)
         } else {
             if isLeft {
@@ -498,40 +508,74 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func scoreGame(isLeft: Bool) {
-        if isLeft {
-            if recordPointView.config.player1GameNum < game.gameNum - 1 {
-                recordPointView.config.player1GameNum += 1
-                dealWithPosition(isGameDone: true)
-            } else if recordPointView.config.player1GameNum == game.gameNum - 1, recordPointView.config.player2GameNum == game.gameNum || recordPointView.config.player2GameNum == game.gameNum - 1 {
-                recordPointView.config.player1GameNum = game.gameNum
-                if recordPointView.config.player2GameNum == game.gameNum {
-                    enterTieBreak()
-                } else {
+        if game.gameNum == 4 {
+            if isLeft {
+                if recordPointView.config.player1GameNum < game.gameNum - 2 {
+                    recordPointView.config.player1GameNum += 1
                     dealWithPosition(isGameDone: true)
+                } else if recordPointView.config.player1GameNum == game.gameNum - 2 {
+                    recordPointView.config.player1GameNum += 1
+                    if recordPointView.config.player2GameNum == 3 {
+                        enterTieBreak()
+                    } else {
+                        dealWithPosition(isGameDone: true)
+                    }
+                } else {
+                    recordPointView.config.player1GameNum = 0
+                    recordPointView.config.player2GameNum = 0
+                    scoreSet(isLeft: isLeft)
                 }
             } else {
-                recordPointView.config.player1GameNum = 0
-                recordPointView.config.player2GameNum = 0
-                scoreSet(isLeft: isLeft)
-                dealWithPosition(isGameDone: false)
+                if recordPointView.config.player2GameNum < game.gameNum - 2 {
+                    recordPointView.config.player2GameNum += 1
+                    dealWithPosition(isGameDone: true)
+                } else if recordPointView.config.player2GameNum == game.gameNum - 2 {
+                    recordPointView.config.player2GameNum += 1
+                    if recordPointView.config.player1GameNum == 3 {
+                        enterTieBreak()
+                    } else {
+                        dealWithPosition(isGameDone: true)
+                    }
+                } else {
+                    recordPointView.config.player1GameNum = 0
+                    recordPointView.config.player2GameNum = 0
+                    scoreSet(isLeft: isLeft)
+                }
             }
         } else {
-            let gameNum = recordPointView.config.player2GameNum
-            if gameNum < game.gameNum - 1 {
-                recordPointView.config.player2GameNum += 1
-                dealWithPosition(isGameDone: true)
-            } else if gameNum == game.gameNum - 1, recordPointView.config.player1GameNum == game.gameNum || recordPointView.config.player1GameNum == game.gameNum - 1 {
-                recordPointView.config.player2GameNum = game.gameNum
-                if recordPointView.config.player1GameNum == game.gameNum {
-                    enterTieBreak()
-                } else {
+            if isLeft {
+                if recordPointView.config.player1GameNum < game.gameNum - 1 {
+                    recordPointView.config.player1GameNum += 1
                     dealWithPosition(isGameDone: true)
+                } else if recordPointView.config.player1GameNum == game.gameNum - 1, recordPointView.config.player2GameNum == game.gameNum || recordPointView.config.player2GameNum == game.gameNum - 1 {
+                    recordPointView.config.player1GameNum += 1
+                    if recordPointView.config.player2GameNum == game.gameNum {
+                        enterTieBreak()
+                    } else {
+                        dealWithPosition(isGameDone: true)
+                    }
+                } else {
+                    recordPointView.config.player1GameNum = 0
+                    recordPointView.config.player2GameNum = 0
+                    scoreSet(isLeft: isLeft)
                 }
             } else {
-                recordPointView.config.player1GameNum = 0
-                recordPointView.config.player2GameNum = 0
-                dealWithPosition(isGameDone: false)
-                scoreSet(isLeft: isLeft)
+                let gameNum = recordPointView.config.player2GameNum
+                if gameNum < game.gameNum - 1 {
+                    recordPointView.config.player2GameNum += 1
+                    dealWithPosition(isGameDone: true)
+                } else if gameNum == game.gameNum - 1, recordPointView.config.player1GameNum == game.gameNum || recordPointView.config.player1GameNum == game.gameNum - 1 {
+                    recordPointView.config.player2GameNum += 1
+                    if recordPointView.config.player1GameNum == game.gameNum {
+                        enterTieBreak()
+                    } else {
+                        dealWithPosition(isGameDone: true)
+                    }
+                } else {
+                    recordPointView.config.player1GameNum = 0
+                    recordPointView.config.player2GameNum = 0
+                    scoreSet(isLeft: isLeft)
+                }
             }
         }
     }
@@ -540,14 +584,16 @@ class TMRecordView: TMUserInteractionUnabledView {
         if isLeft {
             recordPointView.config.player1SetNum += 1
             if recordPointView.config.player1SetNum == game.setNum {
-                game.endDate = Date().timeIntervalSince1970
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: leftBasicInfoView.config.name)
+            } else {
+                dealWithPosition(isGameDone: false)
             }
         } else {
             recordPointView.config.player2SetNum += 1
             if recordPointView.config.player2SetNum == game.setNum {
-                game.endDate = Date().timeIntervalSince1970
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: rightBasicInfoView.config.name)
+            } else {
+                dealWithPosition(isGameDone: false)
             }
         }
     }
@@ -662,8 +708,6 @@ class TMRecordView: TMUserInteractionUnabledView {
     }
 
     func scoreUp(isLeft: Bool) {
-        print("This is player1 stats \(player1Stats)")
-        print("This is player2 stats \(player2Stats)")
         if isLeft == game.isPlayer1Left {
             livePoint[0] += 1
             print(livePoint)
@@ -692,12 +736,14 @@ class TMRecordView: TMUserInteractionUnabledView {
         }
     }
 
-    func endGame() {
+    func endGame(completionHandler: @escaping () -> Void) {
+        game.result[game.result.count - 1].append(livePoint)
         game.endDate = Date().timeIntervalSince1970
         game.player1Stats = player1Stats
         game.player2Stats = player2Stats
         TMGameRequest.updateGameAndStats(game: game) { _ in
             self.recordPointView.updateData(liveScore: self.game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, setConfigNum: self.game.setNum, gameConfigNum: self.game.gameNum)
+            completionHandler()
         }
     }
 
@@ -869,10 +915,10 @@ class TMRecordView: TMUserInteractionUnabledView {
                         recordBreakStatsDowm(isPlayer1: true)
                     case .unforcedError:
                         player2Stats.unforcedErrors += 1
-                        recordServeStatsDown(isPlayer1: true)
-                        recordReturnStatsUp(isPlayer1: false)
-                        recordBreakStatsDowm(isPlayer1: true)
-                        recordBreakStatsUp(isPlayer1: false)
+                        recordServeStatsDown(isPlayer1: false)
+                        recordReturnStatsUp(isPlayer1: true)
+                        recordBreakStatsDowm(isPlayer1: false)
+                        recordBreakStatsUp(isPlayer1: true)
                     case .netPoint:
                         player2Stats.netPoints += 1
                         recordServeStatsUp(isPlayer1: false)
@@ -1015,10 +1061,10 @@ class TMRecordView: TMUserInteractionUnabledView {
                         recordBreakStatsDowm(isPlayer1: true)
                     case .unforcedError:
                         player2Stats.unforcedErrors += 1
-                        recordServeStatsDown(isPlayer1: true)
-                        recordReturnStatsUp(isPlayer1: false)
-                        recordBreakStatsDowm(isPlayer1: true)
-                        recordBreakStatsUp(isPlayer1: false)
+                        recordServeStatsDown(isPlayer1: false)
+                        recordReturnStatsUp(isPlayer1: true)
+                        recordBreakStatsDowm(isPlayer1: false)
+                        recordBreakStatsUp(isPlayer1: true)
                     case .netPoint:
                         player2Stats.netPoints += 1
                         recordServeStatsUp(isPlayer1: false)

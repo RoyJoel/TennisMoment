@@ -10,6 +10,7 @@ import TMComponent
 
 class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     var event = Event(id: 0, icon: "NickKyrgios", name: "", startDate: Date().timeIntervalSince1970, endDate: Date().timeIntervalSince1970, level: .series15, draw: [], schedule: [])
+    var scheduleSelections = scheduleConfigViewDataSource()
     var currentSeletedIndex = 0
 
     lazy var tourNameView: TMLabel = {
@@ -61,7 +62,6 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         super.layoutSubviews()
         scheduleView.frame = CGRect(x: bounds.width - 246, y: 22, width: 148, height: 38)
         bringSubviewToFront(scheduleView)
-        scheduleView.delegate = scheduleView
         liveGameView.delegate = self
         liveGameView.dataSource = self
         liveGameView.register(TMEventGameCell.self, forCellReuseIdentifier: "TMEventGameCell")
@@ -84,9 +84,6 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             make.width.equalTo(68)
             make.height.equalTo(44)
         }
-//        drawView.snp.makeConstraints { make in
-//            make.
-//        }
 
         liveGameView.frame = CGRect(x: 12, y: 68, width: 668.5, height: 168)
 
@@ -108,28 +105,33 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
                 joinConfig = TMButtonConfig(title: "ONGOING", action: nil, actionTarget: self)
             }
         }
-        var scheduleCells: [TMPopUpViewCell] = []
-        for date in TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate) {
-            let cell = TMPopUpViewCell()
-            cell.setupUI()
-            cell.setupEvent(title: "\(date) schedule")
-            scheduleCells.append(cell)
+        scheduleSelections.schedules = TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate)
+        scheduleView.dataSource = scheduleSelections
+        scheduleView.delegate = scheduleView
+        scheduleView.selectedCompletionHandler = {
+            self.liveGameView.reloadData()
         }
-        let scheduleViewConfig = TMPopUpViewConfig(cells: scheduleCells, rowHeight: 38)
-
         tourNameView.setupEvent(config: nameConfig)
         DateLabel.setupEvent(config: dateConfig)
         joinBtn.setupEvent(config: joinConfig)
-        scheduleView.setupEvent(config: scheduleViewConfig)
         liveGameView.reloadData()
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        event.schedule[currentSeletedIndex].count
+        event.schedule[scheduleView.selectedIndex?.row ?? 0].count
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         330
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = liveGameView.cellForRow(at: indexPath)
+        if let currentViewController = cell?.getParentViewController() {
+            let vc = TMGameStatsDetailViewController()
+            vc.game = event.schedule[scheduleView.selectedIndex?.row ?? 0][indexPath.row]
+            currentViewController.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,11 +141,30 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         cell.transform = transform
         cell.backgroundColor = UIColor(named: "BackgroundGray")
         cell.selectionStyle = .none
-        cell.setupEvent(game: event.schedule[currentSeletedIndex][indexPath.row])
+        cell.setupEvent(game: event.schedule[scheduleView.selectedIndex?.row ?? 0][indexPath.row])
         return cell
     }
 
     @objc func joinEvent() {
         print("SB")
+    }
+}
+
+class scheduleConfigViewDataSource: NSObject, UITableViewDataSource {
+    var schedules: [String] = []
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        44
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        schedules.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMPopUpCell()
+        cell.setupUI()
+        cell.setupEvent(title: "\(schedules[indexPath.row]) SCHEDULE")
+        return cell
     }
 }

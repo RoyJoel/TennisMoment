@@ -30,10 +30,11 @@ class TMGameRequest {
         }
     }
 
-    static func SearchRecentGames(playerId: Int, num: Int, completionHandler: @escaping ([Game]) -> Void) {
+    static func SearchRecentGames(playerId: Int, num: Int, isCompleted: Bool, completionHandler: @escaping ([Game]) -> Void) {
         TMNetWork.post("/game/searchRecent", dataParameters: [
             "id": playerId,
             "limit": num,
+            "isCompleted": isCompleted,
         ]) { json in
             guard let json = json else {
                 return

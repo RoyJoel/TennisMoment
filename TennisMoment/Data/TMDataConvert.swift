@@ -8,7 +8,8 @@
 import Foundation
 
 class TMDataConvert {
-    static func read(from result: [[[Int]]], setConfigNum _: Int, gameConfigNum: Int) -> [[Int]] {
+    static func read(from result: [[[Int]]], gameConfigNum: Int) -> ([[Int]], Bool) {
+        var isInTieBreak = false
         var leftSetNum = 0
         var rightSetNum = 0
         var leftGameNum = 0
@@ -18,45 +19,89 @@ class TMDataConvert {
 
         for set in result.indices {
             for game in result[set].indices {
-                if set == (result.count - 1), game == (result[set].count - 1), leftGameNum != gameConfigNum, rightGameNum != gameConfigNum {
-                    if result[set][game][0] == 5 {
-                        leftGameNum += 1
-                        leftPointNum = 0
-                        rightPointNum = 0
-                    } else if result[set][game][1] == 5 {
-                        rightGameNum += 1
-                        leftPointNum = 0
-                        rightPointNum = 0
+                if !result[set][game].isEmpty {
+                    if set == (result.count - 1), game == (result[set].count - 1) {
+                        if leftGameNum == gameConfigNum, rightGameNum == gameConfigNum {
+                            leftPointNum = result[set][game][0]
+                            rightPointNum = result[set][game][1]
+                            isInTieBreak = true
+                            continue
+                        }
+                        if result[set][game][0] == 5 {
+                            leftGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                            continue
+                        } else if result[set][game][1] == 5 {
+                            rightGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                            continue
+                        } else {
+                            leftPointNum = result[set][game][0]
+                            rightPointNum = result[set][game][1]
+                            continue
+                        }
                     } else {
-                        leftPointNum = result[set][game][0]
-                        rightPointNum = result[set][game][1]
-                    }
-                } else {
-                    if result[set][game][0] > result[set][game][1] {
-                        leftGameNum += 1
-                        leftPointNum = 0
-                        rightPointNum = 0
-                    } else {
-                        rightGameNum += 1
-                        leftPointNum = 0
-                        rightPointNum = 0
+                        if result[set][game][0] > result[set][game][1] {
+                            leftGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                        } else {
+                            rightGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                        }
                     }
                 }
             }
-            if set != result.count - 1 {
-                if leftGameNum > rightGameNum {
-                    leftSetNum += 1
-                    leftGameNum = 0
-                    rightGameNum = 0
-                } else {
-                    rightSetNum += 1
-                    leftGameNum = 0
-                    rightGameNum = 0
+            if !result[set].isEmpty {
+                if set != result.count - 1 {
+                    if leftGameNum > rightGameNum {
+                        leftSetNum += 1
+                        leftGameNum = 0
+                        rightGameNum = 0
+                    } else {
+                        rightSetNum += 1
+                        leftGameNum = 0
+                        rightGameNum = 0
+                    }
                 }
             }
         }
 
-        return [[leftSetNum, rightSetNum], [leftGameNum, rightGameNum], [leftPointNum, rightPointNum]]
+        return ([[leftSetNum, rightSetNum], [leftGameNum, rightGameNum], [leftPointNum, rightPointNum]], isInTieBreak)
+    }
+
+    static func gameResult(from result: [[[Int]]]) -> [[Int]] {
+        var res: [[Int]] = []
+        for set in result {
+            var player1SetResult = 0
+            var player2SetResult = 0
+            for game in set {
+                if game[0] > game[1] {
+                    player1SetResult += 1
+                } else {
+                    player2SetResult += 1
+                }
+            }
+            res.append([player1SetResult, player2SetResult])
+        }
+        return res
+    }
+
+    static func setResult(from result: [[[Int]]]) -> [Int] {
+        let gameResult = self.gameResult(from: result)
+        var player1SetResult = 0
+        var player2SetResult = 0
+        for set in gameResult {
+            if set[0] > set[1] {
+                player1SetResult += 1
+            } else {
+                player2SetResult += 1
+            }
+        }
+        return [player1SetResult, player2SetResult]
     }
 
     static func changePosition(with value1: inout Int, and value2: inout Int) {

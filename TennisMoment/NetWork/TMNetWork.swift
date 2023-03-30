@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 class TMNetWork {
-    static let tennisMomentURL = "http://169.254.81.8:8080"
+    static let tennisMomentURL = "http://169.254.151.24:8080"
     static func get(_ parameters: String, completionHandler: @escaping (JSON?) -> Void) {
         AF.request(URL(string: tennisMomentURL + parameters)!).response { response in
             guard let jsonData = response.data else {

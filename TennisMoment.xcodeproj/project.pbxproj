@@ -24,6 +24,7 @@
 		A83AAA2429A8E0FE0020483A /* TMWinnerToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83AAA2329A8E0FE0020483A /* TMWinnerToastView.swift */; };
 		A83FAA6B29B33B1F00C17AE7 /* TMLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83FAA6A29B33B1F00C17AE7 /* TMLocationManager.swift */; };
 		A83FAA6D29B341E900C17AE7 /* TMStatsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83FAA6C29B341E900C17AE7 /* TMStatsRequest.swift */; };
+		A86DE5D329D046DC00E8282A /* TMGameStatsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */; };
 		A87D6B4E29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87D6B4D29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift */; };
 		A8ABA0AC29B027C3002F1632 /* TMRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABA0AB29B027C3002F1632 /* TMRecordView.swift */; };
 		A8ABA11729B059AB002F1632 /* TMGameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABA11629B059AB002F1632 /* TMGameRequest.swift */; };
@@ -43,6 +44,11 @@
 		A8B7201529BAFCC900FD6400 /* TMUserActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7201429BAFCC900FD6400 /* TMUserActivityView.swift */; };
 		A8B7201729BAFED200FD6400 /* TMGameStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7201629BAFED200FD6400 /* TMGameStatsView.swift */; };
 		A8B7201929BDA72000FD6400 /* TMCircleStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B7201829BDA72000FD6400 /* TMCircleStatsView.swift */; };
+		A8C1051D29D27EF8003E225E /* TMGameBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1051C29D27EF8003E225E /* TMGameBookingView.swift */; };
+		A8C1051F29D28BE3003E225E /* TMUserScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1051E29D28BE3003E225E /* TMUserScheduleView.swift */; };
+		A8C1052129D2BAB5003E225E /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1052029D2BAB5003E225E /* Schedule.swift */; };
+		A8C1052329D2BC8B003E225E /* TMScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1052229D2BC8B003E225E /* TMScheduleCell.swift */; };
+		A8C1052529D31432003E225E /* TMMarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1052429D31432003E225E /* TMMarkerAnnotationView.swift */; };
 		A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D90299E77CB0011F37A /* AppDelegate.swift */; };
 		A8C19D93299E77CB0011F37A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C19D92299E77CB0011F37A /* SceneDelegate.swift */; };
 		A8C19D9D299E77CC0011F37A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C19D9C299E77CC0011F37A /* Assets.xcassets */; };
@@ -110,6 +116,7 @@
 		A83AAA2329A8E0FE0020483A /* TMWinnerToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWinnerToastView.swift; sourceTree = "<group>"; };
 		A83FAA6A29B33B1F00C17AE7 /* TMLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMLocationManager.swift; sourceTree = "<group>"; };
 		A83FAA6C29B341E900C17AE7 /* TMStatsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMStatsRequest.swift; sourceTree = "<group>"; };
+		A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameStatsDetailViewController.swift; sourceTree = "<group>"; };
 		A87D6B4D29A5AC4D0001C59F /* TMUserInteractionUnabledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMUserInteractionUnabledView.swift; sourceTree = "<group>"; };
 		A8ABA0AB29B027C3002F1632 /* TMRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMRecordView.swift; sourceTree = "<group>"; };
 		A8ABA11629B059AB002F1632 /* TMGameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameRequest.swift; sourceTree = "<group>"; };
@@ -129,6 +136,11 @@
 		A8B7201429BAFCC900FD6400 /* TMUserActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMUserActivityView.swift; sourceTree = "<group>"; };
 		A8B7201629BAFED200FD6400 /* TMGameStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameStatsView.swift; sourceTree = "<group>"; };
 		A8B7201829BDA72000FD6400 /* TMCircleStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCircleStatsView.swift; sourceTree = "<group>"; };
+		A8C1051C29D27EF8003E225E /* TMGameBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameBookingView.swift; sourceTree = "<group>"; };
+		A8C1051E29D28BE3003E225E /* TMUserScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMUserScheduleView.swift; sourceTree = "<group>"; };
+		A8C1052029D2BAB5003E225E /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		A8C1052229D2BC8B003E225E /* TMScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMScheduleCell.swift; sourceTree = "<group>"; };
+		A8C1052429D31432003E225E /* TMMarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMMarkerAnnotationView.swift; sourceTree = "<group>"; };
 		A8C19D8D299E77CB0011F37A /* TennisMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TennisMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8C19D90299E77CB0011F37A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8C19D92299E77CB0011F37A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +274,10 @@
 				A83AAA1B29A7670D0020483A /* TMPointRecordView.swift */,
 				A83AAA1D29A769870020483A /* TMPointRecordViewConfig.swift */,
 				A834D5DA29B5F82D007FA84C /* TMScoreCtrollerButton.swift */,
+				A8C1051C29D27EF8003E225E /* TMGameBookingView.swift */,
+				A8C1052429D31432003E225E /* TMMarkerAnnotationView.swift */,
+				A8C1051E29D28BE3003E225E /* TMUserScheduleView.swift */,
+				A8C1052229D2BC8B003E225E /* TMScheduleCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -274,6 +290,7 @@
 				A8B1A09B29C1E7FB0084F9CE /* TMTourView.swift */,
 				A8C35A0229C6CA60009338A4 /* TMEventGameCell.swift */,
 				A8B1A09729C0A59C0084F9CE /* TMClubTableViewCell.swift */,
+				A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -385,6 +402,7 @@
 				A8B1A09529C09F830084F9CE /* Club.swift */,
 				A8C359FC29C6B56E009338A4 /* Event.swift */,
 				A8C35A0029C6BBAE009338A4 /* User.swift */,
+				A8C1052029D2BAB5003E225E /* Schedule.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -645,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8C35A0329C6CA60009338A4 /* TMEventGameCell.swift in Sources */,
+				A8C1052329D2BC8B003E225E /* TMScheduleCell.swift in Sources */,
 				A8D1BB4829AA0E5C0096EE41 /* Player.swift in Sources */,
 				A8ABA11729B059AB002F1632 /* TMGameRequest.swift in Sources */,
 				A8B1A0A629C2BB780084F9CE /* TMplayerSelectionCell.swift in Sources */,
@@ -653,6 +672,7 @@
 				A810F78E29ADEDB70044C424 /* TMPlayerRequest.swift in Sources */,
 				A8C359FF29C6B757009338A4 /* DateFormatter.swift in Sources */,
 				A8C35A0129C6BBAE009338A4 /* User.swift in Sources */,
+				A8C1052129D2BAB5003E225E /* Schedule.swift in Sources */,
 				A834D5DB29B5F82D007FA84C /* TMScoreCtrollerButton.swift in Sources */,
 				A8C19E15299E8CE50011F37A /* AccountViewController.swift in Sources */,
 				A8C19E17299E8CE50011F37A /* TabViewController.swift in Sources */,
@@ -671,7 +691,9 @@
 				A8C19E02299E854E0011F37A /* TrackingEvents.swift in Sources */,
 				A8C19E18299E8CE50011F37A /* UIStandard.swift in Sources */,
 				A8B7200F29BAD77000FD6400 /* TMUserInfoView.swift in Sources */,
+				A8C1052529D31432003E225E /* TMMarkerAnnotationView.swift in Sources */,
 				A834D5D329B59A1F007FA84C /* TMDataConvert.swift in Sources */,
+				A86DE5D329D046DC00E8282A /* TMGameStatsDetailViewController.swift in Sources */,
 				A83FAA6D29B341E900C17AE7 /* TMStatsRequest.swift in Sources */,
 				A8ABA11F29B0ACDA002F1632 /* testData.swift in Sources */,
 				A8ABA11B29B06C43002F1632 /* TMTextField.swift in Sources */,
@@ -690,8 +712,10 @@
 				A8C19DFD299E854E0011F37A /* TMNavigationItem.swift in Sources */,
 				A8C19E03299E854E0011F37A /* UIViewExtension.swift in Sources */,
 				A8C19E07299E854E0011F37A /* TMNavigationController.swift in Sources */,
+				A8C1051F29D28BE3003E225E /* TMUserScheduleView.swift in Sources */,
 				A8C359FD29C6B56E009338A4 /* Event.swift in Sources */,
 				A834D5D729B5A38D007FA84C /* StringExtension.swift in Sources */,
+				A8C1051D29D27EF8003E225E /* TMGameBookingView.swift in Sources */,
 				A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */,
 				A8C19E16299E8CE50011F37A /* TennisMoment.xcdatamodeld in Sources */,
 				A834D5D029B590C3007FA84C /* TMSys.swift in Sources */,

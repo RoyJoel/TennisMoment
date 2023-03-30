@@ -16,18 +16,18 @@ class TMLocationManager: NSObject {
     private var viewController: UIViewController? // 承接外部传过来的视图控制器，做弹框处理
 
     // 外部初始化的对象调用，执行定位处理。
-    func startPositioning(completionHandler: @escaping (String) -> Void) {
+    func startPositioning(completionHandler: @escaping (CLLocation, String) -> Void) {
         if locationManager != nil, CLLocationManager.authorizationStatus() == .denied {
             // 定位提示
         } else {
-            requestLocationServicesAuthorization(completionHandler: { string in
-                completionHandler(string)
+            requestLocationServicesAuthorization(completionHandler: { location, description in
+                completionHandler(location, description)
             })
         }
     }
 
     // 初始化定位
-    private func requestLocationServicesAuthorization(completionHandler: @escaping (String) -> Void) {
+    private func requestLocationServicesAuthorization(completionHandler: @escaping (CLLocation, String) -> Void) {
         if locationManager == nil {
             locationManager = CLLocationManager()
             locationManager?.delegate = self
@@ -47,8 +47,8 @@ class TMLocationManager: NSObject {
             locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager?.startUpdatingLocation()
             let location = locationManager?.location
-            getLocationDescription(location: location ?? CLLocation(), completionHandler: { string in
-                completionHandler(string)
+            getLocationDescription(location: location ?? CLLocation(), completionHandler: { location, des in
+                completionHandler(location, des)
             })
         }
     }
@@ -57,17 +57,15 @@ class TMLocationManager: NSObject {
     private func reportLocationServicesAuthorizationStatus(status: CLAuthorizationStatus) {
         if status == .notDetermined {
             // 未决定,继续请求授权
-            requestLocationServicesAuthorization(completionHandler: { _ in })
+            requestLocationServicesAuthorization(completionHandler: { _, _ in })
         } else if status == .restricted {} else if status == .denied {}
     }
 
-    func getLocationDescription(location: CLLocation, completionHandler: @escaping (String) -> Void) {
+    func getLocationDescription(location: CLLocation, completionHandler: @escaping (CLLocation, String) -> Void) {
         let geocoder = CLGeocoder()
 
         geocoder.reverseGeocodeLocation(location) { placemarks, _ in
             if let place = placemarks?[0] {
-                // 国家 省  市  区  街道  名称  国家编码  邮编
-
                 let administrativeArea = place.administrativeArea ?? ""
                 let locality = place.locality ?? ""
                 let subLocality = place.subLocality ?? ""
@@ -76,7 +74,7 @@ class TMLocationManager: NSObject {
 
                 let addressLines = administrativeArea + locality + subLocality + thoroughfare + name
 
-                completionHandler(addressLines)
+                completionHandler(location, addressLines)
             }
         }
     }

@@ -86,8 +86,8 @@ class TMClubContentView: TMView, UITableViewDelegate, UITableViewDataSource {
         tourView.setCorner(radii: 15)
         tourView.dataSource = self
         tourView.delegate = self
-        tourView.separatorStyle = .none
         tourView.register(TMTourView.self, forCellReuseIdentifier: "TMTourView")
+        tourView.separatorStyle = .none
         tourView.showsVerticalScrollIndicator = false
         tourView.showsHorizontalScrollIndicator = false
     }

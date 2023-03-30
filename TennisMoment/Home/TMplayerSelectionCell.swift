@@ -20,11 +20,12 @@ class TMplayerSelectionCell: UITableViewCell {
         return label
     }()
 
-    func setup() {
+    func setupUI() {
         addSubview(playerIconView)
         addSubview(playerNameView)
 
         playerIconView.setCorner(radii: 5)
+        playerIconView.contentMode = .scaleAspectFill
 
         playerIconView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

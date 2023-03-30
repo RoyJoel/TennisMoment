@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 import TMComponent
 import UIKit
 
@@ -37,8 +38,8 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.title = ""
+        navigationController?.navigationBar.tintColor = UIColor(named: "ContentBackground")
         view.backgroundColor = UIColor(named: "BackgroundGray")
-
         view.addSubview(settingView)
         view.addSubview(iconView)
         view.addSubview(basicInfoView)
@@ -54,7 +55,7 @@ class AccountViewController: UIViewController {
 
         userDataView.tab_startAnimation {
             DispatchQueue.main.async {
-                TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 3) { games in
+                TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 3, isCompleted: true) { games in
                     self.games = games
                     if self.games.count != 0 {
                         self.userDataView.setupEventForGameStatsView(games: self.games)
@@ -89,5 +90,26 @@ class AccountViewController: UIViewController {
             make.top.equalTo(iconView.snp.bottom)
             make.bottom.equalToSuperview().offset(-78)
         }
+        userDataView.gameStatsView.leftActivityView.addTapGesture(self, #selector(enterLeftDetailStatsView))
+        userDataView.gameStatsView.midActivityView.addTapGesture(self, #selector(enterMidDetailStatsView))
+        userDataView.gameStatsView.rightActivityView.addTapGesture(self, #selector(enterRightDetailStatsView))
+    }
+
+    @objc func enterLeftDetailStatsView() {
+        let vc = TMGameStatsDetailViewController()
+        vc.game = userDataView.gameStatsView.leftActivityView.game ?? Game(json: JSON())
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc func enterMidDetailStatsView() {
+        let vc = TMGameStatsDetailViewController()
+        vc.game = userDataView.gameStatsView.midActivityView.game ?? Game(json: JSON())
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc func enterRightDetailStatsView() {
+        let vc = TMGameStatsDetailViewController()
+        vc.game = userDataView.gameStatsView.rightActivityView.game ?? Game(json: JSON())
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

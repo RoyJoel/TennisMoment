@@ -31,6 +31,11 @@ extension UIView {
         addGestureRecognizer(tap)
     }
 
+    func addLongPressGesture(_ target: Any, _ action: Selector?) {
+        let tap = UILongPressGestureRecognizer(target: target, action: action)
+        addGestureRecognizer(tap)
+    }
+
     func removeTapGesture(_ target: Any, _ action: Selector?) {
         let tap = UITapGestureRecognizer(target: target, action: action)
         removeGestureRecognizer(tap)
@@ -59,6 +64,19 @@ extension UIView {
         }
         layer.add(animation, forKey: forKey)
         CATransaction.commit()
+    }
+
+    func getParentViewController() -> UIViewController? {
+        for view in sequence(first: superview, next: { view in
+            view?.superview
+        }) {
+            if let responder = view?.next {
+                if responder.isKind(of: UIViewController.self) {
+                    return responder as? UIViewController
+                }
+            }
+        }
+        return nil
     }
 
 //    func addAnimation(_ fromValue: Any?, _ ratio: CGFloat?, _ distance: CGFloat?, _ duration: CFTimeInterval, _ forKey: String?) {

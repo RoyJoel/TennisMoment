@@ -8,51 +8,47 @@
 import Foundation
 import UIKit
 
-class TMPopUpView: TMTableView {
-    override func setupUI() {
-        delegate = self
+open class TMPopUpView: TMTableView, UITableViewDelegate {
+    public var selectedIndex: IndexPath?
+
+    public var selectedCompletionHandler: (() -> Void)?
+
+    public override func setupUI() {
         setCorner(radii: 8)
         super.setupUI()
-    }
-
-    override func setupEvent(config: TMTableViewConfig) {
-        self.config = config
         setupSize()
-        super.setupEvent(config: config)
     }
 
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if toggle == false {
             unfold()
+            reloadData()
         } else {
+            selectedIndex = indexPath
+            setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             UIView.performWithoutAnimation {
                 moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
             }
-            let cell = config.cells[indexPath.row]
-            config.cells.remove(at: indexPath.row)
-            config.cells.insert(cell, at: 0)
+            deselectRow(at: IndexPath(row: 0, section: 0), animated: false)
+            (selectedCompletionHandler ?? {})()
             fold()
         }
     }
 
-    func setupSize() {
+    public func setupSize() {
         var scaledNum: CGFloat = 0
         var scaledHeight: CGFloat = 0
-        if config.cells.count >= 4 {
+        if numberOfRows(inSection: 0) >= 4 {
             scaledNum = 4
             scaledHeight = layer.position.y + 1.5 * bounds.height
         } else {
-            scaledNum = CGFloat(config.cells.count)
-            scaledHeight = layer.position.y + CGFloat(config.cells.count - 1) * 0.5 * bounds.height
+            scaledNum = CGFloat(numberOfRows(inSection: 0))
+            scaledHeight = layer.position.y + CGFloat(numberOfRows(inSection: 0) - 1) * 0.5 * bounds.height
         }
         setup(bounds, layer.position, CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height * scaledNum), CGPoint(x: layer.position.x, y: scaledHeight), 0.3)
     }
-}
 
-class TMPopUpViewConfig: TMTableViewConfig {
-    override init(cells: [UITableViewCell], rowHeight: CGFloat, rowNumWhenFold: Int = 1, rowNumWhenUnfold: Int = 4) {
-        super.init(cells: cells, rowHeight: rowHeight, rowNumWhenFold: rowNumWhenFold, rowNumWhenUnfold: rowNumWhenUnfold)
-        self.cells = cells
-        self.rowHeight = rowHeight
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        originalBounds.height
     }
 }

@@ -428,28 +428,28 @@ class TMUserStatsView: UIView {
 
             netPointView.snp.makeConstraints { make in
                 make.top.equalTo(servePointWonView.snp.top)
-                make.left.equalTo(servePointWonView.snp.right).offset(18)
-                make.width.equalTo(100)
+                make.left.equalTo(servePointWonView.snp.right).offset(8)
+                make.width.equalTo(130)
                 make.height.equalTo(servePointWonView.snp.height).dividedBy(2).offset(-1)
             }
 
             ueView.snp.makeConstraints { make in
                 make.top.equalTo(returnServePointWonView.snp.top)
-                make.right.equalTo(returnServePointWonView.snp.left).offset(-18)
-                make.width.equalTo(100)
+                make.right.equalTo(returnServePointWonView.snp.left).offset(-8)
+                make.width.equalTo(130)
                 make.height.equalTo(returnServePointWonView.snp.height).dividedBy(2).offset(-1)
             }
 
             forehandWinnerView.snp.makeConstraints { make in
                 make.top.equalTo(netPointView.snp.bottom).offset(2)
-                make.left.equalTo(servePointWonView.snp.right).offset(18)
-                make.width.equalTo(100)
+                make.left.equalTo(servePointWonView.snp.right).offset(8)
+                make.width.equalTo(130)
                 make.height.equalTo(servePointWonView.snp.height).dividedBy(2).offset(-1)
             }
             backhandWinnerView.snp.makeConstraints { make in
                 make.top.equalTo(ueView.snp.bottom).offset(2)
-                make.right.equalTo(returnServePointWonView.snp.left).offset(-18)
-                make.width.equalTo(100)
+                make.right.equalTo(returnServePointWonView.snp.left).offset(-8)
+                make.width.equalTo(130)
                 make.height.equalTo(returnServePointWonView.snp.height).dividedBy(2).offset(-1)
             }
         }
@@ -547,7 +547,7 @@ class TMUserStatsView: UIView {
         if UIScreen.main.nativeBounds.height < 2360 {
             let aceConfig = TMInfoViewConfig(infoContent: "\(stats.aces)", infoContentFont: 10, infoTitle: "ACES", infoTitleFont: 8, inset: 6)
             let returnAceConfig = TMInfoViewConfig(infoContent: "\(stats.returnAces)", infoContentFont: 10, infoTitle: "RETURN ACES", infoTitleFont: 8, inset: 6)
-            let doubleFaultConfig = TMInfoViewConfig(infoContent: "\(stats.netPoints)", infoContentFont: 10, infoTitle: "DOUBLE FAULT", infoTitleFont: 8, inset: 6)
+            let doubleFaultConfig = TMInfoViewConfig(infoContent: "\(stats.doubleFaults)", infoContentFont: 10, infoTitle: "DOUBLE FAULT", infoTitleFont: 8, inset: 6)
             let netPointConfig = TMInfoViewConfig(infoContent: "\(stats.netPoints)", infoContentFont: 10, infoTitle: "NET POINTS", infoTitleFont: 8, inset: 6)
             let ueConfig = TMInfoViewConfig(infoContent: "\(stats.unforcedErrors)", infoContentFont: 10, infoTitle: "UNFORCED ERRORS", infoTitleFont: 8, inset: 6)
             let forehandWinnerConfig = TMInfoViewConfig(infoContent: "\(stats.forehandWinners)", infoContentFont: 10, infoTitle: "FOREHAND WINNERS", infoTitleFont: 8, inset: 6)
@@ -563,7 +563,7 @@ class TMUserStatsView: UIView {
         } else {
             let aceConfig = TMInfoViewConfig(infoContent: "\(stats.aces)", infoContentFont: 10, infoTitle: "ACES", infoTitleFont: 8, inset: 6)
             let returnAceConfig = TMInfoViewConfig(infoContent: "\(stats.returnAces)", infoContentFont: 10, infoTitle: "RETURN ACES", infoTitleFont: 8, inset: 6)
-            let doubleFaultConfig = TMInfoViewConfig(infoContent: "\(stats.netPoints)", infoContentFont: 10, infoTitle: "DOUBLE FAULT", infoTitleFont: 8, inset: 6)
+            let doubleFaultConfig = TMInfoViewConfig(infoContent: "\(stats.doubleFaults)", infoContentFont: 10, infoTitle: "DOUBLE FAULT", infoTitleFont: 8, inset: 6)
             let netPointConfig = TMInfoViewConfig(infoContent: "\(stats.netPoints)", infoContentFont: 10, infoTitle: "NET POINTS", infoTitleFont: 8, inset: 8)
             let ueConfig = TMInfoViewConfig(infoContent: "\(stats.unforcedErrors)", infoContentFont: 10, infoTitle: "UNFORCED ERRORS", infoTitleFont: 8, inset: 8)
             let forehandWinnerConfig = TMInfoViewConfig(infoContent: "\(stats.forehandWinners)", infoContentFont: 10, infoTitle: "FOREHAND WINNERS", infoTitleFont: 8, inset: 8)

@@ -6,13 +6,14 @@
 //
 
 import Alamofire
+import CoreLocation
 import Foundation
 import SwiftyJSON
 import UIKit
 
 class TMUser {
     // 未登录时为默认信息
-    static var user = User(id: 1, loginName: "Jason Zhang", name: "Jason Zhang", icon: "JasonZhang", sex: .Man, age: 21, yearsPlayed: 1, height: 171, width: 1, grip: .Western, backhand: .TwoHandedBackhand, points: 1000, isAdult: true, careerStats: Stats(json: JSON()), friends: [], allClubs: [], allGames: [], allTourLevelGames: [], allEvents: [])
+    static var user = User(id: 1, loginName: "Jason Zhang", name: "Jason Zhang", icon: "JasonZhang", sex: .Man, age: 21, yearsPlayed: 1, height: 171, width: 1, grip: .Western, backhand: .TwoHandedBackhand, points: 1000, isAdult: true, careerStats: Stats(json: JSON()), friends: [], allClubs: [], allGames: [], allTourLevelGames: [], allEvents: [], allSchedules: [])
 
 //    static func updateUserInfo(completionHandler: @escaping (Player) -> Void) {
 //        TMPlayerRequest.updatePlayerInfo(player: TMUser.user) { player in
@@ -90,6 +91,32 @@ class TMUser {
                 return
             }
             completionHandler(json.boolValue)
+        }
+    }
+
+    static func getLocationdescription(completionHandler: @escaping (String) -> Void) {
+        TMLocationManager.shared.startPositioning { _, location in
+            completionHandler(location)
+        }
+    }
+
+    static func getLocationCoor(completionHandler: @escaping (CLLocation) -> Void) {
+        TMLocationManager.shared.startPositioning { location, _ in
+            completionHandler(location)
+        }
+    }
+
+    static func addSchedule(startDate: TimeInterval, place: String, OpponentId: Int, completionHandler: @escaping (Schedule) -> Void) {
+        TMNetWork.post("/schedule/add", dataParameters: [
+            "startDate": startDate,
+            "place": place,
+            "player1Id": TMUser.user.id,
+            "player2Id": OpponentId,
+        ]) { res in
+            guard let res = res else {
+                return
+            }
+            completionHandler(Schedule(json: res))
         }
     }
 }

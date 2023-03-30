@@ -26,7 +26,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = ""
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.navigationBar.tintColor = UIColor(named: "ContentBackground")
         view.backgroundColor = UIColor(named: "BackgroundGray")
 
         view.addSubview(clubListView)

@@ -28,8 +28,9 @@ struct User: Codable {
     var allGames: [Game]
     var allTourLevelGames: [Game]
     var allEvents: [Event]
+    var allSchedules: [Schedule]
 
-    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Club], allGames: [Game], allTourLevelGames: [Game], allEvents: [Event]) {
+    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Club], allGames: [Game], allTourLevelGames: [Game], allEvents: [Event], allSchedules: [Schedule]) {
         self.id = id
         self.loginName = loginName
         self.name = name
@@ -49,6 +50,7 @@ struct User: Codable {
         self.allGames = allGames
         self.allTourLevelGames = allTourLevelGames
         self.allEvents = allEvents
+        self.allSchedules = allSchedules
     }
 
     init(json: JSON) {
@@ -71,5 +73,6 @@ struct User: Codable {
         allGames = json["allGames"].arrayValue.map { Game(json: $0) }
         allTourLevelGames = json["allTourLevelGames"].arrayValue.map { Game(json: $0) }
         allEvents = json["allEvents"].arrayValue.map { Event(json: $0) }
+        allSchedules = json["allSchedules"].arrayValue.map { Schedule(json: $0) }
     }
 }

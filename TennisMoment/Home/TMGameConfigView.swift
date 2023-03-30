@@ -9,7 +9,12 @@ import Foundation
 import TMComponent
 import UIKit
 
-class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
+class TMGameConfigView: TMUserInteractionUnabledView {
+    let player1Selections = Player1SelectViewDataSource()
+    let player2Selections = Player1SelectViewDataSource()
+    let setNumSelections = setNumSelectViewDataSource()
+    let gameNumSelections = gameNumSelectViewDataSource()
+    let surfaceTypeSelections = surfaceTypeConfigViewDataSource()
     var isPlayer1Serving: Bool = true
 
     lazy var startGameBtn: TMTitleOrImageButton = {
@@ -17,12 +22,12 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
         return btn
     }()
 
-    lazy var player1TextField: TMPopUpView = {
+    lazy var Player1SelectView: TMPopUpView = {
         let textField = TMPopUpView()
         return textField
     }()
 
-    lazy var player2TextField: TMPopUpView = {
+    lazy var Player2SelectView: TMPopUpView = {
         let textField = TMPopUpView()
         return textField
     }()
@@ -68,8 +73,8 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
         clipsToBounds = false
 
         addSubview(startGameBtn)
-        addSubview(player1TextField)
-        addSubview(player2TextField)
+        addSubview(Player1SelectView)
+        addSubview(Player2SelectView)
         addSubview(leftServerView)
         addSubview(rightServerView)
         addSubview(isGoldenGoalLabel)
@@ -79,8 +84,8 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
         addSubview(surfaceConfigView)
 
         startGameBtn.frame = CGRect(x: 0, y: 0, width: 68, height: 68)
-        player1TextField.frame = CGRect(x: 220, y: 112, width: UIStandard.shared.screenWidth * 0.15, height: 44)
-        player2TextField.frame = CGRect(x: 480, y: 112, width: UIStandard.shared.screenWidth * 0.15, height: 44)
+        Player1SelectView.frame = CGRect(x: 220, y: 112, width: UIStandard.shared.screenWidth * 0.15, height: 44)
+        Player2SelectView.frame = CGRect(x: 480, y: 112, width: UIStandard.shared.screenWidth * 0.15, height: 44)
 
         leftServerView.frame = CGRect(x: 170 + UIStandard.shared.screenWidth * 0.075, y: 124 + UIStandard.shared.screenHeight * 0.08, width: 100, height: 50)
         rightServerView.frame = CGRect(x: 430 + UIStandard.shared.screenWidth * 0.075, y: 124 + UIStandard.shared.screenHeight * 0.08, width: 100, height: 50)
@@ -95,8 +100,8 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
 
         surfaceConfigView.frame = CGRect(x: 140 + UIStandard.shared.screenWidth * 0.3, y: 208 + UIStandard.shared.screenHeight * 0.08, width: UIStandard.shared.screenWidth * 0.15, height: 30)
 
-        player1TextField.isHidden = true
-        player2TextField.isHidden = true
+        Player1SelectView.isHidden = true
+        Player2SelectView.isHidden = true
         leftServerView.isHidden = true
         rightServerView.isHidden = true
         isGoldenGoalLabel.isHidden = true
@@ -108,14 +113,14 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
         bringSubviewToFront(setConfigView)
         bringSubviewToFront(gameConfigView)
         bringSubviewToFront(surfaceConfigView)
-        bringSubviewToFront(player1TextField)
-        bringSubviewToFront(player2TextField)
+        bringSubviewToFront(Player1SelectView)
+        bringSubviewToFront(Player2SelectView)
 
         let startGameBtnConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(configGameViewUp), actionTarget: self)
         startGameBtn.setUp(with: startGameBtnConfig)
 
-        player1TextField.delegate = player1TextField
-        player2TextField.delegate = player2TextField
+        Player1SelectView.delegate = Player1SelectView
+        Player2SelectView.delegate = Player2SelectView
         setConfigView.delegate = setConfigView
         gameConfigView.delegate = gameConfigView
         surfaceConfigView.delegate = surfaceConfigView
@@ -128,69 +133,32 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
 
         leftServerView.addTapGesture(self, #selector(changeServe))
         rightServerView.addTapGesture(self, #selector(changeServe))
+    }
 
-        player1TextField.setupUI()
-        player2TextField.setupUI()
+    func setupEvent(friends: [Player]) {
+        player1Selections.players = friends
+        player2Selections.players = friends
+        Player1SelectView.dataSource = player1Selections
+        Player2SelectView.dataSource = player2Selections
+        setConfigView.dataSource = setNumSelections
+        gameConfigView.dataSource = gameNumSelections
+        surfaceConfigView.dataSource = surfaceTypeSelections
+        Player1SelectView.setupUI()
+        Player2SelectView.setupUI()
         setConfigView.setupUI()
         gameConfigView.setupUI()
         surfaceConfigView.setupUI()
     }
 
-    func setupEvent(friends: [Player]) {
-        var playerCells: [TMplayerSelectionCell] = []
-        for friend in friends {
-            let cell = TMplayerSelectionCell()
-            cell.setup()
-            cell.setupEvent(imageName: friend.icon, playerName: friend.name, playerId: friend.id)
-            playerCells.append(cell)
-        }
-        var player2Cells: [TMplayerSelectionCell] = []
-        for friend in friends {
-            let cell = TMplayerSelectionCell()
-            cell.setup()
-            cell.setupEvent(imageName: friend.icon, playerName: friend.name, playerId: friend.id)
-            player2Cells.append(cell)
-        }
-        let player1TextFieldconfig = TMPopUpViewConfig(cells: playerCells, rowHeight: 44)
-        let player2TextFieldconfig = TMPopUpViewConfig(cells: player2Cells, rowHeight: 44)
-        player1TextField.setupEvent(config: player1TextFieldconfig)
-        player2TextField.setupEvent(config: player2TextFieldconfig)
-
-        var setConfigCells: [TMPopUpViewCell] = []
-        for i in 1 ... 6 {
-            let cell = TMPopUpViewCell()
-            cell.setupUI()
-            cell.setupEvent(title: "\(i)")
-            setConfigCells.append(cell)
-        }
-        let setConfig = TMPopUpViewConfig(cells: setConfigCells, rowHeight: 30)
-        setConfigView.setupEvent(config: setConfig)
-
-        var gameConfigCells: [TMPopUpViewCell] = []
-        for i in 1 ... 6 {
-            let cell = TMPopUpViewCell()
-            cell.setupUI()
-            cell.setupEvent(title: "\(i)")
-            gameConfigCells.append(cell)
-        }
-        let gameConfig = TMPopUpViewConfig(cells: gameConfigCells, rowHeight: 30)
-        gameConfigView.setupEvent(config: gameConfig)
-
-        var surfaceConfigCells: [TMPopUpViewCell] = []
-        for surface in SurfaceType.allCases {
-            let cell = TMPopUpViewCell()
-            cell.setupUI()
-            cell.setupEvent(title: surface.rawValue)
-            surfaceConfigCells.append(cell)
-        }
-        let surfaceConfig = TMPopUpViewConfig(cells: surfaceConfigCells, rowHeight: 30)
-        surfaceConfigView.setupEvent(config: surfaceConfig)
-    }
-
     override func scaleTo(_ isEnlarge: Bool, completionHandler _: @escaping () -> Void) {
-        if isEnlarge {
-            player1TextField.isHidden = true
-            player2TextField.isHidden = true
+        if !toggle {
+            startGameBtn.addAnimation(startGameBtn.layer.position, CGPoint(x: 136, y: 136), 0.3, "position")
+            startGameBtn.layer.position = CGPoint(x: 136, y: 136)
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
+            startGameBtn.setUp(with: config)
+        } else {
+            Player1SelectView.isHidden = true
+            Player2SelectView.isHidden = true
             leftServerView.isHidden = true
             rightServerView.isHidden = true
             isGoldenGoalLabel.isHidden = true
@@ -202,16 +170,11 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
             startGameBtn.layer.position = CGPoint(x: 34, y: 34)
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(configGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
-        } else {
-            startGameBtn.addAnimation(startGameBtn.layer.position, CGPoint(x: 136, y: 136), 0.3, "position")
-            startGameBtn.layer.position = CGPoint(x: 136, y: 136)
-            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
-            startGameBtn.setUp(with: config)
         }
         super.scaleTo(isEnlarge) {
-            if !isEnlarge {
-                self.player1TextField.isHidden = false
-                self.player2TextField.isHidden = false
+            if self.toggle {
+                self.Player1SelectView.isHidden = false
+                self.Player2SelectView.isHidden = false
                 self.leftServerView.isHidden = false
                 self.rightServerView.isHidden = false
                 self.isGoldenGoalLabel.isHidden = false
@@ -233,11 +196,11 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
     /// 返回用户填写的比赛数据
     /// - Returns: 0：player1LoginName，1: player2LoginName，2：setNum，3: gameNum， 4: isGoldenGoal
     func getData() -> (player1Id: Int, player2Id: Int, surfaceType: SurfaceType, setNum: Int, gameNum: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool) {
-        let player1Id = (player1TextField.config.cells.first as! TMplayerSelectionCell).playerId
-        let player2Id = (player2TextField.config.cells.first as! TMplayerSelectionCell).playerId
-        let setConfig = Int((setConfigView.config.cells.first as! TMPopUpViewCell).label.text ?? "0") ?? 0
-        let gameConfig = Int((gameConfigView.config.cells.first as! TMPopUpViewCell).label.text ?? "0") ?? 0
-        let surfaceConfig = (surfaceConfigView.config.cells.first as! TMPopUpViewCell).label.text ?? "hard"
+        let player1Id = player1Selections.players[Player1SelectView.selectedIndex?.row ?? 0].id
+        let player2Id = player2Selections.players[Player2SelectView.selectedIndex?.row ?? 0].id
+        let setConfig = setNumSelections.numConfig[setConfigView.selectedIndex?.row ?? 0]
+        let gameConfig = gameNumSelections.numConfig[gameConfigView.selectedIndex?.row ?? 0]
+        let surfaceConfig = surfaceTypeSelections.surfaceConfig[surfaceConfigView.selectedIndex?.row ?? 0].rawValue
         return (player1Id, player2Id, SurfaceType(rawValue: surfaceConfig) ?? .hard, setConfig, gameConfig, isGoldenGoalConfigView.isOn, isPlayer1Serving)
     }
 
@@ -254,5 +217,78 @@ class TMGameConfigView: TMUserInteractionUnabledView, UITableViewDelegate {
         isPlayer1Serving.toggle()
         leftServerView.changeStats(to: isPlayer1Serving)
         rightServerView.changeStats(to: !isPlayer1Serving)
+    }
+}
+
+class Player1SelectViewDataSource: NSObject, UITableViewDataSource {
+    var players: [Player] = []
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        players.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMplayerSelectionCell()
+        cell.setupUI()
+        cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+        return cell
+    }
+}
+
+class Player2SelectViewDataSource: NSObject, UITableViewDataSource {
+    var players: [Player] = []
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        players.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMplayerSelectionCell()
+        cell.setupUI()
+        cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+        return cell
+    }
+}
+
+class setNumSelectViewDataSource: NSObject, UITableViewDataSource {
+    var numConfig: [Int] = [1, 2, 3]
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        numConfig.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMPopUpCell()
+        cell.setupUI()
+        cell.setupEvent(title: "\(numConfig[indexPath.row])")
+        return cell
+    }
+}
+
+class gameNumSelectViewDataSource: NSObject, UITableViewDataSource {
+    var numConfig: [Int] = [4, 6]
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        numConfig.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMPopUpCell()
+        cell.setupUI()
+        cell.setupEvent(title: "\(numConfig[indexPath.row])")
+        return cell
+    }
+}
+
+class surfaceTypeConfigViewDataSource: NSObject, UITableViewDataSource {
+    var surfaceConfig: [SurfaceType] = [.hard, .clay, .grass]
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        surfaceConfig.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMPopUpCell()
+        cell.setupUI()
+        cell.setupEvent(title: surfaceConfig[indexPath.row].rawValue)
+        return cell
     }
 }

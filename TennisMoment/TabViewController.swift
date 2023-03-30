@@ -12,7 +12,7 @@ class TabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.backgroundColor = UIColor(named: "TabBarBackground")
+        tabBar.backgroundColor = UIColor(named: "ComponentBackground")
         tabBar.tintColor = UIColor(named: "Tennis")
         tabBar.unselectedItemTintColor = UIColor(named: "ContentBackground")
         tabBar.setCorner(radii: 15)
@@ -20,7 +20,7 @@ class TabViewController: UITabBarController {
         if #available(iOS 15.0, *) {
             let appearnce = UITabBarAppearance()
             appearnce.configureWithOpaqueBackground()
-            appearnce.backgroundColor = UIColor(named: "TabBarBackground")
+            appearnce.backgroundColor = UIColor(named: "ComponentBackground")
             tabBar.standardAppearance = appearnce
             tabBar.scrollEdgeAppearance = appearnce
         }
