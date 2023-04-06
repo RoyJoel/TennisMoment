@@ -108,12 +108,12 @@ class TMUserInfoView: TMView {
     }
 
     func setupEvent() {
-        let yearPlayedConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.yearsPlayed)", infoContentFont: 20, infoTitle: "YearsPlayed", infoTitleFont: 17, inset: 24)
-        let heightConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.height)", infoContentFont: 20, infoTitle: "Height", infoTitleFont: 17, inset: 24)
-        let widthConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.width)", infoContentFont: 20, infoTitle: "Width", infoTitleFont: 17, inset: 24)
-        let gripConfig = TMInfoViewConfig(infoContent: TMUser.user.grip.rawValue, infoContentFont: 20, infoTitle: "Grip", infoTitleFont: 17, inset: 24)
-        let backhandConfig = TMInfoViewConfig(infoContent: TMUser.user.backhand.rawValue, infoContentFont: 17, infoTitle: "Backhand", infoTitleFont: 17, inset: 24)
-        let pointsConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.points)", infoContentFont: 20, infoTitle: "Current Points", infoTitleFont: 17, inset: 24)
+        let yearPlayedConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.yearsPlayed)", infoContentFont: 20, infoTitle: NSLocalizedString("YearsPlayed", comment: ""), infoTitleFont: 17, inset: 24)
+        let heightConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.height)", infoContentFont: 20, infoTitle: NSLocalizedString("Height", comment: ""), infoTitleFont: 17, inset: 24)
+        let widthConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.width)", infoContentFont: 20, infoTitle: NSLocalizedString("Width", comment: ""), infoTitleFont: 17, inset: 24)
+        let gripConfig = TMInfoViewConfig(infoContent: NSLocalizedString(TMUser.user.grip.rawValue, comment: ""), infoContentFont: 20, infoTitle: NSLocalizedString("Grip", comment: ""), infoTitleFont: 17, inset: 24)
+        let backhandConfig = TMInfoViewConfig(infoContent: NSLocalizedString(TMUser.user.backhand.rawValue, comment: ""), infoContentFont: 17, infoTitle: NSLocalizedString("Backhand", comment: ""), infoTitleFont: 17, inset: 24)
+        let pointsConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.points)", infoContentFont: 20, infoTitle: NSLocalizedString("Current Points", comment: ""), infoTitleFont: 17, inset: 24)
 
         yearsPlayedView.setup(with: yearPlayedConfig)
         heightView.setup(with: heightConfig)

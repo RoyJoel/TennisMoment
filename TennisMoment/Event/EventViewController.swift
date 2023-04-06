@@ -27,12 +27,11 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         navigationItem.title = ""
         navigationController?.navigationBar.tintColor = UIColor(named: "ContentBackground")
-        view.backgroundColor = UIColor(named: "BackgroundGray")
 
+        view.backgroundColor = UIColor(named: "BackgroundGray")
         view.addSubview(clubListView)
         view.insertSubview(clubContentView, belowSubview: clubListView)
 
-        clubContentView.backgroundColor = UIColor(named: "ComponentBackground")
         clubListView.backgroundColor = UIColor(named: "BackgroundGray")
         clubListView.delegate = self
         clubListView.dataSource = self
@@ -43,17 +42,17 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
             clubListView.sectionHeaderTopPadding = 0
         }
         clubListView.register(TMClubTableViewCell.self, forCellReuseIdentifier: "TMClubTableViewCell")
-
-        clubContentView.frame = CGRect(x: 38, y: 32, width: UIStandard.shared.screenWidth * 0.3, height: UIStandard.shared.screenHeight * 0.85)
-        clubContentView.setup(clubContentView.bounds, clubContentView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.6, height: UIStandard.shared.screenHeight * 0.85), CGPoint(x: UIStandard.shared.screenWidth * 0.6 + 62, y: 32 + UIStandard.shared.screenHeight * 0.425), 0.3)
-        clubContentView.setupUI()
-
         clubListView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(38)
             make.top.equalToSuperview().offset(32)
             make.width.equalTo(UIStandard.shared.screenWidth * 0.3)
             make.height.equalTo(UIStandard.shared.screenHeight * 0.85)
         }
+
+        clubContentView.backgroundColor = UIColor(named: "ComponentBackground")
+        clubContentView.frame = CGRect(x: 38, y: 32, width: UIStandard.shared.screenWidth * 0.3, height: UIStandard.shared.screenHeight * 0.85)
+        clubContentView.setup(clubContentView.bounds, clubContentView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.6, height: UIStandard.shared.screenHeight * 0.85), CGPoint(x: UIStandard.shared.screenWidth * 0.6 + 62, y: 32 + UIStandard.shared.screenHeight * 0.425), 0.3)
+        clubContentView.setupUI()
     }
 
     func showContent() {
@@ -66,7 +65,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
         let label = UILabel()
-        label.text = "My Club"
+        label.text = NSLocalizedString("My Club", comment: "")
         label.font = UIFont.systemFont(ofSize: 22)
         return label
     }

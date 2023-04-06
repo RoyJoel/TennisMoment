@@ -11,6 +11,7 @@ import SwiftyJSON
 struct User: Codable {
     var id: Int
     var loginName: String
+    var password: String
     var name: String
     var icon: String
     var sex: Sex
@@ -29,10 +30,12 @@ struct User: Codable {
     var allTourLevelGames: [Game]
     var allEvents: [Event]
     var allSchedules: [Schedule]
+    var token: String
 
-    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Club], allGames: [Game], allTourLevelGames: [Game], allEvents: [Event], allSchedules: [Schedule]) {
+    init(id: Int, loginName: String, password: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Club], allGames: [Game], allTourLevelGames: [Game], allEvents: [Event], allSchedules: [Schedule], token: String) {
         self.id = id
         self.loginName = loginName
+        self.password = password
         self.name = name
         self.icon = icon
         self.sex = sex
@@ -51,11 +54,13 @@ struct User: Codable {
         self.allTourLevelGames = allTourLevelGames
         self.allEvents = allEvents
         self.allSchedules = allSchedules
+        self.token = token
     }
 
     init(json: JSON) {
         id = json["id"].intValue
         loginName = json["loginName"].stringValue
+        password = json["password"].stringValue
         name = json["name"].stringValue
         icon = json["icon"].stringValue
         sex = Sex(rawValue: json["sex"].stringValue) ?? .Man
@@ -74,5 +79,17 @@ struct User: Codable {
         allTourLevelGames = json["allTourLevelGames"].arrayValue.map { Game(json: $0) }
         allEvents = json["allEvents"].arrayValue.map { Event(json: $0) }
         allSchedules = json["allSchedules"].arrayValue.map { Schedule(json: $0) }
+        token = json["token"].stringValue
     }
+}
+
+struct signupResponse: Codable {
+    var user: User
+    var res: Bool
+}
+
+struct UserResponse: Codable {
+    var code: Int
+    var count: Int
+    var data: signupResponse
 }

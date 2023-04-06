@@ -10,7 +10,7 @@ import TMComponent
 import Toast_Swift
 import UIKit
 
-class TMScoreControllerView: TMUserInteractionUnabledView {
+class TMScoreControllerView: TMScalableView {
     var isLeft: Bool = true
 
     lazy var aceBtn: TMButton = {

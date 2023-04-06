@@ -9,15 +9,20 @@ import Alamofire
 import Foundation
 import SwiftyJSON
 class TMNetWork {
-    static let tennisMomentURL = "http://169.254.151.24:8080"
-    static func get(_ parameters: String, completionHandler: @escaping (JSON?) -> Void) {
-        AF.request(URL(string: tennisMomentURL + parameters)!).response { response in
+    static let tennisMomentURL = "http://localhost:8080"
+
+    static func get(_ parameters: String, headers: HTTPHeaders? = nil, completionHandler: @escaping (JSON?, Error?) -> Void) {
+        AF.request(URL(string: tennisMomentURL + parameters)!, headers: headers).response { response in
+            guard response.response?.statusCode != 401 else {
+                completionHandler(nil, TMNetWorkError.authError("认证失败"))
+                return
+            }
             guard let jsonData = response.data else {
-                completionHandler(nil)
+                completionHandler(nil, nil)
                 return
             }
             let json = try! JSON(data: jsonData)
-            completionHandler(json["data"])
+            completionHandler(json["data"], nil)
         }
     }
 
@@ -61,8 +66,13 @@ class TMNetWork {
                 completionHandler(nil)
                 return
             }
-            let json = try! JSON(data: jsonData)
-            completionHandler(json["data"])
+            let json = try? JSON(data: jsonData)
+            completionHandler(json?["data"])
         }
     }
+}
+
+enum TMNetWorkError: Error {
+    case authError(String)
+    case netError(String)
 }

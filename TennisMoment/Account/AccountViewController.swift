@@ -34,11 +34,21 @@ class AccountViewController: UIViewController {
         return dataView
     }()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         navigationItem.title = ""
         navigationController?.navigationBar.tintColor = UIColor(named: "ContentBackground")
+
         view.backgroundColor = UIColor(named: "BackgroundGray")
         view.addSubview(settingView)
         view.addSubview(iconView)
@@ -46,6 +56,7 @@ class AccountViewController: UIViewController {
         view.addSubview(userDataView)
 
         iconView.setupUI()
+
         basicInfoView.setupUI()
         let iconConfig = TMIconViewConfig(icon: TMUser.user.icon, name: TMUser.user.name)
         iconView.setupEvent(config: iconConfig)
@@ -93,6 +104,8 @@ class AccountViewController: UIViewController {
         userDataView.gameStatsView.leftActivityView.addTapGesture(self, #selector(enterLeftDetailStatsView))
         userDataView.gameStatsView.midActivityView.addTapGesture(self, #selector(enterMidDetailStatsView))
         userDataView.gameStatsView.rightActivityView.addTapGesture(self, #selector(enterRightDetailStatsView))
+        settingView.isUserInteractionEnabled = true
+        settingView.addTapGesture(self, #selector(settingViewUp))
     }
 
     @objc func enterLeftDetailStatsView() {
@@ -111,5 +124,10 @@ class AccountViewController: UIViewController {
         let vc = TMGameStatsDetailViewController()
         vc.game = userDataView.gameStatsView.rightActivityView.game ?? Game(json: JSON())
         navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc func settingViewUp() {
+        let vc = TMSettingViewController()
+        navigationController?.present(vc, animated: true)
     }
 }

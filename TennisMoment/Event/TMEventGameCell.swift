@@ -65,7 +65,7 @@ class TMEventGameCell: UITableViewCell {
             make.right.equalToSuperview().offset(-6)
         }
 
-        titleView.text = "In Progress"
+        titleView.text = NSLocalizedString("In Progress", comment: "")
         titleView.textColor = UIColor(named: "ContentBackground")
         titleView.font = UIFont.systemFont(ofSize: 17)
 

@@ -40,12 +40,19 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         return button
     }()
 
+    // 无比赛时提示窗口
+    lazy var alartView: UILabel = {
+        let view = UILabel()
+        return view
+    }()
+
     func setupUI() {
         backgroundColor = UIColor(named: "ComponentBackground")
         setCorner(radii: 15)
         addSubview(opponentLabel)
         addSubview(dateLabel)
         addSubview(placeLabel)
+        addSubview(alartView)
         insertSubview(scheduleList, belowSubview: opponentLabel)
         insertSubview(scheduleConfigView, aboveSubview: scheduleList)
 
@@ -74,6 +81,10 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
             make.bottom.equalToSuperview()
             make.left.right.equalToSuperview()
         }
+        alartView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+        }
 
         addScheduleButton.frame = CGRect(x: bounds.width - 50, y: 0, width: 50, height: 50)
         scheduleConfigView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 50)
@@ -85,9 +96,9 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
         addScheduleButton.setUp(with: addScheduleButtonConfig)
 
-        opponentLabel.text = "Opponent"
-        dateLabel.text = "Date"
-        placeLabel.text = "Place"
+        opponentLabel.text = NSLocalizedString("Opponent", comment: "")
+        dateLabel.text = NSLocalizedString("Date", comment: "")
+        placeLabel.text = NSLocalizedString("Place", comment: "")
         opponentLabel.font = UIFont.systemFont(ofSize: 21)
         dateLabel.font = UIFont.systemFont(ofSize: 21)
         placeLabel.font = UIFont.systemFont(ofSize: 21)
@@ -98,6 +109,24 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         scheduleList.showsVerticalScrollIndicator = false
         scheduleList.showsHorizontalScrollIndicator = false
         scheduleList.allowsSelectionDuringEditing = true
+
+        opponentLabel.isHidden = false
+        dateLabel.isHidden = false
+        placeLabel.isHidden = false
+        scheduleList.isHidden = false
+        alartView.isHidden = true
+    }
+
+    func setupAlart() {
+        opponentLabel.isHidden = true
+        dateLabel.isHidden = true
+        placeLabel.isHidden = true
+        scheduleList.isHidden = true
+        alartView.isHidden = false
+
+        alartView.text = "You don't have any schedule"
+        alartView.font = UIFont.systemFont(ofSize: 22)
+        alartView.textAlignment = .center
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -113,13 +142,11 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt _: IndexPath) -> UITableViewCell.EditingStyle {
-        print(2)
         return .delete
     }
 
     func tableView(_: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let modifyAction = UIContextualAction(style: .destructive, title: "Modify") { _, _, completion in
-            // Your code to handle delete action here
+        let modifyAction = UIContextualAction(style: .destructive, title: NSLocalizedString("Modify", comment: "")) { _, _, completion in
             self.scheduleConfigView.setupEvent(players: TMUser.user.friends, date: TMUser.user.allSchedules[indexPath.row].startDate, place: TMUser.user.allSchedules[indexPath.row].place)
             self.scheduleConfigView.scaleTo(self.scheduleConfigView.toggle)
             let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(self.addSchedule), actionTarget: self)
@@ -128,9 +155,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         modifyAction.backgroundColor = UIColor(named: "Tennis")
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-            // Your code to handle delete action here
-
+        let deleteAction = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { _, _, _ in
             TMUser.user.allSchedules.remove(at: indexPath.row)
             self.scheduleList.reloadData()
             let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(self.scheduleGameViewUp), actionTarget: self)
@@ -151,7 +176,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if !self.point(inside: point, with: nil) {
+        if !CGRectContainsPoint(scheduleList.frame, point), !CGRectContainsPoint(addScheduleButton.frame, point) {
             if scheduleConfigView.toggle == true {
                 scheduleConfigView.scaleTo(scheduleConfigView.toggle)
                 if scheduleConfigView.toggle == false {
@@ -170,14 +195,36 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
 
     @objc func addSchedule() {
-        scheduleConfigView.scaleTo(scheduleConfigView.toggle)
-        let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: scheduleConfigView.placeSearchBar.text ?? "", opponent: scheduleConfigView.players[scheduleConfigView.playerSelectView.selectedIndex?.row ?? 0])
-        TMUser.user.allSchedules.append(newSchedule)
-        scheduleList.reloadData()
-        let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
-        addScheduleButton.setUp(with: addScheduleButtonConfig)
-        DispatchQueue.main.async {
-            TMUser.addSchedule(startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
+        if let place = scheduleConfigView.placeSearchBar.text, place != "" {
+            if scheduleConfigView.players[scheduleConfigView.playerSelectView.selectedIndex?.row ?? 0].id != TMUser.user.id {
+                scheduleConfigView.scaleTo(scheduleConfigView.toggle)
+                let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[scheduleConfigView.playerSelectView.selectedIndex?.row ?? 0])
+                TMUser.user.allSchedules.append(newSchedule)
+                scheduleList.reloadData()
+                let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
+                addScheduleButton.setUp(with: addScheduleButtonConfig)
+                DispatchQueue.main.async {
+                    TMUser.addSchedule(startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
+                }
+            } else {
+                let toastView = UILabel()
+                toastView.text = "The opponent can not be yourself"
+                toastView.bounds = bounds
+                toastView.backgroundColor = UIColor(named: "ComponentBackground")
+                toastView.textAlignment = .center
+                toastView.setCorner(radii: 15)
+                showToast(toastView, duration: 1, position: .center) { _ in
+                }
+            }
+        } else {
+            let toastView = UILabel()
+            toastView.text = "The Place Should Not Be Null"
+            toastView.bounds = bounds
+            toastView.backgroundColor = UIColor(named: "ComponentBackground")
+            toastView.textAlignment = .center
+            toastView.setCorner(radii: 15)
+            showToast(toastView, duration: 1, position: .center) { _ in
+            }
         }
     }
 }

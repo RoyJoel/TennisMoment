@@ -28,7 +28,7 @@ class TMUserDataView: TMView {
 
     func setupUI() {
         setCorner(radii: 20)
-        let titles = ["ACTIVITY", "STATS"]
+        let titles = [NSLocalizedString("ACTIVITY", comment: ""), NSLocalizedString("STATS", comment: "")]
 
         let dataSource = JXSegmentedTitleDataSource()
         dataSource.isTitleColorGradientEnabled = true

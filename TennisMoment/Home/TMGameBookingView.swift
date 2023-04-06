@@ -62,7 +62,7 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
             make.right.equalToSuperview()
         }
         playerSelectView.delegate = playerSelectView
-        placeSearchBar.placeholder = "Search"
+        placeSearchBar.placeholder = NSLocalizedString("Search", comment: "")
         placeSearchBar.delegate = self
         playerSelectView.isHidden = true
         placeSearchBar.isHidden = true
@@ -137,7 +137,6 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TMplayerSelectionCell()
-        cell.setupUI()
         cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
         return cell
     }

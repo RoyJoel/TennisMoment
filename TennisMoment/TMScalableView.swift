@@ -9,10 +9,10 @@ import Foundation
 import TMComponent
 import UIKit
 
-class TMUserInteractionUnabledView: TMView {
+class TMScalableView: TMView {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
-        let tmview = view as? TMUserInteractionUnabledView
+        let tmview = view as? TMScalableView
 
         if let tmview = tmview {
             if tmview.toggle == false {

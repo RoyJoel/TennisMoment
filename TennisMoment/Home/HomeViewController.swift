@@ -45,7 +45,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         view.addSubview(scheduleView)
 
         recordView.frame = CGRect(x: 24, y: 72, width: UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.35)
-        configGameView.frame = CGRect(x: 36 + recordView.bounds.width, y: 72, width: 68, height: 68)
+        configGameView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 72, width: 68, height: 68)
         scheduleView.frame = CGRect(x: 24, y: 84 + UIStandard.shared.screenHeight * 0.35, width: 80 + UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.44)
 
         recordView.setupUI()
@@ -79,13 +79,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
 
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
 
-        configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 100, y: 100, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
 
         scheduleView.setupUI()
     }
 
     @objc private func startRecord() {
-        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "arrowtriangle.backward"), style: .plain, target: self, action: #selector(endRecord)), animated: true)
+        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(endRecord)), animated: true)
         navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(completeGame)), animated: true)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
@@ -130,7 +130,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             }
         }
 
-        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "LastGameTime")
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: TMUDKeys.lastGameTime.rawValue)
     }
 
     @objc func toastUp(_ obj: Notification) {
@@ -147,7 +147,30 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
 
     @objc func startGame() {
+        guard TMUser.user.friends.count > 0 else {
+            let toastView = UILabel()
+            toastView.text = "The Game Should Not start without player"
+            toastView.bounds = configGameView.bounds
+            toastView.backgroundColor = UIColor(named: "ComponentBackground")
+            toastView.textAlignment = .center
+            toastView.setCorner(radii: 15)
+            configGameView.showToast(toastView, position: .center) { _ in
+            }
+            return
+        }
         let gameConfig = configGameView.getData()
+        guard gameConfig.player1Id != gameConfig.player2Id else {
+            let toastView = UILabel()
+            toastView.text = "Player1 and player2 should not be same"
+            toastView.bounds = configGameView.bounds
+            toastView.backgroundColor = UIColor(named: "ComponentBackground")
+            toastView.textAlignment = .center
+            toastView.setCorner(radii: 15)
+            configGameView.showToast(toastView, position: .center) { _ in
+            }
+            return
+        }
+        configGameView.scaleTo(configGameView.toggle, completionHandler: {})
         var newGame = GameRequest(id: 0, place: "", surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: nil, player1Id: gameConfig.player1Id, player1StatsId: 0, player2Id: gameConfig.player2Id, player2StatsId: 0, isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
         TMUser.getLocationdescription(completionHandler: { location in
             newGame.place = location
@@ -156,7 +179,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                     return
                 }
                 self.recordView.setNewGame(game: game)
-                self.navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "arrowtriangle.backward"), style: .plain, target: self, action: #selector(self.endRecord)), animated: true)
+                self.navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(self.endRecord)), animated: true)
                 self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(self.completeGame)), animated: true)
                 self.navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")

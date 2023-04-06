@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftFormat;
+			productName = SwiftFormat;
 		};
 /* End PBXAggregateTarget section */
 
@@ -437,7 +438,7 @@
 		064520D1FE4ADD139512C4D43296C2F4 /* JXSegmentedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JXSegmentedView.swift; path = Sources/Core/JXSegmentedView.swift; sourceTree = "<group>"; };
 		0693442D0AFF58E650391D8E37524D0D /* JXSegmentedView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "JXSegmentedView-Info.plist"; sourceTree = "<group>"; };
 		06C3C6C4542D36F21DEFB0133D84A68B /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
-		07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JXSegmentedView; path = JXSegmentedView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JXSegmentedView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0803258AF32117DAFE982F3FC9E7BE54 /* NSArray+TABAnimatedChain.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+TABAnimatedChain.m"; path = "TABAnimatedDemo/TABAnimated/Decorate/Chain/NSArray+TABAnimatedChain.m"; sourceTree = "<group>"; };
 		089E0FA66635C1BE08E47B833F329002 /* UIView+TABControlAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+TABControlAnimation.h"; path = "TABAnimatedDemo/TABAnimated/Control/Include/UIView+TABControlAnimation.h"; sourceTree = "<group>"; };
 		0A3E3DF5E5D295D8A204E88EE31FCC3E /* TMComponent-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TMComponent-prefix.pch"; sourceTree = "<group>"; };
@@ -468,7 +469,7 @@
 		1BAD442176A57472DD419F2984534264 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		1CD867A2B61BFF90D2CAF25F181C276B /* TABComponentLayer+TABClassicAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "TABComponentLayer+TABClassicAnimation.m"; path = "TABAnimatedDemo/TABAnimated/Decorate/Animation/Classic/TABComponentLayer+TABClassicAnimation.m"; sourceTree = "<group>"; };
 		1D5C7CF7EB9B308D47F7BE1AAAD0BFD8 /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
-		1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TABAnimated; path = TABAnimated.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TABAnimated.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EB48C5ADF838DD9149FF7C0B6C4D57C /* TABAnimatedInjectionIIIHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TABAnimatedInjectionIIIHelper.m; path = TABAnimatedDemo/TABAnimated/Util/TABAnimatedInjectionIIIHelper.m; sourceTree = "<group>"; };
 		1F74922CF40F36153C0CEF2752406AE4 /* TABBaseComponent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TABBaseComponent.h; path = TABAnimatedDemo/TABAnimated/Decorate/Chain/TABBaseComponent.h; sourceTree = "<group>"; };
 		1FB348F7E834B41CA3B0788653A84BAC /* TABDropAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TABDropAnimation.m; path = TABAnimatedDemo/TABAnimated/Decorate/Animation/Drop/TABDropAnimation.m; sourceTree = "<group>"; };
@@ -566,7 +567,7 @@
 		5B6ADFD05D3A15A25514C025E44D34E7 /* Toast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Toast.swift; path = Toast/Toast.swift; sourceTree = "<group>"; };
 		5BEE973928AE547A67270B3E6D529126 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Source/LayoutConstraintItem.swift; sourceTree = "<group>"; };
 		5D0B24D72413BCCEA4258D4E519B7AAB /* TABAnimated-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "TABAnimated-Info.plist"; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F317825D03A9C1246B65D45D672FAD4 /* TABBaseComponent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TABBaseComponent.m; path = TABAnimatedDemo/TABAnimated/Decorate/Chain/TABBaseComponent.m; sourceTree = "<group>"; };
 		5F38F395D8839B6BBCE657FC327060D4 /* TABClassicAnimationImpl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TABClassicAnimationImpl.m; path = TABAnimatedDemo/TABAnimated/Decorate/Animation/Classic/TABClassicAnimationImpl.m; sourceTree = "<group>"; };
 		60B7B318CD1C899BA588EFD4031D15BE /* UIView+TABExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+TABExtension.m"; path = "TABAnimatedDemo/TABAnimated/PullLoading/UIView+TABExtension.m"; sourceTree = "<group>"; };
@@ -635,7 +636,7 @@
 		9CE33345389EB1AD6702D6E6DC1EE714 /* TMTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMTableView.swift; path = TMComponent/Classes/TMTableView.swift; sourceTree = "<group>"; };
 		9D30C8CD66DFE1CBAF0B3FC6884BCF43 /* JXSegmentedView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JXSegmentedView-prefix.pch"; sourceTree = "<group>"; };
 		9D89123E2CA7D57911367448DC37DE22 /* JXSegmentedIndicatorParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JXSegmentedIndicatorParams.swift; path = Sources/Indicator/JXSegmentedIndicatorParams.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0116D7A80866264502D64700F3AEE3E /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Source/ConstraintRelation.swift; sourceTree = "<group>"; };
 		A0E0DDEA22DC96BE7161A697B9D54B2F /* JXSegmentedDotItemModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JXSegmentedDotItemModel.swift; path = Sources/Dot/JXSegmentedDotItemModel.swift; sourceTree = "<group>"; };
 		A1593BEA09BCCF45130CCD420B4AA3B8 /* TABAnimatedCacheManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TABAnimatedCacheManager.h; path = TABAnimatedDemo/TABAnimated/Cache/TABAnimatedCacheManager.h; sourceTree = "<group>"; };
@@ -918,7 +919,6 @@
 				C6DB8CFD596809B0550BA298A866847A /* SwiftyJSON.swift */,
 				03B991E6FED36BEE2FADFC9D3DF14D69 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -951,7 +951,6 @@
 				D8EA94B55BE7B1CD3194A9933B515348 /* UIViewExtension.swift */,
 				946FA510CA2387FD45196BB7E810D942 /* Support Files */,
 			);
-			name = TMComponent;
 			path = TMComponent;
 			sourceTree = "<group>";
 		};
@@ -1002,7 +1001,6 @@
 			children = (
 				7946A508CDDE9A4A6465859986ECF096 /* Support Files */,
 			);
-			name = SwiftFormat;
 			path = SwiftFormat;
 			sourceTree = "<group>";
 		};
@@ -1044,7 +1042,6 @@
 				5B6ADFD05D3A15A25514C025E44D34E7 /* Toast.swift */,
 				57D49360B6A727CA347DD97970ACEF92 /* Support Files */,
 			);
-			name = "Toast-Swift";
 			path = "Toast-Swift";
 			sourceTree = "<group>";
 		};
@@ -1182,7 +1179,6 @@
 				60B7B318CD1C899BA588EFD4031D15BE /* UIView+TABExtension.m */,
 				29DB9AB76AEA8DA672B1C1FE2BBB95A7 /* Support Files */,
 			);
-			name = TABAnimated;
 			path = TABAnimated;
 			sourceTree = "<group>";
 		};
@@ -1257,7 +1253,6 @@
 				3EAE32B80BE5045FF15BB89B09C8046A /* Validation.swift */,
 				07EF14057D6E16C64A058D05AA4A975D /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1309,21 +1304,20 @@
 				89D8F22D228885B8710DC5BB40FA7553 /* JXSegmentedViewTool.swift */,
 				6B738509366F553338CDFF54919E29ED /* Support Files */,
 			);
-			name = JXSegmentedView;
 			path = JXSegmentedView;
 			sourceTree = "<group>";
 		};
 		B55D28E93BCBF3C23348D87A3BA46DAE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */,
-				07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView */,
+				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */,
+				07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView.framework */,
 				3D5859C6B8A701EE50A1663BDAAF6D03 /* Pods-TennisMoment */,
 				A52A1C2BE37BEF07451DAD9AB00E8002 /* Pods-TennisMoment-TennisMomentUITests */,
 				2104BCE7E7C6525FB5C3C517C7801E64 /* Pods-TennisMomentTests */,
 				979486118B3E90C08386079D57962701 /* SnapKit */,
 				E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON */,
-				1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated */,
+				1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated.framework */,
 				B839D137867189A76EBA75FDC14106E1 /* TMComponent */,
 				D6043471C96F93DC41F7DD1E0D7D8B35 /* Toast-Swift */,
 			);
@@ -1405,7 +1399,6 @@
 				DADA32EF105BBAC8B4A6517AB56E30E3 /* UILayoutSupport+Extensions.swift */,
 				8075C63D22ABC496CE285365D7F1D2AD /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1632,7 +1625,7 @@
 			);
 			name = TABAnimated;
 			productName = TABAnimated;
-			productReference = 1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated */;
+			productReference = 1D5D66B1D7573083A392FD0B354846A2 /* TABAnimated.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		B990BD87169C76A3ED3FE8A9258D91A3 /* Toast-Swift */ = {
@@ -1705,7 +1698,7 @@
 			);
 			name = JXSegmentedView;
 			productName = JXSegmentedView;
-			productReference = 07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView */;
+			productReference = 07928762D9A8551470DAAD7C1E1F53A5 /* JXSegmentedView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		EAAA1AD3A8A1B59AB91319EE40752C6D /* Alamofire */ = {
@@ -1723,7 +1716,7 @@
 			);
 			name = Alamofire;
 			productName = Alamofire;
-			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */;
+			productReference = 5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		F8B8031573355937D32A656025FEEDE1 /* Pods-TennisMoment */ = {
@@ -2407,7 +2400,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TABAnimated/TABAnimated-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TABAnimated/TABAnimated-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2530,7 +2523,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Alamofire/Alamofire-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2665,7 +2658,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/JXSegmentedView/JXSegmentedView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/JXSegmentedView/JXSegmentedView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2851,7 +2844,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/JXSegmentedView/JXSegmentedView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/JXSegmentedView/JXSegmentedView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2991,7 +2984,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TABAnimated/TABAnimated-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TABAnimated/TABAnimated-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3098,7 +3091,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Alamofire/Alamofire-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Alamofire/Alamofire-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

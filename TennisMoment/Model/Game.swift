@@ -170,5 +170,6 @@ struct GameRequest: Codable {
 struct GameResponse: Codable {
     var code: Int
     var count: Int
+    var msg: String
     var data: Game
 }

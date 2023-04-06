@@ -21,9 +21,8 @@ open class TMTextField: UIView {
     }
 
     private func setupUI() {
-        backgroundColor = UIColor(named: "ContentGray")
+        backgroundColor = UIColor(named: "TennisBlurTextField")
         setCorner(radii: 15)
-//        drawBorder(color: .black, width: 5)
 
         addSubview(textField)
 

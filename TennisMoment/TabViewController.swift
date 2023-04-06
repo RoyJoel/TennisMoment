@@ -37,9 +37,9 @@ class TabViewController: UITabBarController {
     }
 
     private func addViewController() {
-        setChildViewController(HomeViewController(), "Home", "tennisball.fill")
-        setChildViewController(EventViewController(), "Event", "trophy.fill")
-        setChildViewController(AccountViewController(), "Me", "figure.tennis")
+        setChildViewController(HomeViewController(), NSLocalizedString("Home", comment: ""), "tennisball.fill")
+        setChildViewController(EventViewController(), NSLocalizedString("Event", comment: ""), "trophy.fill")
+        setChildViewController(AccountViewController(), NSLocalizedString("Me", comment: ""), "figure.tennis")
     }
 
     private func setChildViewController(_ childViewController: UIViewController, _ itemName: String, _ itemImage: String) {

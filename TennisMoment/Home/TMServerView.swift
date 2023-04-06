@@ -9,6 +9,7 @@ import Foundation
 import TMComponent
 
 class TMServerView: TMView {
+    var config = TMServeViewConfig(selectedImage: "", unSelectedImage: "", selectedTitle: "", unselectedTitle: "")
     lazy var selectionView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -19,7 +20,8 @@ class TMServerView: TMView {
         return label
     }()
 
-    func setup(isServing: Bool) {
+    func setup(isServing: Bool, config: TMServeViewConfig) {
+        self.config = config
         addSubview(selectionView)
         addSubview(textLabel)
 
@@ -38,21 +40,35 @@ class TMServerView: TMView {
 
         textLabel.textAlignment = .center
         if isServing {
-            selectionView.image = UIImage(systemName: "tennisball.fill")?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
-            textLabel.text = "To serve"
+            selectionView.image = UIImage(systemName: config.selectedImage)?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
+            textLabel.text = NSLocalizedString(config.selectedTitle, comment: "")
         } else {
-            selectionView.image = UIImage(systemName: "tennisball")?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
-            textLabel.text = "To return"
+            selectionView.image = UIImage(systemName: config.unSelectedImage)?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
+            textLabel.text = NSLocalizedString(config.unselectedTitle, comment: "")
         }
     }
 
     func changeStats(to isSelected: Bool) {
         if isSelected {
-            selectionView.image = UIImage(systemName: "tennisball.fill")?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
-            textLabel.text = "To serve"
+            selectionView.image = UIImage(systemName: config.selectedImage)?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
+            textLabel.text = NSLocalizedString(config.selectedTitle, comment: "")
         } else {
-            selectionView.image = UIImage(systemName: "tennisball")?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
-            textLabel.text = "To return"
+            selectionView.image = UIImage(systemName: config.unSelectedImage)?.withTintColor(UIColor(named: "Tennis") ?? .black, renderingMode: .alwaysOriginal)
+            textLabel.text = NSLocalizedString(config.unselectedTitle, comment: "")
         }
+    }
+}
+
+class TMServeViewConfig {
+    var selectedImage: String
+    var unSelectedImage: String
+    var selectedTitle: String
+    var unselectedTitle: String
+
+    init(selectedImage: String, unSelectedImage: String, selectedTitle: String, unselectedTitle: String) {
+        self.selectedImage = selectedImage
+        self.unSelectedImage = unSelectedImage
+        self.selectedTitle = selectedTitle
+        self.unselectedTitle = unselectedTitle
     }
 }

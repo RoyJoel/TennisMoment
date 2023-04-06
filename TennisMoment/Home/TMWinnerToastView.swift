@@ -34,7 +34,7 @@ class TMWinnerToastView: UIView {
         bounds = CGRect(x: 0, y: 0, width: 300, height: 300)
         backgroundColor = .white
         setCorner(radii: 15)
-        titleLabel.text = "SET AND MATCH"
+        titleLabel.text = NSLocalizedString("GAME SET AND MATCH", comment: "")
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
 

@@ -49,8 +49,8 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         contentView.addSubview(DateLabel)
         contentView.addSubview(joinBtn)
 //        addSubview(drawView)
-        contentView.addSubview(scheduleView)
         contentView.addSubview(liveGameView)
+        contentView.addSubview(scheduleView)
         layoutSubviews()
     }
 
@@ -95,14 +95,14 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         self.event = event
         let nameConfig = TMLabelConfig(title: event.name, font: 19)
         let dateConfig = TMLabelConfig(title: "\(event.startDate.convertToString(formatterString: "MM-dd HH:mm:ss")) -- \(event.endDate.convertToString(formatterString: "MM-dd HH:mm:ss"))", font: 13)
-        var joinConfig = TMButtonConfig(title: "JOIN NOW", action: #selector(joinEvent), actionTarget: self)
+        var joinConfig = TMButtonConfig(title: NSLocalizedString("JOIN NOW", comment: ""), action: #selector(joinEvent), actionTarget: self)
         if Date().timeIntervalSince1970 > event.startDate, Date().timeIntervalSince1970 < event.endDate {
-            joinConfig = TMButtonConfig(title: "ONGOING", action: nil, actionTarget: self)
+            joinConfig = TMButtonConfig(title: NSLocalizedString("ONGOING", comment: ""), action: nil, actionTarget: self)
         } else if Date().timeIntervalSince1970 > event.endDate {
-            joinConfig = TMButtonConfig(title: "DONE", action: nil, actionTarget: self)
+            joinConfig = TMButtonConfig(title: NSLocalizedString("COMPLETED", comment: ""), action: nil, actionTarget: self)
         } else if Date().timeIntervalSince1970 < event.startDate {
             if TMUser.user.allEvents.contains(where: { $0.id == event.id }) {
-                joinConfig = TMButtonConfig(title: "ONGOING", action: nil, actionTarget: self)
+                joinConfig = TMButtonConfig(title: NSLocalizedString("ONGOING", comment: ""), action: nil, actionTarget: self)
             }
         }
         scheduleSelections.schedules = TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate)
@@ -164,7 +164,7 @@ class scheduleConfigViewDataSource: NSObject, UITableViewDataSource {
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TMPopUpCell()
         cell.setupUI()
-        cell.setupEvent(title: "\(schedules[indexPath.row]) SCHEDULE")
+        cell.setupEvent(title: "\(schedules[indexPath.row]) " + NSLocalizedString("SCHEDULE", comment: ""))
         return cell
     }
 }

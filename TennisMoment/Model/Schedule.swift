@@ -29,5 +29,6 @@ struct Schedule: Codable {
 struct ScheduleResponse: Codable {
     var code: Int
     var count: Int
+    var msg: String
     var data: Schedule
 }

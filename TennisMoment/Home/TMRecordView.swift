@@ -10,7 +10,7 @@ import SwiftyJSON
 import TMComponent
 import UIKit
 
-class TMRecordView: TMUserInteractionUnabledView {
+class TMRecordView: TMScalableView {
     var game = Game(json: JSON())
 
     var isServingOnLeft: Bool = true
@@ -82,23 +82,23 @@ class TMRecordView: TMUserInteractionUnabledView {
         addSubview(rightScoreControllerView)
         addSubview(alartView)
 
-        let player1AceBtnConfig = TMButtonConfig(title: "ACE", action: #selector(player1AceBtnTap), actionTarget: self)
-        let player1ServeScoreBtnConfig = TMButtonConfig(title: "SERVE WINNER", action: #selector(player1ServeScoreBtnTap), actionTarget: self)
-        let player1ServeFaultBtnConfig = TMButtonConfig(title: "SERVE  FAULT", action: #selector(player1ServeFaultBtnTap), actionTarget: self)
-        let player1ReturnAceBtnConfig = TMButtonConfig(title: "RETURN  ACE", action: #selector(player1ReturnAceBtnTap), actionTarget: self)
-        let player1UnforcedErrorBtnConfig = TMButtonConfig(title: "UNFORCE ERROR", action: #selector(player1UnforceErrorBtnTap), actionTarget: self)
-        let player1ForehandWinnersBtnConfig = TMButtonConfig(title: "FOREHAND WINNER", action: #selector(player1ForehandWinnersBtnTap), actionTarget: self)
-        let player1BackhandWinnersBtnConfig = TMButtonConfig(title: "BACKHAND WINNER", action: #selector(player1BackhandWinnersBtnTap), actionTarget: self)
-        let player1NetPointBtnConfig = TMButtonConfig(title: "NET POINT", action: #selector(player1NetPointBtnTap), actionTarget: self)
+        let player1AceBtnConfig = TMButtonConfig(title: NSLocalizedString("ACE", comment: ""), action: #selector(player1AceBtnTap), actionTarget: self)
+        let player1ServeScoreBtnConfig = TMButtonConfig(title: NSLocalizedString("SERVE WINNER", comment: ""), action: #selector(player1ServeScoreBtnTap), actionTarget: self)
+        let player1ServeFaultBtnConfig = TMButtonConfig(title: NSLocalizedString("SERVE  FAULT", comment: ""), action: #selector(player1ServeFaultBtnTap), actionTarget: self)
+        let player1ReturnAceBtnConfig = TMButtonConfig(title: NSLocalizedString("RETURN  ACE", comment: ""), action: #selector(player1ReturnAceBtnTap), actionTarget: self)
+        let player1UnforcedErrorBtnConfig = TMButtonConfig(title: NSLocalizedString("UNFORCED ERROR", comment: ""), action: #selector(player1UnforceErrorBtnTap), actionTarget: self)
+        let player1ForehandWinnersBtnConfig = TMButtonConfig(title: NSLocalizedString("FOREHAND WINNER", comment: ""), action: #selector(player1ForehandWinnersBtnTap), actionTarget: self)
+        let player1BackhandWinnersBtnConfig = TMButtonConfig(title: NSLocalizedString("BACKHAND WINNER", comment: ""), action: #selector(player1BackhandWinnersBtnTap), actionTarget: self)
+        let player1NetPointBtnConfig = TMButtonConfig(title: NSLocalizedString("NET POINT", comment: ""), action: #selector(player1NetPointBtnTap), actionTarget: self)
 
-        let player2AceBtnConfig = TMButtonConfig(title: "ACE", action: #selector(player2AceBtnTap), actionTarget: self)
-        let player2ServeScoreBtnConfig = TMButtonConfig(title: "SERVE WINNER", action: #selector(player2ServeScoreBtnTap), actionTarget: self)
-        let player2ServeFaultBtnConfig = TMButtonConfig(title: "SERVE  FAULT", action: #selector(player2ServeFaultBtnTap), actionTarget: self)
-        let player2ReturnAceBtnConfig = TMButtonConfig(title: "RETURN  ACE", action: #selector(player2ReturnAceBtnTap), actionTarget: self)
-        let player2UnforcedErrorBtnConfig = TMButtonConfig(title: "UNFORCE ERROR", action: #selector(player2UnforceErrorBtnTap), actionTarget: self)
-        let player2ForehandWinnersBtnConfig = TMButtonConfig(title: "FOREHAND WINNER", action: #selector(player2ForehandWinnersBtnTap), actionTarget: self)
-        let player2BackhandWinnersBtnConfig = TMButtonConfig(title: "BACKHAND WINNER", action: #selector(player2BackhandWinnersBtnTap), actionTarget: self)
-        let player2NetPointBtnConfig = TMButtonConfig(title: "NET POINT", action: #selector(player2NetPointBtnTap), actionTarget: self)
+        let player2AceBtnConfig = TMButtonConfig(title: NSLocalizedString("ACE", comment: ""), action: #selector(player2AceBtnTap), actionTarget: self)
+        let player2ServeScoreBtnConfig = TMButtonConfig(title: NSLocalizedString("SERVE WINNER", comment: ""), action: #selector(player2ServeScoreBtnTap), actionTarget: self)
+        let player2ServeFaultBtnConfig = TMButtonConfig(title: NSLocalizedString("SERVE  FAULT", comment: ""), action: #selector(player2ServeFaultBtnTap), actionTarget: self)
+        let player2ReturnAceBtnConfig = TMButtonConfig(title: NSLocalizedString("RETURN  ACE", comment: ""), action: #selector(player2ReturnAceBtnTap), actionTarget: self)
+        let player2UnforcedErrorBtnConfig = TMButtonConfig(title: NSLocalizedString("UNFORCED ERROR", comment: ""), action: #selector(player2UnforceErrorBtnTap), actionTarget: self)
+        let player2ForehandWinnersBtnConfig = TMButtonConfig(title: NSLocalizedString("FOREHAND WINNER", comment: ""), action: #selector(player2ForehandWinnersBtnTap), actionTarget: self)
+        let player2BackhandWinnersBtnConfig = TMButtonConfig(title: NSLocalizedString("BACKHAND WINNER", comment: ""), action: #selector(player2BackhandWinnersBtnTap), actionTarget: self)
+        let player2NetPointBtnConfig = TMButtonConfig(title: NSLocalizedString("NET POINT", comment: ""), action: #selector(player2NetPointBtnTap), actionTarget: self)
 
         leftScoreControllerView.aceBtn.setUp(with: player1AceBtnConfig)
         leftScoreControllerView.serveScoreBtn.setUp(with: player1ServeScoreBtnConfig)
@@ -118,7 +118,7 @@ class TMRecordView: TMUserInteractionUnabledView {
         rightScoreControllerView.backhandWinnersBtn.setUp(with: player2BackhandWinnersBtnConfig)
         rightScoreControllerView.netPointBtn.setUp(with: player2NetPointBtnConfig)
 
-        titleView.text = "In Progress"
+        titleView.text = NSLocalizedString("In Progress", comment: "")
         titleView.textColor = UIColor(named: "ContentBackground")
         titleView.font = UIFont.systemFont(ofSize: 23)
 
@@ -154,10 +154,14 @@ class TMRecordView: TMUserInteractionUnabledView {
         isUserInteractionEnabled = false
 
         let lastGameTime = UserDefaults.standard.double(forKey: "LastGameTime")
-        let gap = Date().timeIntervalSince1970 - lastGameTime
-        let days = Int(gap / (24 * 3600))
-        let hours = Int((gap / 3600).truncatingRemainder(dividingBy: 24))
-        alartView.text = "\(days) days \(hours) hours since last match"
+        if lastGameTime == 0 {
+            alartView.text = "Tap the add button to start your career"
+        } else {
+            let gap = Date().timeIntervalSince1970 - lastGameTime
+            let days = Int(gap / (24 * 3600))
+            let hours = Int((gap / 3600).truncatingRemainder(dividingBy: 24))
+            alartView.text = String(format: NSLocalizedString("lastGameTime", comment: ""), days, hours)
+        }
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }

@@ -79,10 +79,14 @@ class TMUserActivityView: UIView {
             make.height.equalTo(40)
         }
         let lastGameTime = UserDefaults.standard.double(forKey: "LastGameTime")
-        let gap = Date().timeIntervalSince1970 - lastGameTime
-        let days = Int(gap / (24 * 3600))
-        let hours = Int((gap / 3600).truncatingRemainder(dividingBy: 24))
-        alartView.text = "\(days) days \(hours) hours since last match"
+        if lastGameTime == 0 {
+            alartView.text = "Your history matches will be here"
+        } else {
+            let gap = Date().timeIntervalSince1970 - lastGameTime
+            let days = Int(gap / (24 * 3600))
+            let hours = Int((gap / 3600).truncatingRemainder(dividingBy: 24))
+            alartView.text = String(format: NSLocalizedString("lastGameTime", comment: ""), days, hours)
+        }
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }
