@@ -8,7 +8,7 @@
 import Foundation
 
 class TMDataConvert {
-    static func read(from result: [[[Int]]], gameConfigNum: Int) -> ([[Int]], Bool) {
+    static func read(from result: [[[Int]]], isGameCompleted: Bool, gameConfigNum: Int) -> ([[Int]], Bool) {
         var isInTieBreak = false
         var leftSetNum = 0
         var rightSetNum = 0
@@ -27,7 +27,17 @@ class TMDataConvert {
                             isInTieBreak = true
                             continue
                         }
-                        if result[set][game][0] == 5 {
+                        if result[set][game][0] > 5, result[set][game][0] > result[set][game][1] {
+                            leftGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                            continue
+                        } else if result[set][game][1] > 5, result[set][game][1] > result[set][game][0] {
+                            rightGameNum += 1
+                            leftPointNum = 0
+                            rightPointNum = 0
+                            continue
+                        } else if result[set][game][0] == 5 {
                             leftGameNum += 1
                             leftPointNum = 0
                             rightPointNum = 0
@@ -56,7 +66,17 @@ class TMDataConvert {
                 }
             }
             if !result[set].isEmpty {
-                if set != result.count - 1 {
+                if isGameCompleted {
+                    if leftGameNum > rightGameNum {
+                        leftSetNum += 1
+                        leftGameNum = 0
+                        rightGameNum = 0
+                    } else {
+                        rightSetNum += 1
+                        leftGameNum = 0
+                        rightGameNum = 0
+                    }
+                } else if set != result.count - 1 {
                     if leftGameNum > rightGameNum {
                         leftSetNum += 1
                         leftGameNum = 0

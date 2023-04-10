@@ -14,7 +14,7 @@ import UIKit
 
 class TMUser {
     // 未登录时为默认信息
-    static var user = User(id: 0, loginName: "", password: "", name: "", icon: "JasonZhang", sex: .Man, age: 21, yearsPlayed: 1, height: 171, width: 1, grip: .Western, backhand: .TwoHandedBackhand, points: 1000, isAdult: true, careerStats: Stats(json: JSON()), friends: [], allClubs: [], allGames: [], allTourLevelGames: [], allEvents: [], allSchedules: [], token: "")
+    static var user = User()
 
     static func signIn(completionHandler: @escaping (String?, Error?) -> Void) {
         // 将要加密的字符串连接在一起
@@ -42,7 +42,7 @@ class TMUser {
     }
 
     static func signUp(completionHandler: @escaping (String?, Error?) -> Void) {
-        TMNetWork.post("/user/signUp", dataParameters: TMUser.user, responseBindingType: UserResponse.self) { response in
+        TMNetWork.post("/user/signUp", dataParameters: TMUser.user, responseBindingType: UserSignUpResponse.self) { response in
             guard let res = response else {
                 completionHandler(nil, TMNetWorkError.netError("账号或密码错误"))
                 return
@@ -62,6 +62,17 @@ class TMUser {
                 return
             }
             completionHandler(json.boolValue)
+        }
+    }
+
+    static func updateInfo(completionHandler: @escaping (User?) -> Void) {
+        TMNetWork.post("/user/update", dataParameters: TMUser.user, responseBindingType: UserResponse.self) { response in
+            guard let res = response else {
+                completionHandler(nil)
+                return
+            }
+            TMUser.user = res.data
+            completionHandler(res.data)
         }
     }
 

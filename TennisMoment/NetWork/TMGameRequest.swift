@@ -43,8 +43,8 @@ class TMGameRequest {
         }
     }
 
-    static func searchGame(for player1Id: Int, and player2Id: Int, completionHandler: @escaping ([Game]) -> Void) {
-        TMNetWork.post("/game/search", dataParameters: [
+    static func searchh2h(for player1Id: Int, and player2Id: Int, completionHandler: @escaping ([Game]) -> Void) {
+        TMNetWork.post("/game/h2h", dataParameters: [
             "player1Id": player1Id,
             "player2Id": player2Id,
         ]) { json in

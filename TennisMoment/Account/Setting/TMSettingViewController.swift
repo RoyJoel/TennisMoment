@@ -24,6 +24,7 @@ class TMSettingViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "BackgroundGray")
+        navigationController?.navigationBar.tintColor = UIColor(named: "ContentBackground")
         view.addSubview(tableView)
         view.addSubview(signOutBtn)
         tableView.snp.makeConstraints { make in
@@ -56,12 +57,22 @@ class TMSettingViewController: UIViewController, UITableViewDelegate, UITableVie
             return cell
         } else if indexPath.row == 1 {
             let cell = TMsettingTableViewCell()
-            cell.setupEvent(title: "Appearance", info: Bundle.main.object(forInfoDictionaryKey: "UIUserInterfaceStyle") as? String ?? "Set Appearance")
+            cell.setupEvent(title: "Appearance", info: UserDefaults.standard.string(forKey: "AppleAppearance") ?? "UnSpecified")
             cell.selectionStyle = .none
             return cell
         } else if indexPath.row == 2 {
             let cell = TMsettingTableViewCell()
-            cell.setupEvent(title: "Language", info: UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese")
+            if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("en") {
+                cell.setupEvent(title: "Language", info: "English")
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("es") {
+                cell.setupEvent(title: "Language", info: "Spanish")
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("fr") {
+                cell.setupEvent(title: "Language", info: "French")
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("de") {
+                cell.setupEvent(title: "Language", info: "German")
+            } else {
+                cell.setupEvent(title: "Language", info: "Chinese")
+            }
             cell.selectionStyle = .none
             return cell
         } else {
@@ -74,18 +85,24 @@ class TMSettingViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! TMsettingTableViewCell
-        let vc = TMSettingSelectionViewController()
-        vc.title = cell.titleView.text
-        let configs = ["Appearance", "Language", "Info"]
-        vc.dataSource = settingConfig[configs[indexPath.row - 1]] ?? []
-        vc.completionHandler = { result in
-            if indexPath.row == 1 {
-                cell.setupEvent(title: "Appearance", info: result)
-            } else if indexPath.row == 2 {
-                cell.setupEvent(title: "Language", info: result)
+        if indexPath.row < 3 {
+            let vc = TMSettingSelectionViewController()
+            vc.title = cell.titleView.text
+            let configs = ["Appearance", "Language"]
+            vc.dataSource = settingConfig[configs[indexPath.row - 1]] ?? []
+            vc.completionHandler = { result in
+                if indexPath.row == 1 {
+                    cell.setupEvent(title: "Appearance", info: result)
+                } else if indexPath.row == 2 {
+                    cell.setupEvent(title: "Language", info: result)
+                }
             }
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc = TMSettingInfoViewController()
+            vc.isModalInPresentation = true
+            navigationController?.pushViewController(vc, animated: true)
         }
-        present(vc, animated: true)
     }
 
     func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

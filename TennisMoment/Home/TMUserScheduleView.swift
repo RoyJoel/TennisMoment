@@ -110,11 +110,15 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         scheduleList.showsHorizontalScrollIndicator = false
         scheduleList.allowsSelectionDuringEditing = true
 
-        opponentLabel.isHidden = false
-        dateLabel.isHidden = false
-        placeLabel.isHidden = false
-        scheduleList.isHidden = false
-        alartView.isHidden = true
+        if TMUser.user.allSchedules.count == 0 {
+            setupAlart()
+        } else {
+            opponentLabel.isHidden = false
+            dateLabel.isHidden = false
+            placeLabel.isHidden = false
+            scheduleList.isHidden = false
+            alartView.isHidden = true
+        }
     }
 
     func setupAlart() {

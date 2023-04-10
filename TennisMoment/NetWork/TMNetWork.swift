@@ -8,8 +8,9 @@
 import Alamofire
 import Foundation
 import SwiftyJSON
+
 class TMNetWork {
-    static let tennisMomentURL = "http://localhost:8080"
+    static let tennisMomentURL = "http://169.254.232.188:8080"
 
     static func get(_ parameters: String, headers: HTTPHeaders? = nil, completionHandler: @escaping (JSON?, Error?) -> Void) {
         AF.request(URL(string: tennisMomentURL + parameters)!, headers: headers).response { response in

@@ -132,4 +132,8 @@ struct Stats: Codable {
             "backhandWinners": self.backhandWinners,
         ])
     }
+
+    init() {
+        self = Stats(json: JSON())
+    }
 }

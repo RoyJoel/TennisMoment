@@ -16,6 +16,7 @@ target 'TennisMoment' do
   pod 'SwiftFormat/CLI', '0.40.4'
   pod 'TABAnimated', '2.5.1'
   pod 'JXSegmentedView'
+  pod 'Starscream'
 
   target 'TennisMomentTests' do
     inherit! :search_paths

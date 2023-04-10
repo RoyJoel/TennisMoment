@@ -81,6 +81,10 @@ struct User: Codable {
         allSchedules = json["allSchedules"].arrayValue.map { Schedule(json: $0) }
         token = json["token"].stringValue
     }
+
+    init() {
+        self = User(json: JSON())
+    }
 }
 
 struct signupResponse: Codable {
@@ -88,8 +92,14 @@ struct signupResponse: Codable {
     var res: Bool
 }
 
-struct UserResponse: Codable {
+struct UserSignUpResponse: Codable {
     var code: Int
     var count: Int
     var data: signupResponse
+}
+
+struct UserResponse: Codable {
+    var code: Int
+    var count: Int
+    var data: User
 }

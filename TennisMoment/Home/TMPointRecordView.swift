@@ -9,7 +9,7 @@ import Foundation
 import TMComponent
 
 class TMPointRecordView: TMView {
-    var config = TMPointRecordViewConfig(rowHeight: 0, rowSpacing: 0, font: UIFont(), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
+    var config = TMPointRecordViewConfig(rowHeight: 0, rowSpacing: 0, font: UIFont(), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, isGameCompleted: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
 
     var pointRecordView: TMmultiplyConfigurableView = {
         let view = TMmultiplyConfigurableView()
@@ -21,20 +21,20 @@ class TMPointRecordView: TMView {
 
         let setConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: config.isTitleHidden, title: NSLocalizedString("SET", comment: ""), iconName: "", isServingOnLeft: true, areBothServing: false, isComparing: false, font: config.font, leftNum: "\(config.player1SetNum)", rightNum: "\(config.player2SetNum)")
         let gameConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: config.isTitleHidden, title: NSLocalizedString("GAME", comment: ""), iconName: "", isServingOnLeft: true, areBothServing: false, isComparing: false, font: config.font, leftNum: "\(config.player1GameNum)", rightNum: "\(config.player2GameNum)")
-        let pointConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: config.isTitleHidden, title: NSLocalizedString("POINT", comment: ""), iconName: "TennisBall", isServingOnLeft: true, areBothServing: false, isComparing: true, font: config.font, leftNum: "\(config.player1PointNum)", rightNum: "\(config.player2PointNum)")
-        let pointRecordViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: config.rowHeight, rowSpacing: config.rowSpacing, numberOfRow: 3, configs: [setConfig, gameConfig, pointConfig])
+        let pointConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: config.isTitleHidden, title: NSLocalizedString("POINT", comment: ""), iconName: "TennisBall", isServingOnLeft: true, areBothServing: false, isComparing: config.isGameCompleted ? false : true, font: config.font, leftNum: "\(config.player1PointNum)", rightNum: "\(config.player2PointNum)")
+        let pointRecordViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: config.rowHeight, rowSpacing: config.rowSpacing, configs: [setConfig, gameConfig, pointConfig])
 
         setupEvent(config: pointRecordViewConfig)
     }
 
-    func updateData(liveScore: [[[Int]]], isPlayer1Serving: Bool, isPlayer1Left: Bool, setConfigNum _: Int, gameConfigNum: Int) {
-        let result = TMDataConvert.read(from: liveScore, gameConfigNum: gameConfigNum)
+    func updateData(liveScore: [[[Int]]], isPlayer1Serving: Bool, isPlayer1Left: Bool, isGameCompleted: Bool, setConfigNum _: Int, gameConfigNum: Int) {
+        let result = TMDataConvert.read(from: liveScore, isGameCompleted: isGameCompleted, gameConfigNum: gameConfigNum)
         let score = result.0
         let isInTieBreak = result.1
 
         let isServingOnLeft = isPlayer1Left == isPlayer1Serving
 
-        config = TMPointRecordViewConfig(rowHeight: 0, rowSpacing: 0, font: UIFont(), isTitleHidden: true, isPlayer1Serving: isPlayer1Serving, isPlayer1Left: isPlayer1Left, player1SetNum: score[0][0], player2SetNum: score[0][1], player1GameNum: score[1][0], player2GameNum: score[1][1], player1PointNum: isInTieBreak ? "\(score[2][0])" : score[2][0].convertToPoint(), player2PointNum: isInTieBreak ? "\(score[2][1])" : score[2][1].convertToPoint())
+        config = TMPointRecordViewConfig(rowHeight: 0, rowSpacing: 0, font: UIFont(), isTitleHidden: true, isPlayer1Serving: isPlayer1Serving, isPlayer1Left: isPlayer1Left, isGameCompleted: isGameCompleted, player1SetNum: score[0][0], player2SetNum: score[0][1], player1GameNum: score[1][0], player2GameNum: score[1][1], player1PointNum: isInTieBreak ? "\(score[2][0])" : score[2][0].convertToPoint(), player2PointNum: isInTieBreak ? "\(score[2][1])" : score[2][1].convertToPoint())
 
         if !isPlayer1Left {
             TMDataConvert.changePosition(with: &config.player1SetNum, and: &config.player2SetNum)
@@ -47,8 +47,8 @@ class TMPointRecordView: TMView {
         pointRecordView.updateRightDate(at: 0, isServingOnRight: false, newNum: "\(config.player2SetNum)")
         pointRecordView.updateLeftDate(at: 1, isServingOnLeft: false, newNum: "\(config.player1GameNum)")
         pointRecordView.updateRightDate(at: 1, isServingOnRight: false, newNum: "\(config.player2GameNum)")
-        pointRecordView.updateLeftDate(at: 2, isServingOnLeft: isServingOnLeft, newNum: config.player1PointNum)
-        pointRecordView.updateRightDate(at: 2, isServingOnRight: !isServingOnLeft, newNum: config.player2PointNum)
+        pointRecordView.updateLeftDate(at: 2, isServingOnLeft: config.isGameCompleted ? false : isServingOnLeft, newNum: config.player1PointNum)
+        pointRecordView.updateRightDate(at: 2, isServingOnRight: config.isGameCompleted ? false : !isServingOnLeft, newNum: config.player2PointNum)
     }
 
     func updateLeftData(at index: Int, isServingOnLeft: Bool, newNum: String) {
@@ -64,8 +64,8 @@ class TMPointRecordView: TMView {
 
         let setConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: isTitleHidden, title: NSLocalizedString("SET", comment: ""), iconName: "", isServingOnLeft: true, areBothServing: false, isComparing: false, font: newFont, leftNum: "\(config.player1SetNum)", rightNum: "\(config.player2SetNum)")
         let gameConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: isTitleHidden, title: NSLocalizedString("GAME", comment: ""), iconName: "", isServingOnLeft: true, areBothServing: false, isComparing: false, font: newFont, leftNum: "\(config.player1GameNum)", rightNum: "\(config.player2GameNum)")
-        let pointConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: isTitleHidden, title: NSLocalizedString("POINT", comment: ""), iconName: "TennisBall", isServingOnLeft: isServingOnLeft, areBothServing: false, isComparing: true, font: newFont, leftNum: config.player1PointNum, rightNum: config.player2PointNum)
-        let pointRecordViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: newRowHeight, rowSpacing: newRowSpacing, numberOfRow: 3, configs: [setConfig, gameConfig, pointConfig])
+        let pointConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: true, isTitleHidden: isTitleHidden, title: NSLocalizedString("POINT", comment: ""), iconName: "TennisBall", isServingOnLeft: isServingOnLeft, areBothServing: false, isComparing: config.isGameCompleted ? false : true, font: newFont, leftNum: config.player1PointNum, rightNum: config.player2PointNum)
+        let pointRecordViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: newRowHeight, rowSpacing: newRowSpacing, configs: [setConfig, gameConfig, pointConfig])
         pointRecordView.reset(with: pointRecordViewConfig)
     }
 

@@ -65,7 +65,6 @@ class TMEventGameCell: UITableViewCell {
             make.right.equalToSuperview().offset(-6)
         }
 
-        titleView.text = NSLocalizedString("In Progress", comment: "")
         titleView.textColor = UIColor(named: "ContentBackground")
         titleView.font = UIFont.systemFont(ofSize: 17)
 
@@ -99,7 +98,7 @@ class TMEventGameCell: UITableViewCell {
     }
 
     func setupEvent(game: Game) {
-        let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 20, rowSpacing: 0, font: UIFont.systemFont(ofSize: 13), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
+        let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 20, rowSpacing: 0, font: UIFont.systemFont(ofSize: 13), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, isGameCompleted: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
         recordPointView.setup(with: pointRecordViewConfig)
         // 说明player1在左侧⬅️
         if game.isPlayer1Left {
@@ -109,6 +108,15 @@ class TMEventGameCell: UITableViewCell {
             leftBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
             rightBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
         }
-        recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+        if Date().timeIntervalSince1970 < game.endDate || game.endDate == 0 {
+            titleView.text = NSLocalizedString("Live", comment: "")
+            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+        } else if Date().timeIntervalSince1970 > game.endDate, game.endDate != 0 {
+            titleView.text = NSLocalizedString("Completed", comment: "")
+            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: true, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+        } else if Date().timeIntervalSince1970 < game.startDate {
+            titleView.text = NSLocalizedString("In Turn", comment: "")
+            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
+        }
     }
 }

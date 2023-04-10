@@ -76,6 +76,7 @@ class TMCircleStatsView: TMView {
         }
         titleLabel.numberOfLines = 2
         print(UIScreen.main.nativeBounds.height)
+        dataLabel.textColor = .black
     }
 
     func startAnimation(radii: Double) {

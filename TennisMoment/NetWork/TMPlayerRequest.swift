@@ -36,16 +36,28 @@ class TMPlayerRequest {
         }
     }
 
-    static func searchPlayer(id: Int, completionHandler: @escaping (Player?) -> Void) {
+    static func getInfo(loginName: String, completionHandler: @escaping (Player?) -> Void) {
         let para = [
-            "id": id,
+            "loginName": loginName,
         ]
-        TMNetWork.post("/player/search", dataParameters: para) { json in
+        TMNetWork.post("/player/getInfo", dataParameters: para) { json in
             guard let json = json else {
                 completionHandler(nil)
                 return
             }
             completionHandler(Player(json: json))
+        }
+    }
+
+    static func searchPlayer(loginName: String, completionHandler: @escaping (Bool) -> Void) {
+        let para = [
+            "loginName": loginName,
+        ]
+        TMNetWork.post("/player/search", dataParameters: para) { json in
+            guard let json = json else {
+                return
+            }
+            completionHandler(json.boolValue)
         }
     }
 

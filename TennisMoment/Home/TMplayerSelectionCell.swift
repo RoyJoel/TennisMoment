@@ -24,6 +24,7 @@ class TMplayerSelectionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(playerIconView)
         addSubview(playerNameView)
+        backgroundColor = UIColor(named: "BackgroundGray")
         layoutSubviews()
     }
 

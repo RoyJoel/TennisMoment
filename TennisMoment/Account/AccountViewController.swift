@@ -128,6 +128,7 @@ class AccountViewController: UIViewController {
 
     @objc func settingViewUp() {
         let vc = TMSettingViewController()
-        navigationController?.present(vc, animated: true)
+        let navVC = UINavigationController(rootViewController: vc)
+        navigationController?.present(navVC, animated: true)
     }
 }

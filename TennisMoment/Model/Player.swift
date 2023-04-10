@@ -57,6 +57,10 @@ struct Player: Codable {
         isAdult = json["isAdult"].boolValue
         careerStats = Stats(json: json["careerStats"])
     }
+
+    init() {
+        self = Player(json: JSON())
+    }
 }
 
 enum Sex: String, Codable {
@@ -69,9 +73,25 @@ enum Grip: String, Codable {
     case Eastern
     case SemiWestern
     case Western
+
+    var index: String {
+        switch self {
+        case .Continented: return "0"
+        case .Eastern: return "1"
+        case .SemiWestern: return "2"
+        case .Western: return "3"
+        }
+    }
 }
 
 enum Backhand: String, Codable {
     case OneHanded = "One-Handed"
     case TwoHandedBackhand = "Two-Handed"
+
+    var index: String {
+        switch self {
+        case .OneHanded: return "0"
+        case .TwoHandedBackhand: return "1"
+        }
+    }
 }

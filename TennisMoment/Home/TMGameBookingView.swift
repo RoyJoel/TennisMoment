@@ -63,6 +63,7 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
         }
         playerSelectView.delegate = playerSelectView
         placeSearchBar.placeholder = NSLocalizedString("Search", comment: "")
+        placeSearchBar.searchBarStyle = .minimal
         placeSearchBar.delegate = self
         playerSelectView.isHidden = true
         placeSearchBar.isHidden = true

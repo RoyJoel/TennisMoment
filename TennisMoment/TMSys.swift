@@ -34,15 +34,15 @@ class TMSys {
     }
 
     func initStyle() -> UIUserInterfaceStyle {
-        // 获取 Info.plist 文件中用户设置的外观，如果没有设置则默认使用浅色模式。
-        guard let appearance = AppearanceSetting(rawValue: Bundle.main.object(forInfoDictionaryKey: "UIUserInterfaceStyle") as? String ?? "UnSpecified") else {
+        guard let appearance = UserDefaults.standard.string(forKey: "AppleAppearance") else {
             // 如果没有设置外观，则默认使用浅色模式。
-            return .light
+            return .unspecified
         }
+        let appearanceType = AppearanceSetting(userDisplayName: appearance)
         // 根据用户设置的外观来设置应用程序的外观。
-        if appearance == .Dark {
+        if appearanceType == .Dark {
             return .dark
-        } else if appearance == .Light {
+        } else if appearanceType == .Light {
             return .light
         } else {
             return .unspecified

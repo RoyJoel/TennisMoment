@@ -33,7 +33,7 @@ class TMUserDataView: TMView {
         let dataSource = JXSegmentedTitleDataSource()
         dataSource.isTitleColorGradientEnabled = true
         dataSource.titleNormalColor = UIColor(named: "ContentBackground") ?? .black
-        dataSource.titleSelectedColor = UIColor(named: "ContentBackground") ?? .black
+        dataSource.titleSelectedColor = .black
         dataSource.titles = titles
         segmentedDataSource = dataSource
         // 配置指示器

@@ -29,6 +29,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         return view
     }()
 
+    lazy var playerSearchingView: TMPlayerSearchingView = {
+        let view = TMPlayerSearchingView()
+        return view
+    }()
+
+    lazy var gameSearchingView: TMGameSearchingView = {
+        let view = TMGameSearchingView()
+        return view
+    }()
+
     lazy var scheduleView: TMUserScheduleView = {
         let view = TMUserScheduleView()
         return view
@@ -43,9 +53,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         view.addSubview(recordView)
         view.addSubview(configGameView)
         view.addSubview(scheduleView)
+        view.addSubview(playerSearchingView)
+        view.addSubview(gameSearchingView)
 
         recordView.frame = CGRect(x: 24, y: 72, width: UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.35)
         configGameView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 72, width: 68, height: 68)
+        playerSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 158, width: 68, height: 68)
+        gameSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 244, width: 68, height: 68)
+
         scheduleView.frame = CGRect(x: 24, y: 84 + UIStandard.shared.screenHeight * 0.35, width: 80 + UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.44)
 
         recordView.setupUI()
@@ -71,8 +86,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         configGameView.setupUI()
         configGameView.setupEvent(friends: TMUser.user.friends)
         recordView.addTapGesture(self, #selector(startRecord))
-
         configGameView.isHidden = false
+
+        playerSearchingView.setupUI()
+        playerSearchingView.isHidden = false
+
+        gameSearchingView.setupUI()
+        gameSearchingView.setupEvent(friends: TMUser.user.friends)
+        gameSearchingView.isHidden = false
 
         NotificationCenter.default.addObserver(self, selector: #selector(toastUp(_:)), name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: Notification.Name(ToastNotification.AddGAmeToast.notificationName.rawValue), object: nil)
@@ -80,7 +101,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
 
         configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
-
+        playerSearchingView.setup(playerSearchingView.bounds, playerSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: 68), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 192), 0.3)
+        gameSearchingView.setup(gameSearchingView.bounds, gameSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: 68), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 278), 0.3)
         scheduleView.setupUI()
     }
 
@@ -92,6 +114,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
 
         recordView.scaleTo(recordView.toggle, completionHandler: {})
         configGameView.isHidden = true
+        playerSearchingView.isHidden = true
+        gameSearchingView.isHidden = true
         scheduleView.isHidden = true
         recordView.refreshData()
     }
@@ -103,6 +127,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         recordView.saveGame()
         recordView.scaleTo(recordView.toggle, completionHandler: {
             self.configGameView.isHidden = false
+            self.gameSearchingView.isHidden = false
+            self.playerSearchingView.isHidden = false
             self.scheduleView.isHidden = false
         })
     }
@@ -117,12 +143,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                     self.recordView.setupEvent(game: games[0])
                     self.recordView.scaleTo(self.recordView.toggle, completionHandler: {
                         self.configGameView.isHidden = false
+                        self.gameSearchingView.isHidden = false
+                        self.playerSearchingView.isHidden = false
                         self.scheduleView.isHidden = false
                     })
                     self.recordView.isUserInteractionEnabled = true
                 } else {
                     self.recordView.scaleTo(self.recordView.toggle, completionHandler: {
                         self.configGameView.isHidden = false
+                        self.gameSearchingView.isHidden = false
+                        self.playerSearchingView.isHidden = false
                         self.scheduleView.isHidden = false
                         self.recordView.setupAlart()
                     })
@@ -186,6 +216,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
 
                 self.recordView.scaleTo(self.recordView.toggle, completionHandler: {})
                 self.configGameView.isHidden = true
+                self.gameSearchingView.isHidden = true
+                self.playerSearchingView.isHidden = true
                 self.scheduleView.isHidden = true
             }
         })

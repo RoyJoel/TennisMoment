@@ -15,6 +15,8 @@ class TMSignUpViewController: UIViewController {
     let configItems = ["Please enter a name for yourself", "Please choose a profile picture.", "What is your gender?", "What is your age?", "How many years have you been playing?", "What is your height in centimeters?", "What is your width in kilograms?", "What is your grip type?", "What is your backhand type?", "Please enter a account for yourself.", "Please enter a password for yourself."]
     var currentIndex = 0
 
+    var completionHandler: (String) -> Void = { _ in }
+
     lazy var progressView: UIProgressView = {
         let view = UIProgressView()
         view.progressViewStyle = .default
@@ -93,6 +95,7 @@ class TMSignUpViewController: UIViewController {
 
     override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "BackgroundGray")
+        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(done)), animated: true)
         view.addSubview(progressView)
         view.addSubview(signInTitleView)
         view.addSubview(nameTextField)
@@ -248,34 +251,116 @@ class TMSignUpViewController: UIViewController {
         nextConfigBtn.setupUI()
         let nextBtnConfig = TMButtonConfig(title: "Next Step", action: #selector(stepForward), actionTarget: self)
         nextConfigBtn.setUp(with: nextBtnConfig)
-        let lastBtnConfig = TMButtonConfig(title: "Last Step", action: #selector(stepBackward), actionTarget: self)
+        let lastBtnConfig = TMButtonConfig(title: "Back", action: #selector(stepBackward), actionTarget: self)
         lastConfigBtn.setUp(with: lastBtnConfig)
+    }
+
+    func showSubView(tag: Int) {
+        currentIndex = tag - 200
+        progressView.isHidden = true
+        nextConfigBtn.isHidden = true
+        lastConfigBtn.isHidden = true
+        signInTitleView.text = configItems[currentIndex]
+        if let viewWithTag = self.view.viewWithTag(tag) {
+            viewWithTag.isHidden = false
+            // 遍历所有的子视图，并隐藏除了标记为 201 之外的所有视图
+            for subview in view.subviews where subview != viewWithTag {
+                subview.isHidden = true
+            }
+            signInTitleView.isHidden = false
+        }
+    }
+
+    func setUserInfo(name: String, icon _: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand) {
+        accountTextField.textField.text = TMUser.user.loginName
+        passwordTextField.textField.text = TMUser.user.password
+        nameTextField.textField.text = name
+//        iconImageView.image = UIImage(named: icon)
+        sexTextField.isLeft = sex == .Man ? true : false
+        ageTextField.textField.text = "\(age)"
+        yearsPlayedTextField.textField.text = "\(yearsPlayed)"
+        heightTextField.textField.text = "\(height)"
+        widthTextField.textField.text = "\(width)"
+        gripTextField.selectedIndex = IndexPath(row: Int(grip.index) ?? 0, section: 0)
+        backgroundTextField.selectedIndex = IndexPath(row: Int(backhand.index) ?? 0, section: 0)
+    }
+
+    func getUserInfo() {
+        TMUser.user.loginName = accountTextField.textField.text ?? ""
+        TMUser.user.password = passwordTextField.textField.text ?? ""
+        TMUser.user.name = nameTextField.textField.text ?? ""
+//            TMUser.user.icon = iconImageView.image
+        TMUser.user.sex = sexTextField.isLeft ? .Man : .Woman
+        TMUser.user.age = Int(ageTextField.textField.text ?? "0") ?? 0
+        TMUser.user.yearsPlayed = Int(yearsPlayedTextField.textField.text ?? "0") ?? 0
+        TMUser.user.height = Float(heightTextField.textField.text ?? "0") ?? 0
+        TMUser.user.width = Float(widthTextField.textField.text ?? "0") ?? 0
+        TMUser.user.grip = gripConfig.gripConfig[gripTextField.selectedIndex?.row ?? 0]
+        TMUser.user.backhand = backhandConfig.backhandConfig[backgroundTextField.selectedIndex?.row ?? 0]
+        TMUser.user.points = 0
+        TMUser.user.isAdult = (Int(ageTextField.textField.text ?? "0") ?? 0) > 18 ? true : false
     }
 
     @objc func stepForward() {
         if currentIndex < configItems.count - 1 {
             currentIndex += 1
-            progressView.setProgress(Float(currentIndex) / Float(configItems.count), animated: true)
-            signInTitleView.text = configItems[currentIndex]
-            view.viewWithTag(currentIndex + 199)?.isHidden = true
-            view.viewWithTag(currentIndex + 200)?.isHidden = false
-            if let thisView = view.viewWithTag(currentIndex + 200) as? TMPopUpView {
-                view.bringSubviewToFront(thisView)
+            if let view = view.viewWithTag(currentIndex + 199), view is TMTextField {
+                if let text = (view as? TMTextField)?.textField.text, !text.isEmpty {
+                    if currentIndex == 10 {
+                        TMPlayerRequest.searchPlayer(loginName: text, completionHandler: { res in
+                            if res {
+                                self.currentIndex -= 1
+                                let toastView = UILabel()
+                                toastView.text = "Account already exists"
+                                toastView.numberOfLines = 2
+                                toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
+                                toastView.backgroundColor = UIColor(named: "ComponentBackground")
+                                toastView.textAlignment = .center
+                                toastView.setCorner(radii: 15)
+                                self.view.showToast(toastView, duration: 1, point: CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2)) { _ in
+                                }
+                            } else {
+                                self.progressView.setProgress(Float(self.currentIndex) / Float(self.configItems.count), animated: true)
+                                self.signInTitleView.text = self.configItems[self.currentIndex]
+                                self.view.viewWithTag(self.currentIndex + 199)?.isHidden = true
+                                self.view.viewWithTag(self.currentIndex + 200)?.isHidden = false
+                                if let thisView = view.viewWithTag(self.currentIndex + 200) as? TMPopUpView {
+                                    self.view.bringSubviewToFront(thisView)
+                                }
+                            }
+                        })
+                    } else {
+                        progressView.setProgress(Float(currentIndex) / Float(configItems.count), animated: true)
+                        signInTitleView.text = configItems[currentIndex]
+                        self.view.viewWithTag(currentIndex + 199)?.isHidden = true
+                        self.view.viewWithTag(currentIndex + 200)?.isHidden = false
+                        if let thisView = view.viewWithTag(currentIndex + 200) as? TMPopUpView {
+                            self.view.bringSubviewToFront(thisView)
+                        }
+                    }
+                } else {
+                    currentIndex -= 1
+                    let toastView = UILabel()
+                    toastView.text = "No Content Input"
+                    toastView.numberOfLines = 2
+                    toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
+                    toastView.backgroundColor = UIColor(named: "ComponentBackground")
+                    toastView.textAlignment = .center
+                    toastView.setCorner(radii: 15)
+                    self.view.showToast(toastView, duration: 1, point: CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2)) { _ in
+                    }
+                }
+            } else {
+                progressView.setProgress(Float(currentIndex) / Float(configItems.count), animated: true)
+                signInTitleView.text = configItems[currentIndex]
+                view.viewWithTag(currentIndex + 199)?.isHidden = true
+                view.viewWithTag(currentIndex + 200)?.isHidden = false
+                if let thisView = view.viewWithTag(currentIndex + 200) as? TMPopUpView {
+                    view.bringSubviewToFront(thisView)
+                }
             }
         } else if currentIndex == configItems.count - 1 {
-            TMUser.user.loginName = accountTextField.textField.text ?? ""
-            TMUser.user.password = passwordTextField.textField.text ?? ""
-            TMUser.user.name = nameTextField.textField.text ?? ""
-//            TMUser.user.icon = iconImageView.image
-            TMUser.user.sex = sexTextField.isLeft ? .Man : .Woman
-            TMUser.user.age = Int(ageTextField.textField.text ?? "0") ?? 0
-            TMUser.user.yearsPlayed = Int(yearsPlayedTextField.textField.text ?? "0") ?? 0
-            TMUser.user.height = Float(Int(heightTextField.textField.text ?? "0") ?? 0)
-            TMUser.user.width = Float(Int(widthTextField.textField.text ?? "0") ?? 0)
-            TMUser.user.grip = gripConfig.gripConfig[gripTextField.selectedIndex?.row ?? 0]
-            TMUser.user.backhand = backhandConfig.backhandConfig[backgroundTextField.selectedIndex?.row ?? 0]
-            TMUser.user.points = 0
-            TMUser.user.isAdult = (Int(ageTextField.textField.text ?? "0") ?? 0) > 18 ? true : false
+            getUserInfo()
             TMUser.signUp { token, error in
                 guard error == nil else {
                     if self.view.window != nil {
@@ -309,14 +394,30 @@ class TMSignUpViewController: UIViewController {
             currentIndex -= 1
             progressView.setProgress(Float(currentIndex) / Float(configItems.count), animated: true)
             signInTitleView.text = configItems[currentIndex]
-            view.viewWithTag(currentIndex + 199)?.isHidden = false
-            view.viewWithTag(currentIndex + 200)?.isHidden = true
+            view.viewWithTag(currentIndex + 200)?.isHidden = false
+            view.viewWithTag(currentIndex + 201)?.isHidden = true
             if let thisView = view.viewWithTag(currentIndex + 200) as? TMPopUpView {
                 view.bringSubviewToFront(thisView)
             }
         } else if currentIndex == 0 {
             dismiss(animated: true)
         }
+    }
+
+    @objc func done() {
+        let tag = currentIndex + 200
+        if let selectedString = (view.viewWithTag(tag) as? TMTextField)?.textField.text {
+            completionHandler(selectedString)
+        } else if let selectedString = (view.viewWithTag(tag) as? TMPopUpView)?.selectedIndex?.row {
+            if tag == 207 {
+                completionHandler(gripConfig.gripConfig[selectedString].rawValue)
+            } else {
+                completionHandler(backhandConfig.backhandConfig[selectedString].rawValue)
+            }
+        } else if let selectedString = (view.viewWithTag(tag) as? TMSelectionView)?.isLeft {
+            completionHandler(selectedString == true ? Sex.Man.rawValue : Sex.Woman.rawValue)
+        }
+        navigationController?.popViewController(animated: true)
     }
 }
 

@@ -85,7 +85,7 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
             make.height.equalTo(44)
         }
 
-        liveGameView.frame = CGRect(x: 12, y: 68, width: 668.5, height: 168)
+        liveGameView.frame = CGRect(x: 12, y: 68, width: UIStandard.shared.screenWidth * 0.6 - 48, height: 168)
 
         joinBtn.setupUI()
         scheduleView.setupUI()
@@ -145,9 +145,7 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    @objc func joinEvent() {
-        print("SB")
-    }
+    @objc func joinEvent() {}
 }
 
 class scheduleConfigViewDataSource: NSObject, UITableViewDataSource {

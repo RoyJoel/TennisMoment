@@ -32,8 +32,13 @@ extension UIView {
     }
 
     func addLongPressGesture(_ target: Any, _ action: Selector?) {
-        let tap = UILongPressGestureRecognizer(target: target, action: action)
-        addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: target, action: action)
+        addGestureRecognizer(longPress)
+    }
+
+    func addPanGesture(_ target: Any, _ action: Selector?) {
+        let pan = UIPanGestureRecognizer(target: target, action: action)
+        addGestureRecognizer(pan)
     }
 
     func removeTapGesture(_ target: Any, _ action: Selector?) {

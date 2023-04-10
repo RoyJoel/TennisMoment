@@ -29,7 +29,7 @@ class TMSignInBtn: UILabel {
     func startBouncing() {
         guard !isBouncing else { return }
         isBouncing = true
-        let bounceHeight = frame.height
+        let bounceHeight = CGFloat(50)
         let bounceDuration: TimeInterval = 0.4
         let bounceDelay: TimeInterval = 0.1
         let options: UIView.AnimationOptions = [.curveEaseInOut, .autoreverse, .repeat]

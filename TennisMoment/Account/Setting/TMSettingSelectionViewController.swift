@@ -40,12 +40,12 @@ class TMSettingSelectionViewController: UIViewController, UITableViewDelegate, U
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if title == "Language" {
-            let selectedLanguage = dataSource[indexPath.row]
+            let selectedLanguage = LanguageSetting(userDisplayName: dataSource[indexPath.row])
             let message = "Change language of this app including its content."
             let sheetCtrl = UIAlertController(title: "Change language", message: message, preferredStyle: .alert)
 
             let action = UIAlertAction(title: "Ok", style: .default) { _ in
-                self.changeToLanguage(languageCode: selectedLanguage)
+                self.changeToLanguage(languageCode: selectedLanguage.rawValue)
                 self.select(at: indexPath)
             }
             sheetCtrl.addAction(action)
@@ -58,17 +58,12 @@ class TMSettingSelectionViewController: UIViewController, UITableViewDelegate, U
             sheetCtrl.popoverPresentationController?.sourceView = view
             sheetCtrl.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.width / 2 - 144, y: view.bounds.height / 2 - 69, width: 288, height: 138)
             present(sheetCtrl, animated: true, completion: nil)
-            completionHandler(selectedLanguage)
+            completionHandler(selectedLanguage.userDisplayName)
         } else if title == "Appearance" {
             let selectedAppearance = AppearanceSetting(userDisplayName: dataSource[indexPath.row])
+            UserDefaults.standard.set(selectedAppearance.userDisplayName, forKey: "AppleAppearance")
 
-            if var infoDict = Bundle.main.infoDictionary {
-                infoDict["UIUserInterfaceStyle"] = selectedAppearance.rawValue
-                if let infoDictPath = Bundle.main.path(forResource: "Info", ofType: "plist") {
-                    (infoDict as NSDictionary).write(toFile: infoDictPath, atomically: true)
-                }
-            }
-            UIApplication.shared.windows.forEach { window in
+            if let window = selectionTableView.window {
                 if selectedAppearance == .Dark {
                     window.overrideUserInterfaceStyle = .dark
                 } else if selectedAppearance == .Light {
@@ -77,6 +72,7 @@ class TMSettingSelectionViewController: UIViewController, UITableViewDelegate, U
                     window.overrideUserInterfaceStyle = .unspecified
                 }
             }
+
             select(at: indexPath)
             completionHandler(selectedAppearance.userDisplayName)
         }
@@ -103,12 +99,24 @@ class TMSettingSelectionViewController: UIViewController, UITableViewDelegate, U
         cell.setupEvent(title: dataSource[indexPath.row])
         cell.selectionStyle = .none
         if title == "Appearance" {
-            if dataSource[indexPath.row] == AppearanceSetting(rawValue: Bundle.main.object(forInfoDictionaryKey: "UIUserInterfaceStyle") as? String ?? "UnSpecified")?.userDisplayName {
+            if dataSource[indexPath.row] == UserDefaults.standard.string(forKey: "AppleAppearance") {
                 cell.isSelected = true
                 selectedRow = indexPath.row
             }
         } else if title == "Language" {
-            if dataSource[indexPath.row] == UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese" {
+            var selectedLanguage = "Chinese"
+            if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("zh") {
+                selectedLanguage = "Chinese"
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("en") {
+                selectedLanguage = "English"
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("es") {
+                selectedLanguage = "Spanish"
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("fr") {
+                selectedLanguage = "French"
+            } else if (UserDefaults.standard.stringArray(forKey: "AppleLanguages")?[0] ?? "Chinese").contains("de") {
+                selectedLanguage = "German"
+            }
+            if dataSource[indexPath.row] == selectedLanguage {
                 cell.isSelected = true
                 selectedRow = indexPath.row
             }

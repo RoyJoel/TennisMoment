@@ -41,7 +41,7 @@ class TMSettingUserIconCell: UITableViewCell {
         super.layoutSubviews()
         titleView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.left.equalToSuperview()
+            make.left.equalToSuperview().offset(24)
             make.width.equalTo(188)
         }
         navigationBar.snp.makeConstraints { make in
@@ -51,11 +51,14 @@ class TMSettingUserIconCell: UITableViewCell {
         }
         iconView.snp.makeConstraints { make in
             make.right.equalTo(navigationBar.snp.left)
-            make.top.bottom.equalToSuperview()
-            make.width.equalTo(218)
+            make.top.equalToSuperview().offset(12)
+            make.bottom.equalToSuperview().offset(-12)
+            make.width.equalTo(74)
         }
         navigationBar.image = UIImage(named: "chevron.backward")
         titleView.font = UIFont.systemFont(ofSize: 20)
+        iconView.contentMode = .scaleAspectFill
+        iconView.setCorner(radii: 15)
     }
 
     func setupEvent(title: String, icon: String) {

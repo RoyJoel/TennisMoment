@@ -6,12 +6,13 @@
 //
 
 import Foundation
-import SwiftyJSON
 import TMComponent
 import UIKit
 
 class TMGameStatsDetailViewController: UIViewController {
-    var game: Game = Game(json: JSON())
+    var game: Game = Game()
+    var games: [Game] = []
+
     lazy var player1IconView: TMIconView = {
         let iconView = TMIconView()
         return iconView
@@ -30,6 +31,17 @@ class TMGameStatsDetailViewController: UIViewController {
     lazy var player2RankingLabel: UILabel = {
         let label = UILabel()
         return label
+    }()
+
+    lazy var H2HRecordView: TMPointComparingView = {
+        let view = TMPointComparingView()
+        return view
+    }()
+
+    lazy var progressView: UIProgressView = {
+        let view = UIProgressView()
+        view.progressViewStyle = .default
+        return view
     }()
 
     lazy var resultView: TMmultiplyConfigurableView = {
@@ -119,6 +131,8 @@ class TMGameStatsDetailViewController: UIViewController {
         view.addSubview(player2IconView)
         view.addSubview(player1RankingLabel)
         view.addSubview(player2RankingLabel)
+        view.addSubview(H2HRecordView)
+        view.insertSubview(progressView, belowSubview: H2HRecordView)
         view.addSubview(resultBackgroundView)
         resultBackgroundView.addSubview(resultView)
         resultBackgroundView.addSubview(resultLabel)
@@ -144,7 +158,7 @@ class TMGameStatsDetailViewController: UIViewController {
         }
         player2IconView.snp.makeConstraints { make in
             make.top.equalTo(player1IconView.snp.top)
-            make.left.equalTo(player1IconView.snp.right).offset(32)
+            make.right.equalTo(commonStatsBackgroundView.snp.right)
             make.width.equalTo(138)
             make.height.equalTo(188)
         }
@@ -159,6 +173,15 @@ class TMGameStatsDetailViewController: UIViewController {
             make.left.equalTo(player2IconView.snp.left)
             make.width.equalTo(player2IconView.snp.width)
             make.height.equalTo(22)
+        }
+        H2HRecordView.snp.makeConstraints { make in
+            make.centerY.equalTo(player1IconView.snp.centerY)
+            make.left.equalTo(player1IconView.snp.right).offset(6)
+            make.right.equalTo(player2IconView.snp.left).offset(-6)
+            make.height.equalTo(40)
+        }
+        progressView.snp.makeConstraints { make in
+            make.edges.equalTo(H2HRecordView.snp.edges)
         }
         resultBackgroundView.snp.makeConstraints { make in
             make.top.equalTo(roundLabel.snp.bottom).offset(12)
@@ -257,6 +280,11 @@ class TMGameStatsDetailViewController: UIViewController {
             make.width.equalTo(300)
         }
 
+        let h2hRecordConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: "H2H", iconName: "", isServingOnLeft: false, areBothServing: false, isComparing: false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(0)", rightNum: "\(0)")
+        H2HRecordView.setup(with: h2hRecordConfig)
+        progressView.setCorner(radii: 10)
+        H2HRecordView.setCorner(radii: 10)
+        H2HRecordView.addTapGesture(self, #selector(presentH2HView))
         resultBackgroundView.backgroundColor = UIColor(named: "ComponentBackground")
         commonStatsBackgroundView.backgroundColor = UIColor(named: "ComponentBackground")
         serveStatsBackgroundView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -285,6 +313,7 @@ class TMGameStatsDetailViewController: UIViewController {
         returnStatsLabel.textAlignment = .center
 
         setupEvent(game: game)
+        searchH2H(player1: game.player1.id, player2: game.player2.id)
     }
 
     func setupEvent(game: Game) {
@@ -355,15 +384,55 @@ class TMGameStatsDetailViewController: UIViewController {
         let forehandWinnersConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("FH Winners", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.forehandWinners > game.player2Stats.forehandWinners ? true : false, areBothServing: false, isComparing: game.player1Stats.forehandWinners != game.player2Stats.forehandWinners ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.forehandWinners)", rightNum: "\(game.player2Stats.forehandWinners)")
         let backhandWinnersConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("BH Winners", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.backhandWinners > game.player2Stats.backhandWinners ? true : false, areBothServing: false, isComparing: game.player1Stats.backhandWinners != game.player2Stats.backhandWinners ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.backhandWinners)", rightNum: "\(game.player2Stats.backhandWinners)")
 
-        let commonStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 32, rowSpacing: 10, numberOfRow: 7, configs: [acesConfig, doubleFaultsConfig, returnAcesConfig, netPointsConfig, unforcedErrorsConfig, forehandWinnersConfig, backhandWinnersConfig])
-        let resultViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 28, rowSpacing: 10, numberOfRow: result.count, configs: multiConfig)
-        let serveStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 58, rowSpacing: 20, numberOfRow: 7, configs: [firstServeInConfig, firstServeWonConfig, secondServeInConfig, secondServeWonConfig, breakPointSavedConfig, servePointWonConfig, serveGameWonConfig])
-        let returnStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 58, rowSpacing: 20, numberOfRow: 7, configs: [firstReturnServeInConfig, firstReturnServeWonConfig, secondReturnServeInConfig, secondReturnServeWonConfig, breakPointConvertConfig, returnPointWonConfig, returnGameWonConfig])
+        let commonStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 32, rowSpacing: 10, configs: [acesConfig, doubleFaultsConfig, returnAcesConfig, netPointsConfig, unforcedErrorsConfig, forehandWinnersConfig, backhandWinnersConfig])
+        let resultViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 28, rowSpacing: 10, configs: multiConfig)
+        let serveStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 58, rowSpacing: 20, configs: [firstServeInConfig, firstServeWonConfig, secondServeInConfig, secondServeWonConfig, breakPointSavedConfig, servePointWonConfig, serveGameWonConfig])
+        let returnStatsViewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 58, rowSpacing: 20, configs: [firstReturnServeInConfig, firstReturnServeWonConfig, secondReturnServeInConfig, secondReturnServeWonConfig, breakPointConvertConfig, returnPointWonConfig, returnGameWonConfig])
         player1IconView.setupEvent(config: player1IconConfig)
         player2IconView.setupEvent(config: player2IconConfig)
         resultView.setupEvent(config: resultViewConfig)
         commonStatsView.setupEvent(config: commonStatsViewConfig)
         serveStatsView.setupEvent(config: serveStatsViewConfig)
         returnStatsView.setupEvent(config: returnStatsViewConfig)
+    }
+
+    func searchH2H(player1: Int, player2: Int) {
+        var player1WinningNum = 0
+        var player2WinningNum = 0
+        TMGameRequest.searchh2h(for: player1, and: player2) { games in
+            self.games = games
+            for game in games {
+                let result = TMDataConvert.setResult(from: game.result)
+                if (result[0] > result[1]) == game.isPlayer1Left {
+                    player1WinningNum += 1
+                } else {
+                    player2WinningNum += 1
+                }
+            }
+            self.H2HRecordView.updateLeftViewData(isServingOnLeft: false, newNum: "\(player1WinningNum)")
+            self.H2HRecordView.updateRightViewData(isServingOnRight: false, newNum: "\(player2WinningNum)")
+            self.progressView.progress = Float(player1WinningNum) / (Float(player2WinningNum) + Float(player1WinningNum))
+            if self.progressView.progress == 0 || self.progressView.progress == 1 {
+                self.progressView.progressTintColor = UIColor(named: "BackgroundGray") // 已有进度颜色
+                self.progressView.trackTintColor = UIColor(named: "BackgroundGray")
+            } else if self.progressView.progress > 0.5 {
+                self.progressView.progressTintColor = UIColor(named: "Tennis") // 已有进度颜色
+                self.progressView.trackTintColor = .gray
+            } else if self.progressView.progress < 0.5 {
+                self.progressView.progressTintColor = .gray
+                self.progressView.trackTintColor = UIColor(named: "Tennis") // 已有进度颜色
+            } else {
+                self.progressView.progressTintColor = UIColor(named: "Tennis")
+                self.progressView.trackTintColor = UIColor(named: "Tennis")
+            }
+        }
+    }
+
+    @objc func presentH2HView() {
+        let vc = TMH2HViewController()
+        vc.player1 = game.player1
+        vc.player2 = game.player2
+        vc.h2hGames = games
+        present(vc, animated: true)
     }
 }

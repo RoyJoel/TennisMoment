@@ -20,11 +20,29 @@ enum AppearanceSetting: String {
         }
     }
 
+    var code: String {
+        switch self {
+        case .UnSpecified: return "0"
+        case .Light: return "1"
+        case .Dark: return "2"
+        }
+    }
+
     init(userDisplayName: String) {
         switch userDisplayName {
         case "Always Light": self = .Light
         case "Always Dark": self = .Dark
         case "System": self = .UnSpecified
+        default:
+            self = .UnSpecified
+        }
+    }
+
+    init(code: String) {
+        switch code {
+        case "1": self = .Light
+        case "2": self = .Dark
+        case "0": self = .UnSpecified
         default:
             self = .UnSpecified
         }

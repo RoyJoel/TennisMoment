@@ -21,7 +21,7 @@ struct Game: Codable {
     var isPlayer1Left: Bool
     var isChangePosition: Bool
     var startDate: TimeInterval
-    var endDate: TimeInterval?
+    var endDate: TimeInterval
     var player1: Player
     var player1Stats: Stats
     var player2: Player
@@ -30,7 +30,7 @@ struct Game: Codable {
     var isPlayer2FirstServe: Bool
     var result: [[[Int]]]
 
-    init(id: Int, place: String, surface: SurfaceType, setNum: Int, gameNum: Int, round: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool, isPlayer1Left: Bool, isChangePosition: Bool, startDate: TimeInterval, endDate: TimeInterval? = nil, player1: Player, player1Stats: Stats, player2: Player, player2Stats: Stats, isPlayer1FirstServe: Bool, isPlayer2FirstServe: Bool, result: [[[Int]]]) {
+    init(id: Int, place: String, surface: SurfaceType, setNum: Int, gameNum: Int, round: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool, isPlayer1Left: Bool, isChangePosition: Bool, startDate: TimeInterval, endDate: TimeInterval, player1: Player, player1Stats: Stats, player2: Player, player2Stats: Stats, isPlayer1FirstServe: Bool, isPlayer2FirstServe: Bool, result: [[[Int]]]) {
         self.id = id
         self.place = place
         self.surface = surface
@@ -82,6 +82,10 @@ struct Game: Codable {
         } else {
             result = [[]]
         }
+    }
+
+    init() {
+        self = Game(json: JSON())
     }
 }
 

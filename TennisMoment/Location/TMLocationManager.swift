@@ -66,13 +66,9 @@ class TMLocationManager: NSObject {
 
         geocoder.reverseGeocodeLocation(location) { placemarks, _ in
             if let place = placemarks?[0] {
-                let administrativeArea = place.administrativeArea ?? ""
                 let locality = place.locality ?? ""
-                let subLocality = place.subLocality ?? ""
-                let thoroughfare = place.thoroughfare ?? ""
                 let name = place.name ?? ""
-
-                let addressLines = administrativeArea + locality + subLocality + thoroughfare + name
+                let addressLines = locality + name
 
                 completionHandler(location, addressLines)
             }
