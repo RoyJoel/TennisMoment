@@ -120,6 +120,7 @@ class TMSettingViewController: UIViewController, UITableViewDelegate, UITableVie
     @objc func signOut() {
         if let window = signOutBtn.window {
             UserDefaults.standard.set(nil, forKey: TMUDKeys.JSONWebToken.rawValue)
+            UserDefaults.standard.set(nil, forKey: TMUDKeys.UserInfo.rawValue)
             window.rootViewController = TMSignInViewController()
         }
     }

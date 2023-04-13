@@ -83,8 +83,8 @@ class TMH2HRecordCell: UITableViewCell {
         dateLabel.text = "\(game.startDate.convertToString(formatterString: "yyyy MM-dd"))"
         placeLabel.text = "\(game.place)"
         roundLabel.text = "\(game.round)"
-        let result = TMDataConvert.gameResult(from: game.result)
-        let setResult = TMDataConvert.setResult(from: game.result)
+        let result = TMDataConvert.gameResult(from: game.result, isGameCompleted: true)
+        let setResult = TMDataConvert.setResult(from: game.result, isGameCompleted: true)
         if setResult[0] > setResult[1], game.isPlayer1Left {
             winnerLabel.text = "\(game.player1.name)"
         } else {

@@ -16,7 +16,7 @@ class TMUser {
     // 未登录时为默认信息
     static var user = User()
 
-    static func signIn(completionHandler: @escaping (String?, Error?) -> Void) {
+    static func signIn(completionHandler: @escaping (User?, Error?) -> Void) {
         // 将要加密的字符串连接在一起
         let password = user.password
 
@@ -34,9 +34,7 @@ class TMUser {
                     completionHandler(nil, TMNetWorkError.netError("账号或密码错误"))
                     return
                 }
-                TMUser.user = User(json: json)
-                print(User(json: json))
-                completionHandler(TMUser.user.token, nil)
+                completionHandler(User(json: json), nil)
             }
         }
     }
@@ -66,26 +64,28 @@ class TMUser {
     }
 
     static func updateInfo(completionHandler: @escaping (User?) -> Void) {
-        TMNetWork.post("/user/update", dataParameters: TMUser.user, responseBindingType: UserResponse.self) { response in
-            guard let res = response else {
+        TMNetWork.post("/user/update", dataParameters: TMUser.user) { json in
+            guard let json = json else {
                 completionHandler(nil)
                 return
             }
-            TMUser.user = res.data
-            completionHandler(res.data)
+            TMUser.user = User(json: json)
+            completionHandler(TMUser.user)
         }
     }
 
-    static func addFriend(_ friendId: Int, completionHandler: @escaping ([Player]) -> Void) {
+    static func addFriend(_ friendId: Int, completionHandler: @escaping (Bool) -> Void) {
         let para = [
             "player1Id": user.id,
             "player2Id": friendId,
         ]
         TMNetWork.post("/friend/add", dataParameters: para) { json in
             guard let json = json else {
+                completionHandler(false)
                 return
             }
-            completionHandler(json.arrayValue.map { Player(json: $0) })
+            TMUser.user.friends = json.arrayValue.map { Player(json: $0) }
+            completionHandler(true)
         }
     }
 

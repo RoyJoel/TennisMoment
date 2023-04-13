@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Stats: Codable {
+struct Stats: Codable, Equatable {
     var id: Int
     var aces: Int
     var doubleFaults: Int
@@ -133,7 +133,135 @@ struct Stats: Codable {
         ])
     }
 
+    func toDictionary() -> [String: Any] {
+        let dict: [String: Any] = [
+            "id": id,
+            "aces": aces,
+            "doubleFaults": doubleFaults,
+            "servePoints": servePoints,
+            "firstServePoints": firstServePoints,
+            "firstServePointsIn": firstServePointsIn,
+            "firstServePointsWon": firstServePointsWon,
+            "secondServePointsIn": secondServePointsIn,
+            "secondServePointsWon": secondServePointsWon,
+            "breakPointsFaced": breakPointsFaced,
+            "breakPointsSaved": breakPointsSaved,
+            "serveGamesPlayed": serveGamesPlayed,
+            "serveGamesWon": serveGamesWon,
+            "returnAces": returnAces,
+            "returnServePoints": returnServePoints,
+            "firstServeReturnPoints": firstServeReturnPoints,
+            "firstServeReturnPointsIn": firstServeReturnPointsIn,
+            "firstServeReturnPointsWon": firstServeReturnPointsWon,
+            "secondServeReturnPointsIn": secondServeReturnPointsIn,
+            "secondServeReturnPointsWon": secondServeReturnPointsWon,
+            "breakPointsOpportunities": breakPointsOpportunities,
+            "breakPointsConverted": breakPointsConverted,
+            "returnGamesPlayed": returnGamesPlayed,
+            "returnGamesWon": returnGamesWon,
+            "netPoints": netPoints,
+            "unforcedErrors": unforcedErrors,
+            "forehandWinners": forehandWinners,
+            "backhandWinners": backhandWinners,
+        ]
+        return dict
+    }
+
+    init?(dict: [String: Any]) {
+        guard let id = dict["id"] as? Int,
+            let aces = dict["aces"] as? Int,
+            let doubleFaults = dict["doubleFaults"] as? Int,
+            let servePoints = dict["servePoints"] as? Int,
+            let firstServePoints = dict["firstServePoints"] as? Int,
+            let firstServePointsIn = dict["firstServePointsIn"] as? Int,
+            let firstServePointsWon = dict["firstServePointsWon"] as? Int,
+            let secondServePointsIn = dict["secondServePointsIn"] as? Int,
+            let secondServePointsWon = dict["secondServePointsWon"] as? Int,
+            let breakPointsFaced = dict["breakPointsFaced"] as? Int,
+            let breakPointsSaved = dict["breakPointsSaved"] as? Int,
+            let serveGamesPlayed = dict["serveGamesPlayed"] as? Int,
+            let serveGamesWon = dict["serveGamesWon"] as? Int,
+            let returnAces = dict["returnAces"] as? Int,
+            let returnServePoints = dict["returnServePoints"] as? Int,
+            let firstServeReturnPoints = dict["firstServeReturnPoints"] as? Int,
+            let firstServeReturnPointsIn = dict["firstServeReturnPointsIn"] as? Int,
+            let firstServeReturnPointsWon = dict["firstServeReturnPointsWon"] as? Int,
+            let secondServeReturnPointsIn = dict["secondServeReturnPointsIn"] as? Int,
+            let secondServeReturnPointsWon = dict["secondServeReturnPointsWon"] as? Int,
+            let breakPointsOpportunities = dict["breakPointsOpportunities"] as? Int,
+            let breakPointsConverted = dict["breakPointsConverted"] as? Int,
+            let returnGamesPlayed = dict["returnGamesPlayed"] as? Int,
+            let returnGamesWon = dict["returnGamesWon"] as? Int,
+            let netPoints = dict["netPoints"] as? Int,
+            let unforcedErrors = dict["unforcedErrors"] as? Int,
+            let forehandWinners = dict["forehandWinners"] as? Int,
+            let backhandWinners = dict["backhandWinners"] as? Int
+        else {
+            return nil
+        }
+
+        self.id = id
+        self.aces = aces
+        self.doubleFaults = doubleFaults
+        self.servePoints = servePoints
+        self.firstServePoints = firstServePoints
+        self.firstServePointsIn = firstServePointsIn
+        self.firstServePointsWon = firstServePointsWon
+        self.secondServePointsIn = secondServePointsIn
+        self.secondServePointsWon = secondServePointsWon
+        self.breakPointsFaced = breakPointsFaced
+        self.breakPointsSaved = breakPointsSaved
+        self.serveGamesPlayed = serveGamesPlayed
+        self.serveGamesWon = serveGamesWon
+        self.returnAces = returnAces
+        self.returnServePoints = returnServePoints
+        self.firstServeReturnPoints = firstServeReturnPoints
+        self.firstServeReturnPointsIn = firstServeReturnPointsIn
+        self.firstServeReturnPointsWon = firstServeReturnPointsWon
+        self.secondServeReturnPointsIn = secondServeReturnPointsIn
+        self.secondServeReturnPointsWon = secondServeReturnPointsWon
+        self.breakPointsOpportunities = breakPointsOpportunities
+        self.breakPointsConverted = breakPointsConverted
+        self.returnGamesPlayed = returnGamesPlayed
+        self.returnGamesWon = returnGamesWon
+        self.netPoints = netPoints
+        self.unforcedErrors = unforcedErrors
+        self.forehandWinners = forehandWinners
+        self.backhandWinners = backhandWinners
+    }
+
     init() {
         self = Stats(json: JSON())
+    }
+
+    static func == (lhs: Stats, rhs: Stats) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.aces == rhs.aces &&
+            lhs.doubleFaults == rhs.doubleFaults &&
+            lhs.servePoints == rhs.servePoints &&
+            lhs.firstServePoints == rhs.firstServePoints &&
+            lhs.firstServePointsIn == rhs.firstServePointsIn &&
+            lhs.firstServePointsWon == rhs.firstServePointsWon &&
+            lhs.secondServePointsIn == rhs.secondServePointsIn &&
+            lhs.secondServePointsWon == rhs.secondServePointsWon &&
+            lhs.breakPointsFaced == rhs.breakPointsFaced &&
+            lhs.breakPointsSaved == rhs.breakPointsSaved &&
+            lhs.serveGamesPlayed == rhs.serveGamesPlayed &&
+            lhs.serveGamesWon == rhs.serveGamesWon &&
+            lhs.returnAces == rhs.returnAces &&
+            lhs.returnServePoints == rhs.returnServePoints &&
+            lhs.firstServeReturnPoints == rhs.firstServeReturnPoints &&
+            lhs.firstServeReturnPointsIn == rhs.firstServeReturnPointsIn &&
+            lhs.firstServeReturnPointsWon == rhs.firstServeReturnPointsWon &&
+            lhs.secondServeReturnPointsIn == rhs.secondServeReturnPointsIn &&
+            lhs.secondServeReturnPointsWon == rhs.secondServeReturnPointsWon &&
+            lhs.breakPointsOpportunities == rhs.breakPointsOpportunities &&
+            lhs.breakPointsConverted == rhs.breakPointsConverted &&
+            lhs.returnGamesPlayed == rhs.returnGamesPlayed &&
+            lhs.returnGamesWon == rhs.returnGamesWon &&
+            lhs.netPoints == rhs.netPoints &&
+            lhs.unforcedErrors == rhs.unforcedErrors &&
+            lhs.forehandWinners == rhs.forehandWinners &&
+            lhs.backhandWinners == rhs.backhandWinners
     }
 }

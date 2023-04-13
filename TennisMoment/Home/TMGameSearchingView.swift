@@ -9,59 +9,170 @@ import Foundation
 import TMComponent
 import UIKit
 
-class TMGameSearchingView: TMView, UITableViewDataSource {
-    var players: [Player] = []
+class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
     var viewUpCompletionHandler: () -> Void = {}
-    lazy var startGameBtn: TMTitleOrImageButton = {
-        let btn = TMTitleOrImageButton()
-        return btn
+    var viewDownCompletionHandler: () -> Void = {}
+    lazy var opponentLabel: UILabel = {
+        let iconView = UILabel()
+        return iconView
     }()
 
-    lazy var Player1SelectView: TMPopUpView = {
-        let textField = TMPopUpView()
-        return textField
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+
+    lazy var lastResultLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+
+    lazy var scheduleList: UITableView = {
+        let tableView = UITableView()
+        return tableView
+    }()
+
+    lazy var startGameBtn: TMTitleOrImageButton = {
+        let button = TMTitleOrImageButton()
+        return button
+    }()
+
+    // 无比赛时提示窗口
+    lazy var alartView: UILabel = {
+        let view = UILabel()
+        return view
     }()
 
     func setupUI() {
         backgroundColor = UIColor(named: "ComponentBackground")
         setCorner(radii: 15)
-        clipsToBounds = false
+        addSubview(opponentLabel)
+        addSubview(dateLabel)
+        addSubview(lastResultLabel)
+        addSubview(alartView)
+        insertSubview(scheduleList, belowSubview: opponentLabel)
 
         addSubview(startGameBtn)
-        addSubview(Player1SelectView)
+
+        opponentLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalTo(dateLabel.snp.right)
+            make.width.equalTo(146)
+            make.height.equalTo(50)
+        }
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalTo(startGameBtn.snp.right).offset(12)
+            make.width.equalTo(158)
+            make.height.equalTo(50)
+        }
+        lastResultLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalTo(opponentLabel.snp.right)
+            make.right.equalToSuperview().offset(-12)
+            make.height.equalTo(50)
+        }
+        scheduleList.snp.makeConstraints { make in
+            make.top.equalTo(opponentLabel.snp.bottom)
+            make.bottom.equalToSuperview()
+            make.left.equalTo(dateLabel.snp.left)
+            make.right.equalToSuperview()
+        }
+        alartView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+        }
 
         startGameBtn.frame = CGRect(x: 0, y: 0, width: 68, height: 68)
-        Player1SelectView.frame = CGRect(x: 120, y: 12, width: UIStandard.shared.screenWidth * 0.15, height: 44)
 
-        Player1SelectView.isHidden = true
+        let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
+        startGameBtn.setUp(with: addScheduleButtonConfig)
 
-        let startGameBtnConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(gameSearchingViewUp), actionTarget: self)
-        startGameBtn.setUp(with: startGameBtnConfig)
+        opponentLabel.text = NSLocalizedString("Opponent", comment: "")
+        dateLabel.text = NSLocalizedString("Date", comment: "")
+        lastResultLabel.text = NSLocalizedString("Last Result", comment: "")
+        opponentLabel.font = UIFont.systemFont(ofSize: 21)
+        dateLabel.font = UIFont.systemFont(ofSize: 21)
+        lastResultLabel.font = UIFont.systemFont(ofSize: 21)
+        scheduleList.delegate = self
+        scheduleList.dataSource = self
+        scheduleList.register(TMScheduleCell.self, forCellReuseIdentifier: "TMScheduleCell.self")
+        scheduleList.separatorStyle = .none
+        scheduleList.showsVerticalScrollIndicator = false
+        scheduleList.showsHorizontalScrollIndicator = false
+        scheduleList.allowsSelectionDuringEditing = true
+        scheduleList.backgroundColor = UIColor(named: "ComponentBackground")
 
-        Player1SelectView.delegate = Player1SelectView
+        if TMUser.user.allHistoryGames.count == 0 {
+            setupAlart()
+        } else {
+            opponentLabel.isHidden = false
+            dateLabel.isHidden = false
+            lastResultLabel.isHidden = false
+            scheduleList.isHidden = false
+            alartView.isHidden = true
+        }
     }
 
-    func setupEvent(friends: [Player]) {
-        players = friends
-        Player1SelectView.dataSource = self
-        Player1SelectView.setupUI()
+    func setupAlart() {
+        opponentLabel.isHidden = true
+        dateLabel.isHidden = true
+        lastResultLabel.isHidden = true
+        scheduleList.isHidden = true
+        alartView.isHidden = false
+
+        alartView.text = "You don't have any game to finish"
+        alartView.font = UIFont.systemFont(ofSize: 22)
+        alartView.textAlignment = .center
     }
 
     override func scaleTo(_ isEnlarge: Bool, completionHandler _: @escaping () -> Void) {
         if !toggle {
-            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
+            viewUpCompletionHandler()
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
         } else {
-            Player1SelectView.isHidden = true
-            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(gameSearchingViewUp), actionTarget: self)
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
         }
         super.scaleTo(isEnlarge) {
-            if self.toggle {
-                self.viewUpCompletionHandler()
-                self.Player1SelectView.isHidden = false
+            if self.toggle {} else {
+                self.viewDownCompletionHandler()
             }
         }
+    }
+
+    override func scaleTo(_ isEnlarge: Bool) {
+        super.scaleTo(isEnlarge)
+        if toggle {
+            viewUpCompletionHandler()
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
+            startGameBtn.setUp(with: config)
+        } else {
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
+            startGameBtn.setUp(with: config)
+        }
+    }
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        42
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        TMUser.user.allUnfinishedGames.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TMHistoryGameCell()
+        cell.selectionStyle = .none
+        cell.showsReorderControl = true // 显示移动编辑样式
+        cell.editingAccessoryType = .disclosureIndicator // 显示向右箭头的编辑样式
+        cell.setupEvent(game: TMUser.user.allUnfinishedGames[indexPath.row])
+        return cell
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        NotificationCenter.default.post(name: Notification.Name(ToastNotification.ContinueGameToast.notificationName.rawValue), object: indexPath.row)
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -71,34 +182,7 @@ class TMGameSearchingView: TMView, UITableViewDataSource {
         return super.hitTest(point, with: event)
     }
 
-    /// 返回用户填写的比赛数据
-    /// - Returns: 0：player1LoginName，1: player2LoginName，2：setNum，3: gameNum， 4: isGoldenGoal
-    func getData() -> Int {
-        players[Player1SelectView.selectedIndex?.row ?? 0].id
-    }
-
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        players.count == 0 ? 1 : players.count
-    }
-
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if players.count == 0 {
-            let cell = TMPopUpCell()
-            cell.setupUI()
-            cell.setupEvent(title: "Find a friend To Play With")
-            return cell
-        } else {
-            let cell = TMplayerSelectionCell()
-            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
-            return cell
-        }
-    }
-
-    @objc func gameSearchingViewUp() {
+    @objc func scheduleGameViewUp() {
         scaleTo(toggle, completionHandler: {})
-    }
-
-    @objc func startGame() {
-        NotificationCenter.default.post(name: Notification.Name(ToastNotification.AddGAmeToast.notificationName.rawValue), object: nil)
     }
 }

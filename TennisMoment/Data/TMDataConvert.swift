@@ -93,16 +93,26 @@ class TMDataConvert {
         return ([[leftSetNum, rightSetNum], [leftGameNum, rightGameNum], [leftPointNum, rightPointNum]], isInTieBreak)
     }
 
-    static func gameResult(from result: [[[Int]]]) -> [[Int]] {
+    static func gameResult(from result: [[[Int]]], isGameCompleted: Bool) -> [[Int]] {
         var res: [[Int]] = []
-        for set in result {
+        for set in result.indices {
             var player1SetResult = 0
             var player2SetResult = 0
-            for game in set {
-                if game[0] > game[1] {
-                    player1SetResult += 1
+            for game in result[set].indices {
+                if isGameCompleted {
+                    if result[set][game][0] > result[set][game][1] {
+                        player1SetResult += 1
+                    } else {
+                        player2SetResult += 1
+                    }
                 } else {
-                    player2SetResult += 1
+                    if set == (result.count - 1), game == (result[set].count - 1) {} else {
+                        if result[set][game][0] > result[set][game][1] {
+                            player1SetResult += 1
+                        } else {
+                            player2SetResult += 1
+                        }
+                    }
                 }
             }
             res.append([player1SetResult, player2SetResult])
@@ -110,8 +120,8 @@ class TMDataConvert {
         return res
     }
 
-    static func setResult(from result: [[[Int]]]) -> [Int] {
-        let gameResult = self.gameResult(from: result)
+    static func setResult(from result: [[[Int]]], isGameCompleted: Bool) -> [Int] {
+        let gameResult = self.gameResult(from: result, isGameCompleted: isGameCompleted)
         var player1SetResult = 0
         var player2SetResult = 0
         for set in gameResult {
@@ -140,19 +150,63 @@ class TMDataConvert {
 
     static func datesInRangeString(startDate: TimeInterval, endDate: TimeInterval) -> [String] {
         let calendar = Calendar.current
-        var currentDate = Date(timeIntervalSince1970: startDate)
-        var dates: [String] = []
-        let endDate = Date(timeIntervalSince1970: endDate)
+        let startDate = Date(timeIntervalSince1970: startDate)
+        var currentDate = startDate
+        let endDate = Date(timeIntervalSince1970: endDate).startOfDay.adding(days: 1)
 
-        while currentDate <= endDate {
+        var dates: [String] = []
+        while currentDate < endDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM-dd"
             let dateString = dateFormatter.string(from: currentDate)
-            dates.append(dateString)
+            if currentDate.endOfDay >= Date(), Date() >= currentDate.startOfDay {
+                dates.insert(dateString, at: 0)
+            } else {
+                dates.append(dateString)
+            }
 
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
         }
 
         return dates
+    }
+
+    static func union<T: Any>(_ array1: [T], to array2: [T]) -> [T] {
+        var res = array2
+        let plu = array1.filter { player1 in
+            !array2.contains { player2 in
+                if let p1 = player1 as? Player, let p2 = player2 as? Player {
+                    return p1.id == p2.id
+                } else if let s1 = player1 as? Schedule, let s2 = player2 as? Schedule {
+                    return s1.opponent.id == s2.opponent.id && s1.startDate == s2.startDate && s1.place == s2.place
+                } else {
+                    return true
+                }
+            }
+        }
+        let men = array2.filter { player1 in
+            !array1.contains { player2 in
+                if let p1 = player1 as? Player, let p2 = player2 as? Player {
+                    return p1.id == p2.id
+                } else if let s1 = player1 as? Schedule, let s2 = player2 as? Schedule {
+                    return s1.opponent.id == s2.opponent.id && s1.startDate == s2.startDate && s1.place == s2.place
+                } else {
+                    return true
+                }
+            }
+        }
+        res += plu
+        res = res.filter { player1 in
+            !men.contains { player2 in
+                if let p1 = player1 as? Player, let p2 = player2 as? Player {
+                    return p1.id == p2.id
+                } else if let s1 = player1 as? Schedule, let s2 = player2 as? Schedule {
+                    return s1.opponent.id == s2.opponent.id && s1.startDate == s2.startDate && s1.place == s2.place
+                } else {
+                    return true
+                }
+            }
+        }
+        return res
     }
 }

@@ -88,10 +88,7 @@ class TMScheduleCell: UITableViewCell {
         searchRequest.naturalLanguageQuery = address
         let localSearch = MKLocalSearch(request: searchRequest)
         localSearch.start { response, error in
-            if let error = error {
-                // 搜索出错，处理错误
-                print("Error occurred in search: \(error.localizedDescription)")
-            } else if let response = response {
+            if error != nil {} else if let response = response {
                 // 获取第一个搜索结果的经纬度坐标
                 if let firstItem = response.mapItems.first {
                     // Step 1: 创建MKMapItem对象

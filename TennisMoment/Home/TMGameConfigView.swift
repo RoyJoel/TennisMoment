@@ -16,6 +16,7 @@ class TMGameConfigView: TMScalableView {
     let gameNumSelections = gameNumSelectViewDataSource()
     let surfaceTypeSelections = surfaceTypeConfigViewDataSource()
     var viewUpCompletionHandler: () -> Void = {}
+    var viewDownCompletionHandler: () -> Void = {}
 
     lazy var startGameBtn: TMTitleOrImageButton = {
         let btn = TMTitleOrImageButton()
@@ -150,9 +151,7 @@ class TMGameConfigView: TMScalableView {
         surfaceConfigLabel.textAlignment = .center
     }
 
-    func setupEvent(friends: [Player]) {
-        player1Selections.players = friends
-        player2Selections.players = friends
+    func setupEvent(friends _: [Player]) {
         Player1SelectView.dataSource = player1Selections
         Player2SelectView.dataSource = player2Selections
         setConfigView.dataSource = setNumSelections
@@ -163,10 +162,36 @@ class TMGameConfigView: TMScalableView {
         setConfigView.setupUI()
         gameConfigView.setupUI()
         surfaceConfigView.setupUI()
+        Player1SelectView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.player1Selections.players.remove(at: indexPath)
+            self.player1Selections.players.insert(selectedPlayer, at: 0)
+            self.Player1SelectView.reloadData()
+        }
+        Player2SelectView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.player2Selections.players.remove(at: indexPath)
+            self.player2Selections.players.insert(selectedPlayer, at: 0)
+            self.Player2SelectView.reloadData()
+        }
+        setConfigView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.setNumSelections.numConfig.remove(at: indexPath)
+            self.setNumSelections.numConfig.insert(selectedPlayer, at: 0)
+            self.setConfigView.reloadData()
+        }
+        gameConfigView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.gameNumSelections.numConfig.remove(at: indexPath)
+            self.gameNumSelections.numConfig.insert(selectedPlayer, at: 0)
+            self.gameConfigView.reloadData()
+        }
+        surfaceConfigView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.surfaceTypeSelections.surfaceConfig.remove(at: indexPath)
+            self.surfaceTypeSelections.surfaceConfig.insert(selectedPlayer, at: 0)
+            self.surfaceConfigView.reloadData()
+        }
     }
 
     override func scaleTo(_ isEnlarge: Bool, completionHandler _: @escaping () -> Void) {
         if !toggle {
+            viewUpCompletionHandler()
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
             startGameBtn.setUp(with: config)
         } else {
@@ -186,7 +211,6 @@ class TMGameConfigView: TMScalableView {
         }
         super.scaleTo(isEnlarge) {
             if self.toggle {
-                self.viewUpCompletionHandler()
                 self.Player1SelectView.isHidden = false
                 self.Player2SelectView.isHidden = false
                 self.serverView.isHidden = false
@@ -198,7 +222,32 @@ class TMGameConfigView: TMScalableView {
                 self.gameConfigLabel.isHidden = false
                 self.surfaceConfigView.isHidden = false
                 self.surfaceConfigLabel.isHidden = false
+            } else {
+                self.viewDownCompletionHandler()
             }
+        }
+    }
+
+    override func scaleTo(_ isEnlarge: Bool) {
+        super.scaleTo(isEnlarge)
+        if toggle {
+            viewUpCompletionHandler()
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
+            startGameBtn.setUp(with: config)
+        } else {
+            Player1SelectView.isHidden = true
+            Player2SelectView.isHidden = true
+            serverView.isHidden = true
+            isGoldenGoalLabel.isHidden = true
+            isGoldenGoalConfigView.isHidden = true
+            setConfigView.isHidden = true
+            setConfigLabel.isHidden = true
+            gameConfigView.isHidden = true
+            gameConfigLabel.isHidden = true
+            surfaceConfigView.isHidden = true
+            surfaceConfigLabel.isHidden = true
+            let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(configGameViewUp), actionTarget: self)
+            startGameBtn.setUp(with: config)
         }
     }
 
@@ -212,11 +261,11 @@ class TMGameConfigView: TMScalableView {
     /// 返回用户填写的比赛数据
     /// - Returns: 0：player1LoginName，1: player2LoginName，2：setNum，3: gameNum， 4: isGoldenGoal
     func getData() -> (player1Id: Int, player2Id: Int, surfaceType: SurfaceType, setNum: Int, gameNum: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool) {
-        let player1Id = player1Selections.players[Player1SelectView.selectedIndex?.row ?? 0].id
-        let player2Id = player2Selections.players[Player2SelectView.selectedIndex?.row ?? 0].id
-        let setConfig = setNumSelections.numConfig[setConfigView.selectedIndex?.row ?? 0]
-        let gameConfig = gameNumSelections.numConfig[gameConfigView.selectedIndex?.row ?? 0]
-        let surfaceConfig = surfaceTypeSelections.surfaceConfig[surfaceConfigView.selectedIndex?.row ?? 0].rawValue
+        let player1Id = player1Selections.players[0].id
+        let player2Id = player2Selections.players[0].id
+        let setConfig = setNumSelections.numConfig[0]
+        let gameConfig = gameNumSelections.numConfig[0]
+        let surfaceConfig = surfaceTypeSelections.surfaceConfig[0].rawValue
         return (player1Id, player2Id, SurfaceType(rawValue: surfaceConfig) ?? .hard, setConfig, gameConfig, isGoldenGoalConfigView.isOn, serverView.isPlayer1Serving)
     }
 
@@ -225,15 +274,16 @@ class TMGameConfigView: TMScalableView {
     }
 
     @objc func startGame() {
-        NotificationCenter.default.post(name: Notification.Name(ToastNotification.AddGAmeToast.notificationName.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(ToastNotification.AddGameToast.notificationName.rawValue), object: nil)
     }
 }
 
 class Player1SelectViewDataSource: NSObject, UITableViewDataSource {
-    var players: [Player] = []
+    var players: [Player] = TMUser.user.friends
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        players.count == 0 ? 1 : players.count
+        players = TMDataConvert.union(TMUser.user.friends, to: players)
+        return players.count == 0 ? 1 : players.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -248,13 +298,18 @@ class Player1SelectViewDataSource: NSObject, UITableViewDataSource {
             return cell
         }
     }
+
+    func tableView(_: UITableView, canMoveRowAt _: IndexPath) -> Bool {
+        true
+    }
 }
 
 class Player2SelectViewDataSource: NSObject, UITableViewDataSource {
-    var players: [Player] = []
+    var players: [Player] = TMUser.user.friends
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        players.count == 0 ? 1 : players.count
+        players = TMDataConvert.union(TMUser.user.friends, to: players)
+        return players.count == 0 ? 1 : players.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

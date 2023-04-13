@@ -185,11 +185,11 @@ class TMRecordView: TMScalableView {
         rightScoreControllerView.isHidden = false
         recordPointView.isHidden = false
         alartView.isHidden = true
-        setupEvent(game: game)
-        self.game.result = [[]]
+        refreshData(game: game)
+        startRecord()
     }
 
-    func setupEvent(game: Game) {
+    func refreshData(game: Game) {
         self.game = game
         isServingOnLeft = game.isPlayer1Left == game.isPlayer1Serving
 
@@ -211,40 +211,22 @@ class TMRecordView: TMScalableView {
             titleView.text = NSLocalizedString("In Turn", comment: "")
             recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
         }
-        let lastGame = self.game.result[game.result.count - 1].last ?? [0, 0]
-        if lastGame[0] == 5 || lastGame[1] == 5 {
-            livePoint = [0, 0]
-        } else {
-            livePoint = lastGame
-        }
 
         player1Stats = game.player1Stats
         player2Stats = game.player2Stats
-        var liveResult = game.result
+        let liveResult = game.result
         resultStack.append(liveResult)
         player1StatsStack.append(player1Stats)
         player2StatsStack.append(player2Stats)
     }
 
-    func refreshData() {
-        if Date().timeIntervalSince1970 < game.endDate || game.endDate == 0 {
-            titleView.text = NSLocalizedString("Live", comment: "")
-            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
-        } else if Date().timeIntervalSince1970 > game.endDate, game.endDate != 0 {
-            titleView.text = NSLocalizedString("Completed", comment: "")
-            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: true, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
-        } else if Date().timeIntervalSince1970 < game.startDate {
-            titleView.text = NSLocalizedString("In Turn", comment: "")
-            recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
-        }
-        if game.result != [[]] {
-            let lastGame = game.result[game.result.count - 1].removeLast()
-            if lastGame[0] == 5 || lastGame[1] == 5 {
-                livePoint = [0, 0]
-                game.result[game.result.count - 1].append(lastGame)
-            } else {
-                livePoint = lastGame
-            }
+    func startRecord() {
+        let lastGame = game.result[game.result.count - 1].removeLast()
+        if lastGame[0] == 5 || lastGame[1] == 5 {
+            livePoint = [0, 0]
+            game.result[game.result.count - 1].append(lastGame)
+        } else {
+            livePoint = lastGame
         }
     }
 
@@ -431,53 +413,88 @@ class TMRecordView: TMScalableView {
             if isLeft {
                 switch recordPointView.config.player1PointNum {
                 case "0":
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "15")
+                    recordPointView.config.player1PointNum = "15"
                     scoreUp(isLeft: isLeft)
                 case "15":
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "30")
+                    recordPointView.config.player1PointNum = "30"
                     scoreUp(isLeft: isLeft)
                 case "30":
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "40")
+                    recordPointView.config.player1PointNum = "40"
                     scoreUp(isLeft: isLeft)
                 case "40":
                     if recordPointView.config.player2PointNum == "40" {
+                        recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "AD")
+                        recordPointView.config.player1PointNum = "AD"
                         scoreUp(isLeft: isLeft)
                     } else if recordPointView.config.player2PointNum == "AD" {
+                        recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "40")
+                        recordPointView.config.player2PointNum = "40"
                         scoreDowm(isLeft: !isLeft)
                     } else {
+                        recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
+                        recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
+                        recordPointView.config.player1PointNum = "0"
+                        recordPointView.config.player2PointNum = "0"
                         scoreUp(isLeft: isLeft)
                         scoreUp(isLeft: isLeft)
                         scoreGame(isLeft: isLeft)
                     }
                 case "AD":
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
+                    recordPointView.config.player1PointNum = "0"
+                    recordPointView.config.player2PointNum = "0"
                     scoreUp(isLeft: isLeft)
                     scoreGame(isLeft: isLeft)
-
-                default: break
+                default:
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
                 }
             } else {
                 switch recordPointView.config.player2PointNum {
                 case "0":
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "15")
+                    recordPointView.config.player2PointNum = "15"
                     scoreUp(isLeft: isLeft)
                 case "15":
-
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "30")
+                    recordPointView.config.player2PointNum = "30"
                     scoreUp(isLeft: isLeft)
                 case "30":
-
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "40")
+                    recordPointView.config.player2PointNum = "40"
                     scoreUp(isLeft: isLeft)
                 case "40":
                     if recordPointView.config.player1PointNum == "40" {
+                        recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "AD")
+                        recordPointView.config.player2PointNum = "AD"
                         scoreUp(isLeft: isLeft)
                     } else if recordPointView.config.player1PointNum == "AD" {
+                        recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "40")
+                        recordPointView.config.player1PointNum = "40"
                         scoreDowm(isLeft: !isLeft)
                     } else {
+                        recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
+                        recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
+                        recordPointView.config.player1PointNum = "0"
+                        recordPointView.config.player2PointNum = "0"
                         scoreUp(isLeft: isLeft)
                         scoreUp(isLeft: isLeft)
                         scoreGame(isLeft: isLeft)
                     }
                 case "AD":
-
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
+                    recordPointView.config.player1PointNum = "0"
+                    recordPointView.config.player2PointNum = "0"
                     scoreUp(isLeft: isLeft)
                     scoreGame(isLeft: isLeft)
                 default:
-                    break
+                    recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "0")
                 }
             }
         }
@@ -487,13 +504,21 @@ class TMRecordView: TMScalableView {
         if isLeft {
             let point = Int(recordPointView.config.player1PointNum) ?? 0
             if point < 6 {
+                recordPointView.updateLeftData(at: 2, isServingOnLeft: false, newNum: "\(point + 1)")
+                recordPointView.config.player1PointNum = "\(point + 1)"
                 scoreUp(isLeft: isLeft)
                 changePositionInTieBreak()
             } else {
                 if point - (Int(recordPointView.config.player2PointNum) ?? 0) < 1 {
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: false, newNum: "\(point + 1)")
+                    recordPointView.config.player1PointNum = "\(point + 1)"
                     scoreUp(isLeft: isLeft)
                     changePositionInTieBreak()
                 } else {
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: false, newNum: "0")
+                    recordPointView.updateRightData(at: 2, isServingOnRight: false, newNum: "0")
+                    recordPointView.config.player1PointNum = "0"
+                    recordPointView.config.player2PointNum = "0"
                     scoreUp(isLeft: isLeft)
                     scoreGame(isLeft: isLeft)
                 }
@@ -501,13 +526,21 @@ class TMRecordView: TMScalableView {
         } else {
             let point = Int(recordPointView.config.player2PointNum) ?? 0
             if point < 6 {
+                recordPointView.updateRightData(at: 2, isServingOnRight: false, newNum: "\(point + 1)")
+                recordPointView.config.player2PointNum = "\(point + 1)"
                 scoreUp(isLeft: isLeft)
                 changePositionInTieBreak()
             } else {
                 if point - (Int(recordPointView.config.player1PointNum) ?? 0) < 1 {
+                    recordPointView.updateRightData(at: 2, isServingOnRight: false, newNum: "\(point + 1)")
+                    recordPointView.config.player2PointNum = "\(point + 1)"
                     scoreUp(isLeft: isLeft)
                     changePositionInTieBreak()
                 } else {
+                    recordPointView.updateLeftData(at: 2, isServingOnLeft: false, newNum: "0")
+                    recordPointView.updateRightData(at: 2, isServingOnRight: false, newNum: "0")
+                    recordPointView.config.player1PointNum = "0"
+                    recordPointView.config.player2PointNum = "0"
                     scoreUp(isLeft: isLeft)
                     scoreGame(isLeft: isLeft)
                 }
@@ -736,9 +769,12 @@ class TMRecordView: TMScalableView {
     }
 
     func saveGame() {
-        game.result[game.result.count - 1].append(livePoint)
-        game.player1Stats = player1Stats
-        game.player2Stats = player2Stats
+        game.result = resultStack.last ?? []
+        game.player1Stats = player1StatsStack.last ?? Stats()
+        game.player2Stats = player2StatsStack.last ?? Stats()
+        resultStack = [game.result]
+        player1StatsStack = [game.player1Stats]
+        player2StatsStack = [game.player2Stats]
         TMGameRequest.updateGameAndStats(game: game) { _ in
             if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
                 self.titleView.text = NSLocalizedString("Live", comment: "")
@@ -758,6 +794,9 @@ class TMRecordView: TMScalableView {
         game.endDate = Date().timeIntervalSince1970
         game.player1Stats = player1Stats
         game.player2Stats = player2Stats
+        resultStack = [game.result]
+        player1StatsStack = [game.player1Stats]
+        player2StatsStack = [game.player2Stats]
         TMGameRequest.updateGameAndStats(game: game) { [self] _ in
             if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
                 titleView.text = NSLocalizedString("Live", comment: "")
@@ -1331,7 +1370,6 @@ class TMRecordView: TMScalableView {
         resultStack.append(liveResult)
         player1StatsStack.append(player1Stats)
         player2StatsStack.append(player2Stats)
-        recordPointView.updateData(liveScore: liveResult, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
     }
 
     func popStateStack() {
@@ -1349,11 +1387,10 @@ class TMRecordView: TMScalableView {
             resultStack.removeLast()
             player1StatsStack.removeLast()
             player2StatsStack.removeLast()
-            let liveResult = resultStack.last ?? []
-            livePoint = liveResult.last?.last ?? [0, 0]
+            var liveResult = resultStack.last ?? []
+            recordPointView.updateData(liveScore: liveResult, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
             player1Stats = player1StatsStack.last ?? Stats()
             player2Stats = player2StatsStack.last ?? Stats()
-            recordPointView.updateData(liveScore: liveResult, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
         }
     }
 }

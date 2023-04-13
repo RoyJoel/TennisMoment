@@ -10,8 +10,7 @@ import UIKit
 
 open class TMPopUpView: TMTableView, UITableViewDelegate {
     public var selectedIndex: IndexPath?
-
-    public var selectedCompletionHandler: (() -> Void)?
+    public var selectedCompletionHandler: ((Int) -> Void)?
 
     public override func setupUI() {
         setCorner(radii: 8)
@@ -21,16 +20,16 @@ open class TMPopUpView: TMTableView, UITableViewDelegate {
 
     open func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if toggle == false {
+            deselectRow(at: IndexPath(row: 0, section: 0), animated: false)
             unfold()
-            reloadData()
         } else {
             selectedIndex = indexPath
+            (selectedCompletionHandler ?? { _ in })(indexPath.row)
             setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             UIView.performWithoutAnimation {
                 moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
             }
             deselectRow(at: IndexPath(row: 0, section: 0), animated: false)
-            (selectedCompletionHandler ?? {})()
             fold()
         }
     }
@@ -50,5 +49,12 @@ open class TMPopUpView: TMTableView, UITableViewDelegate {
 
     public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         originalBounds.height
+    }
+
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !self.point(inside: point, with: nil), toggle == true {
+            fold()
+        }
+        return super.hitTest(point, with: event)
     }
 }

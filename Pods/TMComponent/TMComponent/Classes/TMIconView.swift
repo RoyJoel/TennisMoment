@@ -53,6 +53,8 @@ open class TMIconView: TMView {
             make.height.equalTo(30)
             make.centerX.equalTo(self.iconImage.snp.centerX)
         }
+        iconImage.isUserInteractionEnabled = true
+        nameView.isUserInteractionEnabled = true
     }
 
     public func setupEvent(config: TMIconViewConfig) {

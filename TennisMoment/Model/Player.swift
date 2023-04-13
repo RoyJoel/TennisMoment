@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Player: Codable {
+struct Player: Codable, Equatable {
     var id: Int
     var loginName: String
     var name: String
@@ -58,8 +58,69 @@ struct Player: Codable {
         careerStats = Stats(json: json["careerStats"])
     }
 
+    init?(dictionary: [String: Any]) {
+        guard let id = dictionary["id"] as? Int,
+            let loginName = dictionary["loginName"] as? String,
+            let name = dictionary["name"] as? String,
+            let icon = dictionary["icon"] as? String,
+            let sexRawValue = dictionary["sex"] as? String,
+            let sex = Sex(rawValue: sexRawValue),
+            let age = dictionary["age"] as? Int,
+            let yearsPlayed = dictionary["yearsPlayed"] as? Int,
+            let height = dictionary["height"] as? Float,
+            let width = dictionary["width"] as? Float,
+            let gripRawValue = dictionary["grip"] as? String,
+            let grip = Grip(rawValue: gripRawValue),
+            let backhandRawValue = dictionary["backhand"] as? String,
+            let backhand = Backhand(rawValue: backhandRawValue),
+            let points = dictionary["points"] as? Int,
+            let isAdult = dictionary["isAdult"] as? Bool,
+            let statsDictionary = dictionary["careerStats"] as? [String: Any],
+            let careerStats = Stats(dict: statsDictionary) else {
+            return nil
+        }
+
+        self.init(id: id, loginName: loginName, name: name, icon: icon, sex: sex, age: age, yearsPlayed: yearsPlayed, height: height, width: width, grip: grip, backhand: backhand, points: points, isAdult: isAdult, careerStats: careerStats)
+    }
+
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "loginName": loginName,
+            "name": name,
+            "icon": icon,
+            "sex": sex.rawValue,
+            "age": age,
+            "yearsPlayed": yearsPlayed,
+            "height": height,
+            "width": width,
+            "grip": grip.rawValue,
+            "backhand": backhand.rawValue,
+            "points": points,
+            "isAdult": isAdult,
+            "careerStats": careerStats.toDictionary(),
+        ]
+    }
+
     init() {
         self = Player(json: JSON())
+    }
+
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.loginName == rhs.loginName &&
+            lhs.name == rhs.name &&
+            lhs.icon == rhs.icon &&
+            lhs.sex == rhs.sex &&
+            lhs.age == rhs.age &&
+            lhs.yearsPlayed == rhs.yearsPlayed &&
+            Int(lhs.height * 100) == Int(rhs.height * 100) &&
+            Int(lhs.width * 100) == Int(rhs.width * 100) &&
+            lhs.grip == rhs.grip &&
+            lhs.backhand == rhs.backhand &&
+            lhs.points == rhs.points &&
+            lhs.isAdult == rhs.isAdult &&
+            lhs.careerStats == rhs.careerStats
     }
 }
 

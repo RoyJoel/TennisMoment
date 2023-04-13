@@ -8,8 +8,10 @@
 import Foundation
 
 enum TMUDKeys: String {
+    case UserInfo
     case isNotFirstDownload
     case lastGameTime
+    case liveMatch
     case JSONWebToken
     case loggedinUser
 }

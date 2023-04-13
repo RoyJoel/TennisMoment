@@ -9,7 +9,7 @@ import Foundation
 import TMComponent
 import UIKit
 
-class TMSignUpViewController: UIViewController {
+class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let gripConfig = gripConfigViewDataSource()
     let backhandConfig = backhandConfigViewDataSource()
     let configItems = ["Please enter a name for yourself", "Please choose a profile picture.", "What is your gender?", "What is your age?", "How many years have you been playing?", "What is your height in centimeters?", "What is your width in kilograms?", "What is your grip type?", "What is your backhand type?", "Please enter a account for yourself.", "Please enter a password for yourself."]
@@ -36,6 +36,11 @@ class TMSignUpViewController: UIViewController {
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
+    }()
+
+    lazy var imagePicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        return picker
     }()
 
     lazy var sexTextField: TMSelectionView = {
@@ -228,6 +233,9 @@ class TMSignUpViewController: UIViewController {
         nameTextField.setup(with: nameConfig)
         iconImageView.image = UIImage(systemName: "camera")
         iconImageView.tintColor = UIColor(named: "ContentBackground")
+        iconImageView.isUserInteractionEnabled = true
+        imagePicker.delegate = self
+        iconImageView.addTapGesture(self, #selector(changeIcon))
         sexTextField.setupUI()
         sexTextField.setupEvent(config: TMServeViewConfig(selectedImage: "circle.fill", unSelectedImage: "circle", selectedTitle: "man", unselectedTitle: "woman"))
         let ageConfig = TMTextFieldConfig(placeholderText: configItems[3])
@@ -253,6 +261,16 @@ class TMSignUpViewController: UIViewController {
         nextConfigBtn.setUp(with: nextBtnConfig)
         let lastBtnConfig = TMButtonConfig(title: "Back", action: #selector(stepBackward), actionTarget: self)
         lastConfigBtn.setUp(with: lastBtnConfig)
+        gripTextField.selectedCompletionHandler = { index in
+            let selectedGrip = self.gripConfig.gripConfig.remove(at: index)
+            self.gripConfig.gripConfig.insert(selectedGrip, at: 0)
+            self.gripTextField.reloadData()
+        }
+        backgroundTextField.selectedCompletionHandler = { index in
+            let selectedBackhand = self.backhandConfig.backhandConfig.remove(at: index)
+            self.backhandConfig.backhandConfig.insert(selectedBackhand, at: 0)
+            self.backgroundTextField.reloadData()
+        }
     }
 
     func showSubView(tag: Int) {
@@ -281,8 +299,10 @@ class TMSignUpViewController: UIViewController {
         yearsPlayedTextField.textField.text = "\(yearsPlayed)"
         heightTextField.textField.text = "\(height)"
         widthTextField.textField.text = "\(width)"
-        gripTextField.selectedIndex = IndexPath(row: Int(grip.index) ?? 0, section: 0)
-        backgroundTextField.selectedIndex = IndexPath(row: Int(backhand.index) ?? 0, section: 0)
+        let selectedGrip = gripConfig.gripConfig.remove(at: Int(grip.index) ?? 0)
+        gripConfig.gripConfig.insert(selectedGrip, at: 0)
+        let selectedBackhand = backhandConfig.backhandConfig.remove(at: Int(backhand.index) ?? 0)
+        backhandConfig.backhandConfig.insert(selectedBackhand, at: 0)
     }
 
     func getUserInfo() {
@@ -295,10 +315,23 @@ class TMSignUpViewController: UIViewController {
         TMUser.user.yearsPlayed = Int(yearsPlayedTextField.textField.text ?? "0") ?? 0
         TMUser.user.height = Float(heightTextField.textField.text ?? "0") ?? 0
         TMUser.user.width = Float(widthTextField.textField.text ?? "0") ?? 0
-        TMUser.user.grip = gripConfig.gripConfig[gripTextField.selectedIndex?.row ?? 0]
-        TMUser.user.backhand = backhandConfig.backhandConfig[backgroundTextField.selectedIndex?.row ?? 0]
+        TMUser.user.grip = gripConfig.gripConfig[0]
+        TMUser.user.backhand = backhandConfig.backhandConfig[0]
         TMUser.user.points = 0
         TMUser.user.isAdult = (Int(ageTextField.textField.text ?? "0") ?? 0) > 18 ? true : false
+    }
+
+    func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            iconImageView.contentMode = .scaleAspectFit
+            iconImageView.image = pickedImage
+        }
+
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 
     @objc func stepForward() {
@@ -307,6 +340,7 @@ class TMSignUpViewController: UIViewController {
             if let view = view.viewWithTag(currentIndex + 199), view is TMTextField {
                 if let text = (view as? TMTextField)?.textField.text, !text.isEmpty {
                     if currentIndex == 10 {
+                        nextConfigBtn.isEnabled = false
                         TMPlayerRequest.searchPlayer(loginName: text, completionHandler: { res in
                             if res {
                                 self.currentIndex -= 1
@@ -319,6 +353,7 @@ class TMSignUpViewController: UIViewController {
                                 toastView.setCorner(radii: 15)
                                 self.view.showToast(toastView, duration: 1, point: CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2)) { _ in
                                 }
+                                self.nextConfigBtn.isEnabled = true
                             } else {
                                 self.progressView.setProgress(Float(self.currentIndex) / Float(self.configItems.count), animated: true)
                                 self.signInTitleView.text = self.configItems[self.currentIndex]
@@ -327,6 +362,7 @@ class TMSignUpViewController: UIViewController {
                                 if let thisView = view.viewWithTag(self.currentIndex + 200) as? TMPopUpView {
                                     self.view.bringSubviewToFront(thisView)
                                 }
+                                self.nextConfigBtn.isEnabled = true
                             }
                         })
                     } else {
@@ -408,16 +444,21 @@ class TMSignUpViewController: UIViewController {
         let tag = currentIndex + 200
         if let selectedString = (view.viewWithTag(tag) as? TMTextField)?.textField.text {
             completionHandler(selectedString)
-        } else if let selectedString = (view.viewWithTag(tag) as? TMPopUpView)?.selectedIndex?.row {
-            if tag == 207 {
-                completionHandler(gripConfig.gripConfig[selectedString].rawValue)
-            } else {
-                completionHandler(backhandConfig.backhandConfig[selectedString].rawValue)
-            }
         } else if let selectedString = (view.viewWithTag(tag) as? TMSelectionView)?.isLeft {
             completionHandler(selectedString == true ? Sex.Man.rawValue : Sex.Woman.rawValue)
+        } else {
+            if tag == 207 {
+                completionHandler(gripConfig.gripConfig[0].rawValue)
+            } else {
+                completionHandler(backhandConfig.backhandConfig[0].rawValue)
+            }
         }
         navigationController?.popViewController(animated: true)
+    }
+
+    @objc func changeIcon() {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true)
     }
 }
 

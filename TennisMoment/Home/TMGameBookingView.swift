@@ -11,7 +11,7 @@ import TMComponent
 import UIKit
 
 class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITableViewDataSource {
-    var players: [Player] = []
+    var players: [Player] = TMUser.user.friends
     var selectedMapItem: MKMapItem?
     var isDatePickerUp = false
 
@@ -92,13 +92,18 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
             placeSearchBar.isHidden = true
             datePicker.isHidden = true
             mapView.isHidden = true
+            placeSearchBar.resignFirstResponder()
         }
     }
 
-    func setupEvent(players: [Player], date: TimeInterval, place: String) {
-        self.players = players
+    func setupEvent(date: TimeInterval, place: String) {
         playerSelectView.dataSource = self
         playerSelectView.setupUI()
+        playerSelectView.selectedCompletionHandler = { indexPath in
+            let selectedPlayer = self.players.remove(at: indexPath)
+            self.players.insert(selectedPlayer, at: 0)
+            self.playerSelectView.reloadData()
+        }
         datePicker.date = Date(timeIntervalSince1970: date)
         placeSearchBar.text = place == "" ? nil : place
     }
@@ -123,9 +128,7 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
         let geocoder = CLGeocoder()
         let cllocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         geocoder.reverseGeocodeLocation(cllocation) { placemarks, error in
-            if let error = error {
-                print("Error in reverse geocoding: \(error.localizedDescription)")
-            } else if let placemark = placemarks?.first {
+            if error != nil {} else if let placemark = placemarks?.first {
                 pointAnnotation.title = placemark.name
                 self.selectedMapItem?.name = placemark.name
             }
@@ -133,13 +136,25 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        players.count
+        players = TMDataConvert.union(TMUser.user.friends, to: players)
+        return players.count == 0 ? 1 : players.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TMplayerSelectionCell()
-        cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
-        return cell
+        if players.count == 0 {
+            let cell = TMPopUpCell()
+            cell.setupUI()
+            cell.setupEvent(title: "Find a friend To Play With")
+            return cell
+        } else {
+            let cell = TMplayerSelectionCell()
+            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+            return cell
+        }
+    }
+
+    func tableView(_: UITableView, canMoveRowAt _: IndexPath) -> Bool {
+        true
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -183,9 +198,8 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
             // 创建一个 MKLocalSearch 对象，并开始搜索
             let localSearch = MKLocalSearch(request: searchRequest)
             localSearch.start { response, error in
-                if let error = error {
+                if error != nil {
                     // 搜索出错，处理错误
-                    print("Error occurred in search: \(error.localizedDescription)")
                 } else if let response = response {
                     // 搜索成功，处理搜索结果
                     self.mapView.removeAnnotations(self.mapView.annotations)
@@ -218,10 +232,7 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
         // 创建一个 MKLocalSearch 对象，并开始搜索
         let localSearch = MKLocalSearch(request: searchRequest)
         localSearch.start { response, error in
-            if let error = error {
-                // 搜索出错，处理错误
-                print("Error occurred in search: \(error.localizedDescription)")
-            } else if let response = response {
+            if error != nil {} else if let response = response {
                 // 搜索成功，处理搜索结果
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 let mapItems = response.mapItems

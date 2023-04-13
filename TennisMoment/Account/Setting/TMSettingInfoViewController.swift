@@ -90,9 +90,24 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     @objc func updateUserInfo() {
-        infoVC.getUserInfo()
-        TMUser.updateInfo { _ in
-            self.navigationController?.popViewController(animated: true)
+        let sheetCtrl = UIAlertController(title: "Cancel changes", message: nil, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.infoVC.getUserInfo()
+            TMUser.updateInfo { _ in
+                NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)
+                self.navigationController?.popViewController(animated: true)
+            }
         }
+        sheetCtrl.addAction(action)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+            sheetCtrl.dismiss(animated: true)
+        }
+        sheetCtrl.addAction(cancelAction)
+
+        sheetCtrl.popoverPresentationController?.sourceView = view
+        sheetCtrl.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.width / 2 - 144, y: view.bounds.height / 2 - 69, width: 288, height: 138)
+        present(sheetCtrl, animated: true, completion: nil)
     }
 }

@@ -105,7 +105,7 @@ class TMSignInViewController: AVPlayerViewController {
                 if !loginName.isEmpty, !password.isEmpty {
                     TMUser.user.loginName = loginName
                     TMUser.user.password = password
-                    TMUser.signIn { token, error in
+                    TMUser.signIn { user, error in
                         guard error == nil else {
                             if let window = self.signInBtn.window {
                                 let toastView = UILabel()
@@ -121,10 +121,28 @@ class TMSignInViewController: AVPlayerViewController {
                             self.signInBtn.stopBouncing()
                             return
                         }
+                        guard let user = user else {
+                            if let window = self.signInBtn.window {
+                                let toastView = UILabel()
+                                toastView.text = "login failed"
+                                toastView.numberOfLines = 2
+                                toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
+                                toastView.backgroundColor = UIColor(named: "ComponentBackground")
+                                toastView.textAlignment = .center
+                                toastView.setCorner(radii: 15)
+                                (window.rootViewController as? TMSignInViewController)?.contentOverlayView?.showToast(toastView, duration: 1, point: CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)) { _ in
+                                }
+                            }
+                            self.signInBtn.stopBouncing()
+                            return
+                        }
+                        TMUser.user = user
                         var loggedinUser = (UserDefaults.standard.array(forKey: TMUDKeys.loggedinUser.rawValue) as? [String]) ?? []
                         loggedinUser.append(TMUser.user.loginName)
+                        let userInfo = try? PropertyListEncoder().encode(TMUser.user)
                         UserDefaults.standard.set(loggedinUser, forKey: TMUDKeys.loggedinUser.rawValue)
-                        UserDefaults.standard.set(token, forKey: TMUDKeys.JSONWebToken.rawValue)
+                        UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
+                        UserDefaults.standard.set(user.token, forKey: TMUDKeys.JSONWebToken.rawValue)
                         // 登录成功后，跳转到下一个界面
                         if let window = self.signInBtn.window {
                             let homeVC = TabViewController()

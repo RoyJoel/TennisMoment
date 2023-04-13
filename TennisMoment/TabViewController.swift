@@ -9,6 +9,9 @@ import SnapKit
 import UIKit
 
 class TabViewController: UITabBarController {
+    let homeVC = HomeViewController()
+    let eventVC = EventViewController()
+    let accountVC = AccountViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,9 +40,9 @@ class TabViewController: UITabBarController {
     }
 
     private func addViewController() {
-        setChildViewController(HomeViewController(), NSLocalizedString("Home", comment: ""), "tennisball.fill")
-        setChildViewController(EventViewController(), NSLocalizedString("Event", comment: ""), "trophy.fill")
-        setChildViewController(AccountViewController(), NSLocalizedString("Me", comment: ""), "figure.tennis")
+        setChildViewController(homeVC, NSLocalizedString("Home", comment: ""), "tennisball.fill")
+        setChildViewController(eventVC, NSLocalizedString("Event", comment: ""), "trophy.fill")
+        setChildViewController(accountVC, NSLocalizedString("Me", comment: ""), "figure.tennis")
     }
 
     private func setChildViewController(_ childViewController: UIViewController, _ itemName: String, _ itemImage: String) {

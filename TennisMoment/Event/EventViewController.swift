@@ -13,6 +13,7 @@ import TMComponent
 import UIKit
 
 class EventViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var clubs: [Club] = []
     lazy var clubListView: UITableView = {
         let tableView = UITableView()
         return tableView
@@ -34,7 +35,6 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         clubListView.backgroundColor = UIColor(named: "BackgroundGray")
         clubListView.delegate = self
-        clubListView.dataSource = self
         clubListView.separatorStyle = .none
         clubListView.showsVerticalScrollIndicator = false
         clubListView.showsHorizontalScrollIndicator = false
@@ -52,7 +52,16 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         clubContentView.backgroundColor = UIColor(named: "ComponentBackground")
         clubContentView.frame = CGRect(x: 38, y: 32, width: UIStandard.shared.screenWidth * 0.3, height: UIStandard.shared.screenHeight * 0.85)
         clubContentView.setup(clubContentView.bounds, clubContentView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.6, height: UIStandard.shared.screenHeight * 0.85), CGPoint(x: UIStandard.shared.screenWidth * 0.6 + 62, y: 32 + UIStandard.shared.screenHeight * 0.425), 0.3)
+        clubListView.dataSource = self
         clubContentView.setupUI()
+        clubListView.tab_startAnimation {
+            TMClubRequest.getInfos(ids: TMUser.user.allClubs) { clubs in
+                self.clubs = clubs
+                self.clubListView.reloadData()
+                self.clubListView.tab_endAnimation()
+            }
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
     }
 
     func showContent() {
@@ -60,7 +69,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        TMUser.user.allClubs.count
+        clubs.count
     }
 
     func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
@@ -79,7 +88,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        clubContentView.setupEvent(club: TMUser.user.allClubs[indexPath.row])
+        clubContentView.setupEvent(club: clubs[indexPath.row])
         showContent()
     }
 
@@ -87,7 +96,17 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = TMClubTableViewCell()
         cell.setupUI()
         cell.selectionStyle = .none
-        cell.setupEvent(clubIcon: TMUser.user.allClubs[indexPath.row].icon, clubName: TMUser.user.allClubs[indexPath.row].name)
+        cell.setupEvent(clubIcon: clubs[indexPath.row].icon, clubName: clubs[indexPath.row].name)
         return cell
+    }
+
+    @objc func refreshData() {
+        clubListView.tab_startAnimation {
+            TMClubRequest.getInfos(ids: TMUser.user.allClubs) { clubs in
+                self.clubs = clubs
+                self.clubListView.reloadData()
+                self.clubListView.tab_endAnimation()
+            }
+        }
     }
 }

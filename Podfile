@@ -9,7 +9,7 @@ target 'TennisMoment' do
 
   pod 'SnapKit', '~> 5.0.0'
   pod 'TABAnimated', '2.5.1'
-  pod 'TMComponent', :git => 'https://github.com/RoyJoel/TMComponent.git'
+  pod 'TMComponent', :git => 'https://github.com/RoyJoel/TMComponent.git', :tag => '0.5.10'
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'SwiftyJSON'
@@ -17,6 +17,7 @@ target 'TennisMoment' do
   pod 'TABAnimated', '2.5.1'
   pod 'JXSegmentedView'
   pod 'Starscream'
+  pod 'ReachabilitySwift'
 
   target 'TennisMomentTests' do
     inherit! :search_paths

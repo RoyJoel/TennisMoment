@@ -9,7 +9,7 @@ import CoreLocation
 import Foundation
 import SwiftyJSON
 
-struct Game: Codable {
+struct Game: Codable, Equatable {
     var id: Int
     var place: String
     var surface: SurfaceType
@@ -86,6 +86,88 @@ struct Game: Codable {
 
     init() {
         self = Game(json: JSON())
+    }
+
+    init?(dictionary: [String: Any]) {
+        guard let id = dictionary["id"] as? Int,
+            let place = dictionary["place"] as? String,
+            let surface = dictionary["surface"] as? String,
+            let surfaceType = SurfaceType(rawValue: surface),
+            let setNum = dictionary["setNum"] as? Int,
+            let gameNum = dictionary["gameNum"] as? Int,
+            let round = dictionary["round"] as? Int,
+            let isGoldenGoal = dictionary["isGoldenGoal"] as? Bool,
+            let isPlayer1Serving = dictionary["isPlayer1Serving"] as? Bool,
+            let isPlayer1Left = dictionary["isPlayer1Left"] as? Bool,
+            let isChangePosition = dictionary["isChangePosition"] as? Bool,
+            let startDate = dictionary["startDate"] as? TimeInterval,
+            let endDate = dictionary["endDate"] as? TimeInterval,
+            let player1Dict = dictionary["player1"] as? [String: Any],
+            let player1StatsDict = dictionary["player1Stats"] as? [String: Any],
+            let player2Dict = dictionary["player2"] as? [String: Any],
+            let player2StatsDict = dictionary["player2Stats"] as? [String: Any],
+            let isPlayer1FirstServe = dictionary["isPlayer1FirstServe"] as? Bool,
+            let isPlayer2FirstServe = dictionary["isPlayer2FirstServe"] as? Bool,
+            let result = dictionary["result"] as? [[[Int]]]
+        else {
+            return nil
+        }
+
+        guard let player1 = Player(dictionary: player1Dict),
+            let player1Stats = Stats(dict: player1StatsDict),
+            let player2 = Player(dictionary: player2Dict),
+            let player2Stats = Stats(dict: player2StatsDict)
+        else {
+            return nil
+        }
+
+        self.init(id: id, place: place, surface: surfaceType, setNum: setNum, gameNum: gameNum, round: round, isGoldenGoal: isGoldenGoal, isPlayer1Serving: isPlayer1Serving, isPlayer1Left: isPlayer1Left, isChangePosition: isChangePosition, startDate: startDate, endDate: endDate, player1: player1, player1Stats: player1Stats, player2: player2, player2Stats: player2Stats, isPlayer1FirstServe: isPlayer1FirstServe, isPlayer2FirstServe: isPlayer2FirstServe, result: result)
+    }
+
+    func toDictionary() -> [String: Any] {
+        var dict: [String: Any] = [:]
+        dict["id"] = id
+        dict["place"] = place
+        dict["surface"] = surface.rawValue
+        dict["setNum"] = setNum
+        dict["gameNum"] = gameNum
+        dict["round"] = round
+        dict["isGoldenGoal"] = isGoldenGoal
+        dict["isPlayer1Serving"] = isPlayer1Serving
+        dict["isPlayer1Left"] = isPlayer1Left
+        dict["isChangePosition"] = isChangePosition
+        dict["startDate"] = startDate
+        dict["endDate"] = endDate
+        dict["player1"] = player1.toDictionary()
+        dict["player1Stats"] = player1Stats.toDictionary()
+        dict["player2"] = player2.toDictionary()
+        dict["player2Stats"] = player2Stats.toDictionary()
+        dict["isPlayer1FirstServe"] = isPlayer1FirstServe
+        dict["isPlayer2FirstServe"] = isPlayer2FirstServe
+        dict["result"] = result
+        return dict
+    }
+
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.place == rhs.place &&
+            lhs.surface == rhs.surface &&
+            lhs.setNum == rhs.setNum &&
+            lhs.gameNum == rhs.gameNum &&
+            lhs.round == rhs.round &&
+            lhs.isGoldenGoal == rhs.isGoldenGoal &&
+            lhs.isPlayer1Serving == rhs.isPlayer1Serving &&
+            lhs.isPlayer1Left == rhs.isPlayer1Left &&
+            lhs.isChangePosition == rhs.isChangePosition &&
+            lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate &&
+            lhs.player1 == rhs.player1 &&
+            lhs.player1Stats == rhs.player1Stats &&
+            lhs.player2 == rhs.player2 &&
+            lhs.player2Stats == rhs.player2Stats &&
+            lhs.isPlayer1FirstServe == rhs.isPlayer1FirstServe &&
+            lhs.isPlayer2FirstServe == rhs.isPlayer2FirstServe &&
+            lhs.result == rhs.result
     }
 }
 

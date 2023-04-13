@@ -280,7 +280,7 @@ class TMGameStatsDetailViewController: UIViewController {
             make.width.equalTo(300)
         }
 
-        let h2hRecordConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: "H2H", iconName: "", isServingOnLeft: false, areBothServing: false, isComparing: false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(0)", rightNum: "\(0)")
+        let h2hRecordConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: "H2H", isServingOnLeft: false, areBothServing: false, isComparing: false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(0)", rightNum: "\(0)")
         H2HRecordView.setup(with: h2hRecordConfig)
         progressView.setCorner(radii: 10)
         H2HRecordView.setCorner(radii: 10)
@@ -312,6 +312,11 @@ class TMGameStatsDetailViewController: UIViewController {
         serveStatsLabel.textAlignment = .center
         returnStatsLabel.textAlignment = .center
 
+        player1IconView.isUserInteractionEnabled = true
+        player2IconView.isUserInteractionEnabled = true
+        player1IconView.addTapGesture(self, #selector(seePlayerInfo(sender:)))
+        player2IconView.addTapGesture(self, #selector(seePlayerInfo(sender:)))
+
         setupEvent(game: game)
         searchH2H(player1: game.player1.id, player2: game.player2.id)
     }
@@ -323,7 +328,7 @@ class TMGameStatsDetailViewController: UIViewController {
         roundLabel.text = NSLocalizedString("Round", comment: "") + ": \(game.round)"
         let player1IconConfig = TMIconViewConfig(icon: game.player1.icon, name: game.player1.name)
         let player2IconConfig = TMIconViewConfig(icon: game.player2.icon, name: game.player2.name)
-        let result = TMDataConvert.gameResult(from: game.result)
+        let result = TMDataConvert.gameResult(from: game.result, isGameCompleted: true)
         var multiConfig: [TMPointComparingViewConfig] = []
         for setResult in result.indices {
             let config = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: String(format: NSLocalizedString("setResult", comment: ""), setResult + 1), iconName: "checkmark.circle", isServingOnLeft: result[setResult][0] > result[setResult][1] ? true : false, areBothServing: false, isComparing: true, font: UIFont.systemFont(ofSize: 20), leftNum: "\(result[setResult][0])", rightNum: "\(result[setResult][1])")
@@ -402,7 +407,7 @@ class TMGameStatsDetailViewController: UIViewController {
         TMGameRequest.searchh2h(for: player1, and: player2) { games in
             self.games = games
             for game in games {
-                let result = TMDataConvert.setResult(from: game.result)
+                let result = TMDataConvert.setResult(from: game.result, isGameCompleted: true)
                 if (result[0] > result[1]) == game.isPlayer1Left {
                     player1WinningNum += 1
                 } else {
@@ -425,6 +430,20 @@ class TMGameStatsDetailViewController: UIViewController {
                 self.progressView.progressTintColor = UIColor(named: "Tennis")
                 self.progressView.trackTintColor = UIColor(named: "Tennis")
             }
+        }
+    }
+
+    @objc func seePlayerInfo(sender: UITapGestureRecognizer) {
+        let vc = TMCommonPlayerInfoViewController()
+        if let tappedView = sender.view {
+            if tappedView == player1IconView {
+                // Do something for player 1
+                vc.player = game.player1
+            } else if tappedView == player2IconView {
+                // Do something for player 2
+                vc.player = game.player2
+            }
+            present(vc, animated: true)
         }
     }
 

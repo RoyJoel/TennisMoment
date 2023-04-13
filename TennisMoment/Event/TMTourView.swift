@@ -9,7 +9,8 @@ import Foundation
 import TMComponent
 
 class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
-    var event = Event(id: 0, icon: "NickKyrgios", name: "", startDate: Date().timeIntervalSince1970, endDate: Date().timeIntervalSince1970, level: .series15, draw: [], schedule: [])
+    var event = Event()
+    var schedules: [[Game]] = []
     var scheduleSelections = scheduleConfigViewDataSource()
     var currentSeletedIndex = 0
 
@@ -101,14 +102,19 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         } else if Date().timeIntervalSince1970 > event.endDate {
             joinConfig = TMButtonConfig(title: NSLocalizedString("COMPLETED", comment: ""), action: nil, actionTarget: self)
         } else if Date().timeIntervalSince1970 < event.startDate {
-            if TMUser.user.allEvents.contains(where: { $0.id == event.id }) {
+            if TMUser.user.allEvents.contains(where: { $0 == event.id }) {
                 joinConfig = TMButtonConfig(title: NSLocalizedString("ONGOING", comment: ""), action: nil, actionTarget: self)
             }
         }
         scheduleSelections.schedules = TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate)
         scheduleView.dataSource = scheduleSelections
         scheduleView.delegate = scheduleView
-        scheduleView.selectedCompletionHandler = {
+        scheduleView.selectedCompletionHandler = { index in
+            let selectedSchedule = self.scheduleSelections.schedules.remove(at: index)
+            self.scheduleSelections.schedules.insert(selectedSchedule, at: 0)
+            let selectedGames = self.schedules.remove(at: index)
+            self.schedules.insert(selectedGames, at: 0)
+            self.scheduleView.reloadData()
             self.liveGameView.reloadData()
         }
         tourNameView.setupEvent(config: nameConfig)
@@ -118,7 +124,8 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        event.schedule[scheduleView.selectedIndex?.row ?? 0].count
+        schedules = TMDataConvert.union(event.schedule, to: schedules)
+        return schedules[0].count
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -129,7 +136,7 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         let cell = liveGameView.cellForRow(at: indexPath)
         if let currentViewController = cell?.getParentViewController() {
             let vc = TMGameStatsDetailViewController()
-            vc.game = event.schedule[scheduleView.selectedIndex?.row ?? 0][indexPath.row]
+            vc.game = event.schedule[0][indexPath.row]
             currentViewController.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -141,7 +148,7 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         cell.transform = transform
         cell.backgroundColor = UIColor(named: "BackgroundGray")
         cell.selectionStyle = .none
-        cell.setupEvent(game: event.schedule[scheduleView.selectedIndex?.row ?? 0][indexPath.row])
+        cell.setupEvent(game: schedules[0][indexPath.row])
         return cell
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Event: Codable {
+struct Event: Codable, Equatable {
     var id: Int
     var icon: String
     var name: String
@@ -38,6 +38,57 @@ struct Event: Codable {
         level = EventLevel(rawValue: json["level"].intValue) ?? .series15
         draw = json["draw"].arrayValue.map { Player(json: $0) }
         schedule = json["schedule"].arrayValue.map { $0.arrayValue.map { Game(json: $0) } }
+    }
+
+    init() {
+        self = Event(json: JSON())
+    }
+
+    init?(dict: [String: Any]) {
+        guard let id = dict["id"] as? Int,
+            let icon = dict["icon"] as? String,
+            let name = dict["name"] as? String,
+            let startDate = dict["startDate"] as? TimeInterval,
+            let endDate = dict["endDate"] as? TimeInterval,
+            let levelString = dict["level"] as? Int,
+            let level = EventLevel(rawValue: levelString),
+            let drawDicts = dict["draw"] as? [[String: Any]],
+            let scheduleDicts = dict["schedule"] as? [[[String: Any]]]
+        else {
+            return nil
+        }
+
+        let draw = drawDicts.compactMap { Player(dictionary: $0) }
+        let schedule = scheduleDicts.map { $0.compactMap { Game(dictionary: $0) } }
+
+        self = Event(id: id, icon: icon, name: name, startDate: startDate, endDate: endDate, level: level, draw: draw, schedule: schedule)
+    }
+
+    func toDictionary() -> [String: Any] {
+        let drawDicts = draw.map { Player(dictionary: $0.toDictionary()) }
+        let scheduleDicts = schedule.map { $0.map { Game(dictionary: $0.toDictionary()) } }
+
+        return [
+            "id": id,
+            "icon": icon,
+            "name": name,
+            "startDate": startDate,
+            "endDate": endDate,
+            "level": level.rawValue,
+            "draw": drawDicts,
+            "schedule": scheduleDicts,
+        ]
+    }
+
+    static func == (lhs: Event, rhs: Event) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.icon == rhs.icon &&
+            lhs.name == rhs.name &&
+            lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate &&
+            lhs.level == rhs.level &&
+            lhs.draw == rhs.draw &&
+            lhs.schedule == rhs.schedule
     }
 }
 

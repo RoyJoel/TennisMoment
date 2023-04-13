@@ -11,8 +11,6 @@ import TMComponent
 import UIKit
 
 class AccountViewController: UIViewController {
-    var games: [Game] = []
-
     lazy var settingView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "gearshape")
@@ -63,18 +61,10 @@ class AccountViewController: UIViewController {
         basicInfoView.setupEvent()
         userDataView.setupUI()
         userDataView.setupEventForCareerStatsView()
-
-        userDataView.tab_startAnimation {
-            DispatchQueue.main.async {
-                TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 3, isCompleted: true) { games in
-                    self.games = games
-                    if self.games.count != 0 {
-                        self.userDataView.setupEventForGameStatsView(games: self.games)
-                    } else {
-                        self.userDataView.gameStatsView.setupAlart()
-                    }
-                }
-            }
+        if TMUser.user.allHistoryGames.count != 0 {
+            userDataView.setupEventForGameStatsView(games: TMUser.user.allHistoryGames)
+        } else {
+            userDataView.gameStatsView.setupAlart()
         }
         settingView.tintColor = UIColor(named: "ContentBackground")
         settingView.snp.makeConstraints { make in
@@ -106,6 +96,7 @@ class AccountViewController: UIViewController {
         userDataView.gameStatsView.rightActivityView.addTapGesture(self, #selector(enterRightDetailStatsView))
         settingView.isUserInteractionEnabled = true
         settingView.addTapGesture(self, #selector(settingViewUp))
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
     }
 
     @objc func enterLeftDetailStatsView() {
@@ -130,5 +121,11 @@ class AccountViewController: UIViewController {
         let vc = TMSettingViewController()
         let navVC = UINavigationController(rootViewController: vc)
         navigationController?.present(navVC, animated: true)
+    }
+
+    @objc func refreshData() {
+        basicInfoView.setupEvent()
+        userDataView.setupEventForCareerStatsView()
+        userDataView.setupEventForGameStatsView(games: TMUser.user.allHistoryGames)
     }
 }

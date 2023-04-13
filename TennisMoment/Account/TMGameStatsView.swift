@@ -25,13 +25,14 @@ class TMGameStatsView: UIView {
             make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
         }
+        statsView.setupUI()
     }
 
     func setupEvent(game: Game) {
         self.game = game
-        let result = TMDataConvert.setResult(from: game.result)
+        let result = TMDataConvert.setResult(from: game.result, isGameCompleted: true)
 
-        let playerConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, iconName: "", isServingOnLeft: true, areBothServing: false, isComparing: false, font: UIFont.systemFont(ofSize: 23), leftNum: game.player1.name, rightNum: game.player2.name)
+        let playerConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, isServingOnLeft: true, areBothServing: false, isComparing: false, font: UIFont.systemFont(ofSize: 23), leftNum: game.player1.name, rightNum: game.player2.name)
         let resultConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("RESULT", comment: ""), iconName: "checkmark.circle", isServingOnLeft: result[0] > result[1] ? true : false, areBothServing: false, isComparing: result[0] == result[1] ? false : true, font: UIFont.systemFont(ofSize: 17), leftNum: "\(result[0])", rightNum: "\(result[1])")
         let aceConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("ACES", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.aces > game.player2Stats.aces ? true : false, areBothServing: false, isComparing: game.player1Stats.aces == game.player2Stats.aces ? false : true, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.aces)", rightNum: "\(game.player2Stats.aces)")
         let winnerConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("WINNERS", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.forehandWinners + game.player1Stats.backhandWinners > game.player2Stats.forehandWinners + game.player2Stats.backhandWinners ? true : false, areBothServing: false, isComparing: game.player1Stats.forehandWinners + game.player1Stats.backhandWinners == game.player2Stats.forehandWinners + game.player2Stats.backhandWinners ? false : true, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.forehandWinners + game.player1Stats.backhandWinners)", rightNum: "\(game.player2Stats.forehandWinners + game.player2Stats.backhandWinners)")
@@ -40,6 +41,6 @@ class TMGameStatsView: UIView {
 
         let viewConfig = TMmultiplyConfigurableViewConfig(rowHeight: 48, rowSpacing: 0, configs: [playerConfig, resultConfig, aceConfig, winnerConfig, ueConfig, netPointConfig])
 
-        statsView.setup(with: viewConfig)
+        statsView.setupEvent(config: viewConfig)
     }
 }

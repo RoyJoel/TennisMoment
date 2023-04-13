@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 
 enum ToastNotification: String {
+    case DataFreshToast
     case HomeViewToast
-    case AddGAmeToast
+    case AddGameToast
+    case ContinueGameToast
 
     /// 通知名称
     var notificationName: NSNotification.Name {

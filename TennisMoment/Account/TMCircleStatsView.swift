@@ -33,12 +33,6 @@ class TMCircleStatsView: TMView {
         return label
     }()
 
-    override func layoutSubviews() {
-//        smallCircle.addAnimation(CGRect(x: 0, y: 0, width: 0, height: 0), CGRect(x: 0, y: 0, width: sideLen * radii, height: sideLen * radii), 0.3, "bounds")
-//        smallCircle.bounds = CGRect(x: 0, y: 0, width: sideLen * radii, height: sideLen * radii)
-//        print(smallCircle.bounds)
-    }
-
     func setUpUI(sideLen: CGFloat, insight _: CGFloat, title: String) {
         self.sideLen = sideLen
         backgroundColor = UIColor(named: "ComponentBackground")
@@ -75,7 +69,6 @@ class TMCircleStatsView: TMView {
             titleLabel.font = UIFont.systemFont(ofSize: 10)
         }
         titleLabel.numberOfLines = 2
-        print(UIScreen.main.nativeBounds.height)
         dataLabel.textColor = .black
     }
 
@@ -86,7 +79,7 @@ class TMCircleStatsView: TMView {
             make.center.equalTo(bigCircle.snp.center)
             make.width.height.equalTo(sideLen * radii)
         }
-        dataLabel.text = "\(lrint(radii * 100))%"
+        dataLabel.text = "\(radii.TwoBitsRem())%"
     }
 }
 

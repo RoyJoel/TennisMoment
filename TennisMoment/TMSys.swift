@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Reachability
 import TABAnimated
 
 class TMSys {
@@ -17,8 +18,37 @@ class TMSys {
         window.backgroundColor = .white
         window.overrideUserInterfaceStyle = initStyle()
         window.rootViewController = initRootViewController()
+
         window.makeKeyAndVisible()
         return window
+    }
+
+    func observeNetState() {
+        let reachability: Reachability!
+        do {
+            reachability = try Reachability()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        // 检测网络连接状态
+        if reachability.connection != .unavailable {
+            auth()
+        } else {
+            if let userInfo = UserDefaults.standard.data(forKey: TMUDKeys.UserInfo.rawValue) {
+                do {
+                    TMUser.user = try PropertyListDecoder().decode(User.self, from: userInfo)
+                } catch {
+                    if let window = UIApplication.shared.windows.first {
+                        window.rootViewController = TMSignInViewController()
+                    }
+                }
+            } else {
+                if let window = UIApplication.shared.windows.first {
+                    window.rootViewController = TMSignInViewController()
+                }
+            }
+        }
     }
 
     func initRootViewController() -> UIViewController {
@@ -29,7 +59,16 @@ class TMSys {
             }
             return TMSignInViewController()
         } else {
-            return TabViewController()
+            if let userInfo = UserDefaults.standard.data(forKey: TMUDKeys.UserInfo.rawValue) {
+                do {
+                    TMUser.user = try PropertyListDecoder().decode(User.self, from: userInfo)
+                    return TabViewController()
+                } catch {
+                    return TMSignInViewController()
+                }
+            } else {
+                return TMSignInViewController()
+            }
         }
     }
 
@@ -49,9 +88,16 @@ class TMSys {
         }
     }
 
+    func saveUserInfo() {
+        if let token = UserDefaults.standard.string(forKey: TMUDKeys.JSONWebToken.rawValue) {
+            let userInfo = try? PropertyListEncoder().encode(TMUser.user)
+            UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     func auth() {
         if let token = UserDefaults.standard.string(forKey: TMUDKeys.JSONWebToken.rawValue) {
-            print("token is \(token)")
             TMUser.auth(token: token) { userLoginName, userPassword, error in
                 guard error == nil else {
                     if let window = UIApplication.shared.windows.first {
@@ -66,6 +112,7 @@ class TMSys {
                         toastView.setCorner(radii: 15)
                         (window.rootViewController as? TMSignInViewController)?.contentOverlayView?.showToast(toastView, duration: 1, point: CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)) { _ in
                         }
+                        window.rootViewController = TMSignInViewController()
                     }
                     return
                 }
@@ -77,7 +124,7 @@ class TMSys {
                 }
                 TMUser.user.loginName = userLoginName
                 TMUser.user.password = userPassword
-                TMUser.signIn { token, error in
+                TMUser.signIn { user, error in
                     guard error == nil else {
                         if let window = UIApplication.shared.windows.first {
                             let toastView = UILabel()
@@ -89,13 +136,47 @@ class TMSys {
                             toastView.setCorner(radii: 15)
                             (window.rootViewController as? TMSignInViewController)?.contentOverlayView?.showToast(toastView, duration: 1, point: CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)) { _ in
                             }
+                            window.rootViewController = TMSignInViewController()
                         }
                         return
                     }
-                    if let window = UIApplication.shared.windows.first {
-                        window.rootViewController = TabViewController()
+                    guard let user = user else {
+                        if let window = UIApplication.shared.windows.first {
+                            let toastView = UILabel()
+                            toastView.text = "Login Failed"
+                            toastView.numberOfLines = 2
+                            toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
+                            toastView.backgroundColor = UIColor(named: "ComponentBackground")
+                            toastView.textAlignment = .center
+                            toastView.setCorner(radii: 15)
+                            (window.rootViewController as? TMSignInViewController)?.contentOverlayView?.showToast(toastView, duration: 1, point: CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)) { _ in
+                            }
+                            window.rootViewController = TMSignInViewController()
+                        }
+                        return
                     }
-                    UserDefaults.standard.set(token, forKey: TMUDKeys.JSONWebToken.rawValue)
+                    if let userInfo = UserDefaults.standard.data(forKey: TMUDKeys.UserInfo.rawValue) {
+                        do {
+                            let localUser = try PropertyListDecoder().decode(User.self, from: userInfo)
+                            if localUser == user {
+                                TMUser.user = user
+                            } else {
+                                if let window = UIApplication.shared.windows.first {
+                                    let vc = TMUserDataSelectViewController()
+                                    vc.localUserInfo = localUser
+                                    vc.netUserInfo = user
+                                    vc.isModalInPresentation = true
+                                    window.rootViewController?.present(vc, animated: true)
+                                }
+                            }
+                        } catch {
+                            TMUser.user = user
+                        }
+                    } else {
+                        TMUser.user = user
+                    }
+                    NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)
+                    UserDefaults.standard.set(user.token, forKey: TMUDKeys.JSONWebToken.rawValue)
                 }
             }
         } else {

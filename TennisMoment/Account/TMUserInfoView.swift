@@ -105,6 +105,13 @@ class TMUserInfoView: TMView {
             make.width.equalTo(170)
             make.height.equalTo(100)
         }
+
+        yearsPlayedView.setupUI()
+        heightView.setupUI()
+        widthView.setupUI()
+        gripView.setupUI()
+        backhandView.setupUI()
+        pointsView.setupUI()
     }
 
     func setupEvent() {
@@ -115,11 +122,11 @@ class TMUserInfoView: TMView {
         let backhandConfig = TMInfoViewConfig(infoContent: NSLocalizedString(TMUser.user.backhand.rawValue, comment: ""), infoContentFont: 17, infoTitle: NSLocalizedString("Backhand", comment: ""), infoTitleFont: 17, inset: 24)
         let pointsConfig = TMInfoViewConfig(infoContent: "\(TMUser.user.points)", infoContentFont: 20, infoTitle: NSLocalizedString("Current Points", comment: ""), infoTitleFont: 17, inset: 24)
 
-        yearsPlayedView.setup(with: yearPlayedConfig)
-        heightView.setup(with: heightConfig)
-        widthView.setup(with: widthConfig)
-        gripView.setup(with: gripConfig)
-        backhandView.setup(with: backhandConfig)
-        pointsView.setup(with: pointsConfig)
+        yearsPlayedView.setupEvent(config: yearPlayedConfig)
+        heightView.setupEvent(config: heightConfig)
+        widthView.setupEvent(config: widthConfig)
+        gripView.setupEvent(config: gripConfig)
+        backhandView.setupEvent(config: backhandConfig)
+        pointsView.setupEvent(config: pointsConfig)
     }
 }

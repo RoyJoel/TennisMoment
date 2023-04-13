@@ -23,6 +23,9 @@
 		A83AAA2429A8E0FE0020483A /* TMWinnerToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83AAA2329A8E0FE0020483A /* TMWinnerToastView.swift */; };
 		A83FAA6B29B33B1F00C17AE7 /* TMLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83FAA6A29B33B1F00C17AE7 /* TMLocationManager.swift */; };
 		A83FAA6D29B341E900C17AE7 /* TMStatsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83FAA6C29B341E900C17AE7 /* TMStatsRequest.swift */; };
+		A850A94629E6B045000AC80C /* TMUserDataSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850A94529E6B045000AC80C /* TMUserDataSelectViewController.swift */; };
+		A850A94829E6B2D6000AC80C /* TMGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850A94729E6B2D6000AC80C /* TMGameView.swift */; };
+		A850A94A29E79D2E000AC80C /* TMClubRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850A94929E79D2E000AC80C /* TMClubRequest.swift */; };
 		A86DE5D329D046DC00E8282A /* TMGameStatsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */; };
 		A879B09B29E2C94F006F48FE /* TMH2HViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A879B09A29E2C94F006F48FE /* TMH2HViewController.swift */; };
 		A879B09D29E2E5A7006F48FE /* TMH2HRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A879B09C29E2E5A7006F48FE /* TMH2HRecordCell.swift */; };
@@ -81,6 +84,10 @@
 		A8D373AA29DE9D99003ED78D /* TMSettingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D373A929DE9D99003ED78D /* TMSettingKeys.swift */; };
 		A8D373AC29DEA323003ED78D /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D373AB29DEA323003ED78D /* BundleExtension.swift */; };
 		A8D373AE29DFCE97003ED78D /* TMSettingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D373AD29DFCE97003ED78D /* TMSettingInfoViewController.swift */; };
+		A8EC716729E40653009A5D51 /* TMHistoryGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC716629E40653009A5D51 /* TMHistoryGameCell.swift */; };
+		A8EC716929E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC716829E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift */; };
+		A8EC716B29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC716A29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift */; };
+		A8EC716D29E5024A009A5D51 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC716C29E5024A009A5D51 /* DoubleExtension.swift */; };
 		A8ED765529D56FBD005A6F23 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8ED765729D56FBD005A6F23 /* Localizable.strings */; };
 		A8ED766029D5C56A005A6F23 /* TMSettingIconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED765F29D5C56A005A6F23 /* TMSettingIconCell.swift */; };
 		A8ED766229D68483005A6F23 /* TMSettingSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED766129D68483005A6F23 /* TMSettingSelectionViewController.swift */; };
@@ -136,6 +143,9 @@
 		A83AAA2329A8E0FE0020483A /* TMWinnerToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWinnerToastView.swift; sourceTree = "<group>"; };
 		A83FAA6A29B33B1F00C17AE7 /* TMLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMLocationManager.swift; sourceTree = "<group>"; };
 		A83FAA6C29B341E900C17AE7 /* TMStatsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMStatsRequest.swift; sourceTree = "<group>"; };
+		A850A94529E6B045000AC80C /* TMUserDataSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMUserDataSelectViewController.swift; sourceTree = "<group>"; };
+		A850A94729E6B2D6000AC80C /* TMGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameView.swift; sourceTree = "<group>"; };
+		A850A94929E79D2E000AC80C /* TMClubRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMClubRequest.swift; sourceTree = "<group>"; };
 		A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameStatsDetailViewController.swift; sourceTree = "<group>"; };
 		A879B09A29E2C94F006F48FE /* TMH2HViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMH2HViewController.swift; sourceTree = "<group>"; };
 		A879B09C29E2E5A7006F48FE /* TMH2HRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMH2HRecordCell.swift; sourceTree = "<group>"; };
@@ -198,6 +208,10 @@
 		A8D373A929DE9D99003ED78D /* TMSettingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSettingKeys.swift; sourceTree = "<group>"; };
 		A8D373AB29DEA323003ED78D /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		A8D373AD29DFCE97003ED78D /* TMSettingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSettingInfoViewController.swift; sourceTree = "<group>"; };
+		A8EC716629E40653009A5D51 /* TMHistoryGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMHistoryGameCell.swift; sourceTree = "<group>"; };
+		A8EC716829E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCommonPlayerInfoTableViewCell.swift; sourceTree = "<group>"; };
+		A8EC716A29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCommonPlayerInfoViewController.swift; sourceTree = "<group>"; };
+		A8EC716C29E5024A009A5D51 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 		A8ED765629D56FBD005A6F23 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A8ED765829D56FC2005A6F23 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A8ED765929D56FC4005A6F23 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -282,6 +296,7 @@
 				A810F78D29ADEDB70044C424 /* TMPlayerRequest.swift */,
 				A8ABA11629B059AB002F1632 /* TMGameRequest.swift */,
 				A83FAA6C29B341E900C17AE7 /* TMStatsRequest.swift */,
+				A850A94929E79D2E000AC80C /* TMClubRequest.swift */,
 				A810F79029ADEEB20044C424 /* TMNetWork.swift */,
 			);
 			path = NetWork;
@@ -317,6 +332,7 @@
 				A8C19E0A299E8CE40011F37A /* HomeViewController.swift */,
 				A8C6923029E3C64D0000DB0B /* TMPlayerSearchingView.swift */,
 				A8C6923229E3C65E0000DB0B /* TMGameSearchingView.swift */,
+				A8EC716629E40653009A5D51 /* TMHistoryGameCell.swift */,
 				A8ABA0AB29B027C3002F1632 /* TMRecordView.swift */,
 				A8ABA11829B05BAD002F1632 /* TMGameConfigView.swift */,
 				A8B1A0A529C2BB780084F9CE /* TMplayerSelectionCell.swift */,
@@ -330,6 +346,8 @@
 				A8C1051C29D27EF8003E225E /* TMGameBookingView.swift */,
 				A8C1052429D31432003E225E /* TMMarkerAnnotationView.swift */,
 				A8C1051E29D28BE3003E225E /* TMUserScheduleView.swift */,
+				A8EC716829E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift */,
+				A8EC716A29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift */,
 				A8C1052229D2BC8B003E225E /* TMScheduleCell.swift */,
 			);
 			path = Home;
@@ -342,6 +360,7 @@
 				A8B1A09929C0AA8F0084F9CE /* TMClubContentView.swift */,
 				A8B1A09B29C1E7FB0084F9CE /* TMTourView.swift */,
 				A8C35A0229C6CA60009338A4 /* TMEventGameCell.swift */,
+				A850A94729E6B2D6000AC80C /* TMGameView.swift */,
 				A8B1A09729C0A59C0084F9CE /* TMClubTableViewCell.swift */,
 				A86DE5D229D046DC00E8282A /* TMGameStatsDetailViewController.swift */,
 				A879B09A29E2C94F006F48FE /* TMH2HViewController.swift */,
@@ -456,6 +475,7 @@
 				A8C19DF8299E854D0011F37A /* UIViewExtension.swift */,
 				A834D5D429B5A37D007FA84C /* IntExtension.swift */,
 				A834D5D629B5A38D007FA84C /* StringExtension.swift */,
+				A8EC716C29E5024A009A5D51 /* DoubleExtension.swift */,
 				A8C359FE29C6B757009338A4 /* DateFormatter.swift */,
 				A8D373AB29DEA323003ED78D /* BundleExtension.swift */,
 			);
@@ -496,6 +516,7 @@
 				A83AAA2129A8DE2D0020483A /* ToastNotification.swift */,
 				A8FE6DFB29D95CCA0007C7C2 /* TMUDKeys.swift */,
 				A8C19E11299E8CE50011F37A /* UIStandard.swift */,
+				A850A94529E6B045000AC80C /* TMUserDataSelectViewController.swift */,
 				A8D373A929DE9D99003ED78D /* TMSettingKeys.swift */,
 			);
 			path = Common;
@@ -786,13 +807,18 @@
 				A810F78E29ADEDB70044C424 /* TMPlayerRequest.swift in Sources */,
 				A8C359FF29C6B757009338A4 /* DateFormatter.swift in Sources */,
 				A8C6923129E3C64D0000DB0B /* TMPlayerSearchingView.swift in Sources */,
+				A8EC716D29E5024A009A5D51 /* DoubleExtension.swift in Sources */,
 				A8D373AA29DE9D99003ED78D /* TMSettingKeys.swift in Sources */,
 				A8C35A0129C6BBAE009338A4 /* User.swift in Sources */,
 				A8C6923329E3C65E0000DB0B /* TMGameSearchingView.swift in Sources */,
+				A8EC716729E40653009A5D51 /* TMHistoryGameCell.swift in Sources */,
 				A8C1052129D2BAB5003E225E /* Schedule.swift in Sources */,
+				A850A94629E6B045000AC80C /* TMUserDataSelectViewController.swift in Sources */,
 				A879B09B29E2C94F006F48FE /* TMH2HViewController.swift in Sources */,
 				A8C19E15299E8CE50011F37A /* AccountViewController.swift in Sources */,
 				A8ED766429D686BD005A6F23 /* TMSettingSelectionCell.swift in Sources */,
+				A850A94A29E79D2E000AC80C /* TMClubRequest.swift in Sources */,
+				A8EC716929E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift in Sources */,
 				A8C19E17299E8CE50011F37A /* TabViewController.swift in Sources */,
 				A810F79429ADFF740044C424 /* TMUser.swift in Sources */,
 				A8B1A09629C09F830084F9CE /* Club.swift in Sources */,
@@ -802,6 +828,7 @@
 				A8B7201129BAE60F00FD6400 /* TMUserDataView.swift in Sources */,
 				A8B7201929BDA72000FD6400 /* TMCircleStatsView.swift in Sources */,
 				A8B1A09829C0A59C0084F9CE /* TMClubTableViewCell.swift in Sources */,
+				A8EC716B29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift in Sources */,
 				A83FAA6B29B33B1F00C17AE7 /* TMLocationManager.swift in Sources */,
 				A8FE6E0129D974CC0007C7C2 /* TMSignUpViewController.swift in Sources */,
 				A8FE6DFF29D974480007C7C2 /* TMsignInViewController.swift in Sources */,
@@ -848,6 +875,7 @@
 				A8C1051D29D27EF8003E225E /* TMGameBookingView.swift in Sources */,
 				A8C19D91299E77CB0011F37A /* AppDelegate.swift in Sources */,
 				A8C19E16299E8CE50011F37A /* TennisMoment.xcdatamodeld in Sources */,
+				A850A94829E6B2D6000AC80C /* TMGameView.swift in Sources */,
 				A8ED766029D5C56A005A6F23 /* TMSettingIconCell.swift in Sources */,
 				A834D5D029B590C3007FA84C /* TMSys.swift in Sources */,
 				A8C19D93299E77CB0011F37A /* SceneDelegate.swift in Sources */,

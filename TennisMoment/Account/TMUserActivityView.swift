@@ -78,7 +78,7 @@ class TMUserActivityView: UIView {
             make.center.equalToSuperview()
             make.height.equalTo(40)
         }
-        let lastGameTime = UserDefaults.standard.double(forKey: "LastGameTime")
+        let lastGameTime = UserDefaults.standard.double(forKey: TMUDKeys.lastGameTime.rawValue)
         if lastGameTime == 0 {
             alartView.text = "Your history matches will be here"
         } else {
@@ -93,6 +93,9 @@ class TMUserActivityView: UIView {
 
     func setupEvent(games: [Game]) {
         if games.count >= 3 {
+            leftActivityView.isHidden = false
+            midActivityView.isHidden = false
+            rightActivityView.isHidden = false
             let width = (UIStandard.shared.screenWidth - 112) / 3
             leftActivityView.snp.remakeConstraints { make in
                 make.left.equalToSuperview()
@@ -112,13 +115,13 @@ class TMUserActivityView: UIView {
                 make.height.equalTo(288)
                 make.centerY.equalToSuperview()
             }
-            leftActivityView.isHidden = false
-            midActivityView.isHidden = false
-            rightActivityView.isHidden = false
             leftActivityView.setupEvent(game: games[0])
             midActivityView.setupEvent(game: games[1])
             rightActivityView.setupEvent(game: games[2])
         } else if games.count == 2 {
+            leftActivityView.isHidden = false
+            rightActivityView.isHidden = false
+            midActivityView.isHidden = true
             let width = (UIStandard.shared.screenWidth - 88) / 3
             leftActivityView.snp.remakeConstraints { make in
                 make.left.equalToSuperview().offset(width / 3)
@@ -132,12 +135,12 @@ class TMUserActivityView: UIView {
                 make.height.equalTo(288)
                 make.centerY.equalToSuperview()
             }
-            leftActivityView.isHidden = false
-            rightActivityView.isHidden = false
-            midActivityView.isHidden = true
             leftActivityView.setupEvent(game: games[0])
             rightActivityView.setupEvent(game: games[1])
         } else if games.count == 1 {
+            leftActivityView.isHidden = true
+            rightActivityView.isHidden = true
+            midActivityView.isHidden = false
             let width = (UIStandard.shared.screenWidth - 88) / 3
             midActivityView.snp.remakeConstraints { make in
                 make.centerX.equalToSuperview()
@@ -145,9 +148,6 @@ class TMUserActivityView: UIView {
                 make.height.equalTo(288)
                 make.centerY.equalToSuperview()
             }
-            leftActivityView.isHidden = true
-            rightActivityView.isHidden = true
-            midActivityView.isHidden = false
             midActivityView.setupEvent(game: games[0])
         }
     }

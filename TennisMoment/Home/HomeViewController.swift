@@ -68,19 +68,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         tabAnimation.animatedColor = UIColor(named: "TennisBlur") ?? .gray
         recordView.tabAnimated = tabAnimation
         recordView.isUserInteractionEnabled = false
-        recordView.tab_startAnimation {
-            DispatchQueue.main.async {
-                TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 1, isCompleted: false) { games in
-                    if games.count == 1 {
-                        self.recordView.setupEvent(game: games[0])
-                        self.recordView.tab_endAnimationEaseOut()
-                        self.recordView.isUserInteractionEnabled = true
-                    } else {
-                        self.recordView.setupAlart()
-                        self.recordView.tab_endAnimationEaseOut()
-                    }
-                }
-            }
+        if let game = UserDefaults.standard.object(forKey: TMUDKeys.liveMatch.rawValue) as? [String: Any] {
+            recordView.refreshData(game: Game(dictionary: game) ?? Game())
+            recordView.tab_endAnimationEaseOut()
+            recordView.isUserInteractionEnabled = true
+        } else {
+            recordView.setupAlart()
+            recordView.tab_endAnimationEaseOut()
         }
 
         configGameView.setupUI()
@@ -92,32 +86,62 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         playerSearchingView.isHidden = false
 
         gameSearchingView.setupUI()
-        gameSearchingView.setupEvent(friends: TMUser.user.friends)
         gameSearchingView.isHidden = false
 
+        NotificationCenter.default.addObserver(self, selector: #selector(startHistoryGame(_:)), name: Notification.Name(ToastNotification.ContinueGameToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(toastUp(_:)), name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: Notification.Name(ToastNotification.AddGAmeToast.notificationName.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: Notification.Name(ToastNotification.AddGameToast.notificationName.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
 
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
 
         configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
-        playerSearchingView.setup(playerSearchingView.bounds, playerSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: 68), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 192), 0.3)
-        gameSearchingView.setup(gameSearchingView.bounds, gameSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: 68), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 278), 0.3)
+        playerSearchingView.setup(playerSearchingView.bounds, playerSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        gameSearchingView.setup(gameSearchingView.bounds, gameSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        configGameView.viewUpCompletionHandler = {
+            self.playerSearchingView.isHidden = true
+            self.gameSearchingView.isHidden = true
+        }
+        configGameView.viewDownCompletionHandler = {
+            self.playerSearchingView.isHidden = false
+            self.gameSearchingView.isHidden = false
+        }
+        gameSearchingView.viewUpCompletionHandler = {
+            self.playerSearchingView.isHidden = true
+            self.configGameView.isHidden = true
+        }
+        gameSearchingView.viewDownCompletionHandler = {
+            self.playerSearchingView.isHidden = false
+            self.configGameView.isHidden = false
+        }
+        playerSearchingView.viewUpCompletionHandler = {
+            self.gameSearchingView.isHidden = true
+            self.configGameView.isHidden = true
+        }
+        playerSearchingView.viewDownCompletionHandler = {
+            self.gameSearchingView.isHidden = false
+            self.configGameView.isHidden = false
+        }
         scheduleView.setupUI()
+    }
+
+    @objc func refreshData() {
+        scheduleView.reloadData()
+        gameSearchingView.scheduleList.reloadData()
     }
 
     @objc private func startRecord() {
         navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(endRecord)), animated: true)
-        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(completeGame)), animated: true)
+        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(confirmCompleteGame)), animated: true)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
         navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
 
         recordView.scaleTo(recordView.toggle, completionHandler: {})
+        recordView.startRecord()
         configGameView.isHidden = true
         playerSearchingView.isHidden = true
         gameSearchingView.isHidden = true
         scheduleView.isHidden = true
-        recordView.refreshData()
     }
 
     @objc private func endRecord() {
@@ -133,6 +157,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         })
     }
 
+    @objc private func confirmCompleteGame() {
+        let sheetCtrl = UIAlertController(title: "End Match", message: nil, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.completeGame()
+        }
+        sheetCtrl.addAction(action)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+            sheetCtrl.dismiss(animated: true)
+        }
+        sheetCtrl.addAction(cancelAction)
+
+        sheetCtrl.popoverPresentationController?.sourceView = view
+        sheetCtrl.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.width / 2 - 144, y: view.bounds.height / 2 - 69, width: 288, height: 138)
+        present(sheetCtrl, animated: true, completion: nil)
+    }
+
     @objc private func completeGame() {
         navigationItem.leftBarButtonItem = nil
         navigationItem.rightBarButtonItem = nil
@@ -140,22 +182,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         recordView.endGame {
             TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 1, isCompleted: false) { games in
                 if games.count == 1 {
-                    self.recordView.setupEvent(game: games[0])
-                    self.recordView.scaleTo(self.recordView.toggle, completionHandler: {
-                        self.configGameView.isHidden = false
-                        self.gameSearchingView.isHidden = false
-                        self.playerSearchingView.isHidden = false
-                        self.scheduleView.isHidden = false
-                    })
+                    self.recordView.refreshData(game: games[0])
+                    self.recordView.scaleTo(self.recordView.toggle, completionHandler: {})
+                    self.configGameView.isHidden = false
+                    self.gameSearchingView.isHidden = false
+                    self.playerSearchingView.isHidden = false
+                    self.scheduleView.isHidden = false
                     self.recordView.isUserInteractionEnabled = true
                 } else {
                     self.recordView.scaleTo(self.recordView.toggle, completionHandler: {
-                        self.configGameView.isHidden = false
-                        self.gameSearchingView.isHidden = false
-                        self.playerSearchingView.isHidden = false
-                        self.scheduleView.isHidden = false
                         self.recordView.setupAlart()
                     })
+                    self.configGameView.isHidden = false
+                    self.gameSearchingView.isHidden = false
+                    self.playerSearchingView.isHidden = false
+                    self.scheduleView.isHidden = false
                 }
             }
         }
@@ -168,6 +209,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         let winner = obj.object as? String ?? ""
         let toastView = TMWinnerToastView()
         toastView.setupUI(winner)
+        let player1Id = recordView.game.player1.id
+        let player2Id = recordView.game.player2.id
+        TMGameRequest.searchh2h(for: player1Id, and: player2Id) { games in
+            guard games.count > 0 else {
+                return
+            }
+            self.recordView.refreshData(game: games[0])
+        }
         view.showToast(toastView, position: .center) { _ in
             self.completeGame()
             let vc = TMGameStatsDetailViewController()
@@ -200,7 +249,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             }
             return
         }
-        configGameView.scaleTo(configGameView.toggle, completionHandler: {})
+        configGameView.scaleTo(configGameView.toggle)
         var newGame = GameRequest(id: 0, place: "", surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: nil, player1Id: gameConfig.player1Id, player1StatsId: 0, player2Id: gameConfig.player2Id, player2StatsId: 0, isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
         TMUser.getLocationdescription(completionHandler: { location in
             newGame.place = location
@@ -210,7 +259,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                 }
                 self.recordView.setNewGame(game: game)
                 self.navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(self.endRecord)), animated: true)
-                self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(self.completeGame)), animated: true)
+                self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(self.confirmCompleteGame)), animated: true)
                 self.navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
 
@@ -221,5 +270,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                 self.scheduleView.isHidden = true
             }
         })
+    }
+
+    @objc func startHistoryGame(_ obj: Notification) {
+        let selectedIndex = obj.object as? Int ?? 0
+        let game = TMUser.user.allUnfinishedGames[selectedIndex]
+        gameSearchingView.scaleTo(gameSearchingView.toggle)
+
+        navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(endRecord)), animated: true)
+        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(confirmCompleteGame)), animated: true)
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
+
+        recordView.scaleTo(recordView.toggle, completionHandler: {})
+        configGameView.isHidden = true
+        playerSearchingView.isHidden = true
+        gameSearchingView.isHidden = true
+        scheduleView.isHidden = true
+        recordView.refreshData(game: game)
+        recordView.startRecord()
     }
 }
