@@ -10,14 +10,14 @@ import SwiftyJSON
 
 struct Club: Codable, Equatable {
     var id: Int
-    var icon: String
+    var icon: Data
     var name: String
     var intro: String
     var owner: Player
     var address: String
     var events: [Event]
 
-    init(id: Int, icon: String, name: String, intro: String, owner: Player, address: String, events: [Event]) {
+    init(id: Int, icon: Data, name: String, intro: String, owner: Player, address: String, events: [Event]) {
         self.id = id
         self.icon = icon
         self.name = name
@@ -29,7 +29,8 @@ struct Club: Codable, Equatable {
 
     init(json: JSON) {
         id = json["id"].intValue
-        icon = json["icon"].stringValue
+        let iconData = try? json["icon"].rawData()
+        icon = iconData ?? Data()
         name = json["name"].stringValue
         intro = json["intro"].stringValue
         owner = Player(json: json["owner"])
@@ -43,7 +44,7 @@ struct Club: Codable, Equatable {
 
     init?(dict: [String: Any]) {
         guard let id = dict["id"] as? Int,
-            let icon = dict["icon"] as? String,
+            let icon = dict["icon"] as? Data,
             let name = dict["name"] as? String,
             let intro = dict["intro"] as? String,
             let ownerDict = dict["owner"] as? [String: Any],

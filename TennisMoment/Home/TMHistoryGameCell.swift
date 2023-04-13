@@ -72,7 +72,7 @@ class TMHistoryGameCell: UITableViewCell {
     }
 
     func setupEvent(game: Game) {
-        opponentIcon.image = UIImage(named: game.player1.id == TMUser.user.id ? game.player2.icon : game.player1.icon)
+        opponentIcon.image = UIImage(data: game.player1.id == TMUser.user.id ? game.player2.icon : game.player1.icon)
         opponentLabel.text = game.player1.id == TMUser.user.id ? game.player2.name : game.player1.name
         dateLabel.text = game.startDate.convertToString(formatterString: "yyyy MM-dd HH:mm")
         let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: false)

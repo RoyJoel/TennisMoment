@@ -58,8 +58,8 @@ class TMClubTableViewCell: UITableViewCell {
         clubNameView.textColor = UIColor(named: "ContentBackground")
     }
 
-    func setupEvent(clubIcon: String, clubName: String) {
+    func setupEvent(clubIcon: Data, clubName: String) {
         clubNameView.text = clubName
-        clubIconView.image = UIImage(named: clubIcon)
+        clubIconView.image = UIImage(data: clubIcon)
     }
 }

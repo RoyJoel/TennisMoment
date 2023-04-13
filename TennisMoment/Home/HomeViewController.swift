@@ -126,8 +126,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
 
     @objc func refreshData() {
-        scheduleView.reloadData()
         gameSearchingView.scheduleList.reloadData()
+        configGameView.refreshData()
+        scheduleView.refreshData()
     }
 
     @objc private func startRecord() {
@@ -179,28 +180,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         navigationItem.leftBarButtonItem = nil
         navigationItem.rightBarButtonItem = nil
 
-        recordView.endGame {
-            TMGameRequest.SearchRecentGames(playerId: TMUser.user.id, num: 1, isCompleted: false) { games in
-                if games.count == 1 {
-                    self.recordView.refreshData(game: games[0])
-                    self.recordView.scaleTo(self.recordView.toggle, completionHandler: {})
-                    self.configGameView.isHidden = false
-                    self.gameSearchingView.isHidden = false
-                    self.playerSearchingView.isHidden = false
-                    self.scheduleView.isHidden = false
-                    self.recordView.isUserInteractionEnabled = true
-                } else {
-                    self.recordView.scaleTo(self.recordView.toggle, completionHandler: {
-                        self.recordView.setupAlart()
-                    })
-                    self.configGameView.isHidden = false
-                    self.gameSearchingView.isHidden = false
-                    self.playerSearchingView.isHidden = false
-                    self.scheduleView.isHidden = false
-                }
-            }
-        }
-
+        recordView.endGame()
+        configGameView.isHidden = false
+        gameSearchingView.isHidden = false
+        playerSearchingView.isHidden = false
+        scheduleView.isHidden = false
         UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: TMUDKeys.lastGameTime.rawValue)
     }
 
@@ -209,14 +193,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         let winner = obj.object as? String ?? ""
         let toastView = TMWinnerToastView()
         toastView.setupUI(winner)
-        let player1Id = recordView.game.player1.id
-        let player2Id = recordView.game.player2.id
-        TMGameRequest.searchh2h(for: player1Id, and: player2Id) { games in
-            guard games.count > 0 else {
-                return
-            }
-            self.recordView.refreshData(game: games[0])
-        }
         view.showToast(toastView, position: .center) { _ in
             self.completeGame()
             let vc = TMGameStatsDetailViewController()

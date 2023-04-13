@@ -100,12 +100,19 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
         playerSelectView.dataSource = self
         playerSelectView.setupUI()
         playerSelectView.selectedCompletionHandler = { indexPath in
-            let selectedPlayer = self.players.remove(at: indexPath)
-            self.players.insert(selectedPlayer, at: 0)
-            self.playerSelectView.reloadData()
+            if self.players.count == 0 {} else {
+                let selectedPlayer = self.players.remove(at: indexPath)
+                self.players.insert(selectedPlayer, at: 0)
+                self.playerSelectView.reloadData()
+            }
         }
         datePicker.date = Date(timeIntervalSince1970: date)
         placeSearchBar.text = place == "" ? nil : place
+    }
+
+    func refreshData() {
+        playerSelectView.reloadData()
+        playerSelectView.setupSize()
     }
 
     @objc func dateSelectButtonDidCliked() {

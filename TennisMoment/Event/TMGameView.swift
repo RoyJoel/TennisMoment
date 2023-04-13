@@ -62,17 +62,10 @@ class TMGameView: UIView {
         leftBasicInfoView.isHidden = true
         rightBasicInfoView.isHidden = true
         recordPointView.isHidden = true
-        isUserInteractionEnabled = false
+        alartView.isHidden = false
 
-        let lastGameTime = UserDefaults.standard.double(forKey: TMUDKeys.lastGameTime.rawValue)
-        if lastGameTime == 0 {
-            alartView.text = "You have no Recent Game in this Account"
-        } else {
-            let gap = Date().timeIntervalSince1970 - lastGameTime
-            let days = Int(gap / (24 * 3600))
-            let hours = Int((gap / 3600).truncatingRemainder(dividingBy: 24))
-            alartView.text = String(format: NSLocalizedString("lastGameTime", comment: ""), days, hours)
-        }
+        alartView.text = "You have no Recent Game in this Account"
+
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }

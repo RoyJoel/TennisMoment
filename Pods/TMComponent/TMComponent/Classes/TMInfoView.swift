@@ -22,6 +22,7 @@ open class TMInfoView: TMView {
 
     public func setup(with config: TMInfoViewConfig) {
         self.config = config
+
         setupUI()
         setupEvent(config: config)
     }

@@ -289,11 +289,11 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
 
-    func setUserInfo(name: String, icon _: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand) {
+    func setUserInfo(name: String, icon: Data, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand) {
         accountTextField.textField.text = TMUser.user.loginName
         passwordTextField.textField.text = TMUser.user.password
         nameTextField.textField.text = name
-//        iconImageView.image = UIImage(named: icon)
+        iconImageView.image = UIImage(data: icon)
         sexTextField.isLeft = sex == .Man ? true : false
         ageTextField.textField.text = "\(age)"
         yearsPlayedTextField.textField.text = "\(yearsPlayed)"
@@ -309,7 +309,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
         TMUser.user.loginName = accountTextField.textField.text ?? ""
         TMUser.user.password = passwordTextField.textField.text ?? ""
         TMUser.user.name = nameTextField.textField.text ?? ""
-//            TMUser.user.icon = iconImageView.image
+        TMUser.user.icon = iconImageView.image?.pngData() ?? Data()
         TMUser.user.sex = sexTextField.isLeft ? .Man : .Woman
         TMUser.user.age = Int(ageTextField.textField.text ?? "0") ?? 0
         TMUser.user.yearsPlayed = Int(yearsPlayedTextField.textField.text ?? "0") ?? 0

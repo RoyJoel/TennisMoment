@@ -167,4 +167,11 @@ class TMUser {
             completionHandler(json["loginName"].stringValue, json["password"].stringValue, nil)
         }
     }
+
+    static func getDeviceID() -> String? {
+        if let uuid = UIDevice.current.identifierForVendor {
+            return uuid.uuidString
+        }
+        return nil
+    }
 }

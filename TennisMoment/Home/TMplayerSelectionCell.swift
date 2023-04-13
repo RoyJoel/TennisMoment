@@ -48,9 +48,9 @@ class TMplayerSelectionCell: UITableViewCell {
         }
     }
 
-    func setupEvent(imageName: String, playerName: String, playerId: Int) {
+    func setupEvent(imageName: Data, playerName: String, playerId: Int) {
         self.playerId = playerId
-        playerIconView.image = UIImage(named: imageName)
+        playerIconView.image = UIImage(data: imageName)
         playerNameView.text = playerName
     }
 }

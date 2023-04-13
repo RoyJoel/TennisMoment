@@ -132,11 +132,20 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
         } else {
+            opponentLabel.isHidden = true
+            dateLabel.isHidden = true
+            lastResultLabel.isHidden = true
+            scheduleList.isHidden = true
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
         }
         super.scaleTo(isEnlarge) {
-            if self.toggle {} else {
+            if self.toggle {
+                self.opponentLabel.isHidden = false
+                self.dateLabel.isHidden = false
+                self.lastResultLabel.isHidden = false
+                self.scheduleList.isHidden = false
+            } else {
                 self.viewDownCompletionHandler()
             }
         }

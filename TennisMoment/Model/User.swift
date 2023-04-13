@@ -13,7 +13,7 @@ struct User: Codable, Equatable {
     var loginName: String
     var password: String
     var name: String
-    var icon: String
+    var icon: Data
     var sex: Sex
     var age: Int
     var yearsPlayed: Int
@@ -32,7 +32,7 @@ struct User: Codable, Equatable {
     var allSchedules: [Schedule]
     var token: String
 
-    init(id: Int, loginName: String, password: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Int], allHistoryGames: [Game], allUnfinishedGames: [Game], allEvents: [Int], allSchedules: [Schedule], token: String) {
+    init(id: Int, loginName: String, password: String, name: String, icon: Data, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats, friends: [Player], allClubs: [Int], allHistoryGames: [Game], allUnfinishedGames: [Game], allEvents: [Int], allSchedules: [Schedule], token: String) {
         self.id = id
         self.loginName = loginName
         self.password = password
@@ -62,7 +62,8 @@ struct User: Codable, Equatable {
         loginName = json["loginName"].stringValue
         password = json["password"].stringValue
         name = json["name"].stringValue
-        icon = json["icon"].stringValue
+        let iconData = try? json["icon"].rawData()
+        icon = iconData ?? Data()
         sex = Sex(rawValue: json["sex"].stringValue) ?? .Man
         age = json["age"].intValue
         yearsPlayed = json["yearsPlayed"].intValue
@@ -120,7 +121,7 @@ struct User: Codable, Equatable {
             let loginName = dictionary["loginName"] as? String,
             let password = dictionary["password"] as? String,
             let name = dictionary["name"] as? String,
-            let icon = dictionary["icon"] as? String,
+            let icon = dictionary["icon"] as? Data,
             let sexRawValue = dictionary["sex"] as? String,
             let sex = Sex(rawValue: sexRawValue),
             let age = dictionary["age"] as? Int,

@@ -111,11 +111,11 @@ class TMUserDataSelectViewController: UIViewController {
                 guard let user = user else {
                     return
                 }
-                self.dismiss(animated: true)
                 let userInfo = try? PropertyListEncoder().encode(user)
                 UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
                 UserDefaults.standard.set(user.token, forKey: TMUDKeys.JSONWebToken.rawValue)
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
+                self.dismiss(animated: true)
             }
         }
     }

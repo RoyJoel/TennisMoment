@@ -11,7 +11,7 @@ import UIKit
 
 class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var titleSettingConfig = ["Name", "Icon", "Sex", "Age", "YearsPlayed", "Height", "Width", "Grip", "Backhand"]
-    var infoSettingConfig = [TMUser.user.name, TMUser.user.icon, TMUser.user.sex.rawValue, "\(TMUser.user.age)", "\(TMUser.user.yearsPlayed)", "\(TMUser.user.height)", "\(TMUser.user.width)", TMUser.user.grip.rawValue, TMUser.user.backhand.rawValue]
+    var infoSettingConfig = [TMUser.user.name, "", TMUser.user.sex.rawValue, "\(TMUser.user.age)", "\(TMUser.user.yearsPlayed)", "\(TMUser.user.height)", "\(TMUser.user.width)", TMUser.user.grip.rawValue, TMUser.user.backhand.rawValue]
     let infoVC = TMSignUpViewController()
 
     let tableView: UITableView = {
@@ -42,7 +42,7 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
         if indexPath.row == 1 {
             let cell = TMSettingUserIconCell()
             let indexTitle = titleSettingConfig[indexPath.row]
-            cell.setupEvent(title: indexTitle, icon: infoSettingConfig[indexPath.row])
+            cell.setupEvent(title: indexTitle, icon: TMUser.user.icon)
             cell.selectionStyle = .none
             cell.isUserInteractionEnabled = false
             return cell

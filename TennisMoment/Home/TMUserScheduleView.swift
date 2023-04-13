@@ -164,7 +164,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         let deleteAction = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { _, _, _ in
             TMUser.user.allSchedules.remove(at: indexPath.row)
-            self.reloadData()
+            self.refreshData()
             let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(self.scheduleGameViewUp), actionTarget: self)
             self.addScheduleButton.setUp(with: addScheduleButtonConfig)
         }
@@ -195,8 +195,9 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         return super.hitTest(point, with: event)
     }
 
-    func reloadData() {
+    func refreshData() {
         scheduleList.reloadData()
+        scheduleConfigView.refreshData()
         if TMUser.user.allSchedules.count == 0 {
             setupAlart()
         } else {
@@ -220,7 +221,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
                 scheduleConfigView.scaleTo(scheduleConfigView.toggle)
                 let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
                 TMUser.user.allSchedules.append(newSchedule)
-                reloadData()
+                refreshData()
                 let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
                 addScheduleButton.setUp(with: addScheduleButtonConfig)
                 DispatchQueue.main.async {
@@ -254,7 +255,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
                 scheduleConfigView.scaleTo(scheduleConfigView.toggle)
                 let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
                 TMUser.user.allSchedules[modifiRow] = newSchedule
-                reloadData()
+                refreshData()
                 let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
                 addScheduleButton.setUp(with: addScheduleButtonConfig)
                 DispatchQueue.main.async {

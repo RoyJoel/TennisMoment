@@ -163,14 +163,18 @@ class TMGameConfigView: TMScalableView {
         gameConfigView.setupUI()
         surfaceConfigView.setupUI()
         Player1SelectView.selectedCompletionHandler = { indexPath in
-            let selectedPlayer = self.player1Selections.players.remove(at: indexPath)
-            self.player1Selections.players.insert(selectedPlayer, at: 0)
-            self.Player1SelectView.reloadData()
+            if self.player1Selections.players.count == 0 {} else {
+                let selectedPlayer = self.player1Selections.players.remove(at: indexPath)
+                self.player1Selections.players.insert(selectedPlayer, at: 0)
+                self.Player1SelectView.reloadData()
+            }
         }
         Player2SelectView.selectedCompletionHandler = { indexPath in
-            let selectedPlayer = self.player2Selections.players.remove(at: indexPath)
-            self.player2Selections.players.insert(selectedPlayer, at: 0)
-            self.Player2SelectView.reloadData()
+            if self.player2Selections.players.count == 0 {} else {
+                let selectedPlayer = self.player2Selections.players.remove(at: indexPath)
+                self.player2Selections.players.insert(selectedPlayer, at: 0)
+                self.Player2SelectView.reloadData()
+            }
         }
         setConfigView.selectedCompletionHandler = { indexPath in
             let selectedPlayer = self.setNumSelections.numConfig.remove(at: indexPath)
@@ -275,6 +279,13 @@ class TMGameConfigView: TMScalableView {
 
     @objc func startGame() {
         NotificationCenter.default.post(name: Notification.Name(ToastNotification.AddGameToast.notificationName.rawValue), object: nil)
+    }
+
+    func refreshData() {
+        Player1SelectView.reloadData()
+        Player1SelectView.setupSize()
+        Player2SelectView.reloadData()
+        Player2SelectView.setupSize()
     }
 }
 

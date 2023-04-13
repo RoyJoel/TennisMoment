@@ -61,8 +61,8 @@ class TMSettingUserIconCell: UITableViewCell {
         iconView.setCorner(radii: 15)
     }
 
-    func setupEvent(title: String, icon: String) {
+    func setupEvent(title: String, icon: Data) {
         titleView.text = title
-        iconView.image = UIImage(named: icon)
+        iconView.image = UIImage(data: icon)
     }
 }

@@ -74,7 +74,7 @@ class TMScheduleCell: UITableViewCell {
     }
 
     func setupEvent(schedule: Schedule) {
-        opponentIcon.image = UIImage(named: schedule.opponent.icon)
+        opponentIcon.image = UIImage(data: schedule.opponent.icon)
         opponentLabel.text = schedule.opponent.name
         dateLabel.text = schedule.startDate.convertToString(formatterString: "yyyy MM-dd HH:mm")
         placeLabel.text = schedule.place

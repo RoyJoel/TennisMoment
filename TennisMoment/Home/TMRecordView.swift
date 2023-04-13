@@ -143,7 +143,7 @@ class TMRecordView: TMScalableView {
         rightBasicInfoView.setupUI()
         recordPointView.setupUI()
 
-        let basicIconConfig = TMIconViewConfig(icon: "", name: "")
+        let basicIconConfig = TMIconViewConfig(icon: Data(), name: "")
         let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 50, rowSpacing: 20, font: UIFont.systemFont(ofSize: 17), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, isGameCompleted: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
         let undoBtnConfig = TMButtonConfig(title: "Undo", action: #selector(undo), actionTarget: self)
         leftBasicInfoView.setupEvent(config: basicIconConfig)
@@ -783,24 +783,22 @@ class TMRecordView: TMScalableView {
         }
     }
 
-    func endGame(completionHandler: @escaping () -> Void) {
+    func endGame() {
         game.result[game.result.count - 1].append(livePoint)
         game.endDate = Date().timeIntervalSince1970
         game.player1Stats = player1Stats
         game.player2Stats = player2Stats
         gameStack = [self.game]
-        TMGameRequest.updateGameAndStats(game: game) { [self] _ in
-            if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
-                titleView.text = NSLocalizedString("Live", comment: "")
-                self.recordPointView.updateData(liveScore: self.game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, isGameCompleted: false, setConfigNum: self.game.setNum, gameConfigNum: game.gameNum)
-            } else if Date().timeIntervalSince1970 > self.game.endDate, self.game.endDate != 0 {
-                self.titleView.text = NSLocalizedString("Completed", comment: "")
-                self.recordPointView.updateData(liveScore: game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, isGameCompleted: true, setConfigNum: self.game.setNum, gameConfigNum: self.game.gameNum)
-            } else if Date().timeIntervalSince1970 < self.game.startDate {
-                self.titleView.text = NSLocalizedString("In Turn", comment: "")
-                self.recordPointView.updateData(liveScore: self.game.result, isPlayer1Serving: self.game.isPlayer1Serving, isPlayer1Left: self.game.isPlayer1Left, isGameCompleted: false, setConfigNum: self.game.setNum, gameConfigNum: self.game.gameNum)
+        TMGameRequest.updateGameAndStats(game: game) { _ in
+            if TMUser.user.allUnfinishedGames.count > 0 {
+                self.refreshData(game: TMUser.user.allUnfinishedGames[0])
+                self.scaleTo(self.toggle, completionHandler: {})
+                self.isUserInteractionEnabled = true
+            } else {
+                self.scaleTo(self.toggle, completionHandler: {
+                    self.setupAlart()
+                })
             }
-            completionHandler()
         }
     }
 

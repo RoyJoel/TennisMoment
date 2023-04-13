@@ -89,7 +89,7 @@ class TMSys {
     }
 
     func saveUserInfo() {
-        if let token = UserDefaults.standard.string(forKey: TMUDKeys.JSONWebToken.rawValue) {
+        if UserDefaults.standard.string(forKey: TMUDKeys.JSONWebToken.rawValue) != nil {
             let userInfo = try? PropertyListEncoder().encode(TMUser.user)
             UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
             UserDefaults.standard.synchronize()

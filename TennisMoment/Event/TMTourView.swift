@@ -110,12 +110,14 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         scheduleView.dataSource = scheduleSelections
         scheduleView.delegate = scheduleView
         scheduleView.selectedCompletionHandler = { index in
-            let selectedSchedule = self.scheduleSelections.schedules.remove(at: index)
-            self.scheduleSelections.schedules.insert(selectedSchedule, at: 0)
-            let selectedGames = self.schedules.remove(at: index)
-            self.schedules.insert(selectedGames, at: 0)
-            self.scheduleView.reloadData()
-            self.liveGameView.reloadData()
+            if self.scheduleSelections.schedules.count == 0 {} else {
+                let selectedSchedule = self.scheduleSelections.schedules.remove(at: index)
+                self.scheduleSelections.schedules.insert(selectedSchedule, at: 0)
+                let selectedGames = self.schedules.remove(at: index)
+                self.schedules.insert(selectedGames, at: 0)
+                self.scheduleView.reloadData()
+                self.liveGameView.reloadData()
+            }
         }
         tourNameView.setupEvent(config: nameConfig)
         DateLabel.setupEvent(config: dateConfig)
