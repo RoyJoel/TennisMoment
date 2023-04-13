@@ -12,9 +12,7 @@ import UIKit
 
 class TMRecordView: TMScalableView {
     var game = Game(json: JSON())
-    var player1StatsStack: [Stats] = []
-    var player2StatsStack: [Stats] = []
-    var resultStack: [[[[Int]]]] = []
+    var gameStack: [Game] = []
     var isServingOnLeft: Bool = true
 
     var player1Stats = Stats(json: JSON())
@@ -190,6 +188,11 @@ class TMRecordView: TMScalableView {
     }
 
     func refreshData(game: Game) {
+        setData(game: game)
+        gameStack.append(self.game)
+    }
+
+    func setData(game: Game) {
         self.game = game
         isServingOnLeft = game.isPlayer1Left == game.isPlayer1Serving
 
@@ -211,13 +214,8 @@ class TMRecordView: TMScalableView {
             titleView.text = NSLocalizedString("In Turn", comment: "")
             recordPointView.updateData(liveScore: game.result, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
         }
-
         player1Stats = game.player1Stats
         player2Stats = game.player2Stats
-        let liveResult = game.result
-        resultStack.append(liveResult)
-        player1StatsStack.append(player1Stats)
-        player2StatsStack.append(player2Stats)
     }
 
     func startRecord() {
@@ -411,7 +409,7 @@ class TMRecordView: TMScalableView {
             scoreTieBreakPoint(isLeft: isLeft)
         } else {
             if isLeft {
-                switch recordPointView.config.player1PointNum {
+                switch game.isPlayer1Left ? livePoint[0].convertToPoint() : livePoint[1].convertToPoint() {
                 case "0":
                     recordPointView.updateLeftData(at: 2, isServingOnLeft: isServingOnLeft, newNum: "15")
                     recordPointView.config.player1PointNum = "15"
@@ -454,7 +452,7 @@ class TMRecordView: TMScalableView {
                     recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "0")
                 }
             } else {
-                switch recordPointView.config.player2PointNum {
+                switch game.isPlayer1Left ? livePoint[1].convertToPoint() : livePoint[0].convertToPoint() {
                 case "0":
                     recordPointView.updateRightData(at: 2, isServingOnRight: !isServingOnLeft, newNum: "15")
                     recordPointView.config.player2PointNum = "15"
@@ -769,12 +767,8 @@ class TMRecordView: TMScalableView {
     }
 
     func saveGame() {
-        game.result = resultStack.last ?? []
-        game.player1Stats = player1StatsStack.last ?? Stats()
-        game.player2Stats = player2StatsStack.last ?? Stats()
-        resultStack = [game.result]
-        player1StatsStack = [game.player1Stats]
-        player2StatsStack = [game.player2Stats]
+        game = gameStack.last ?? Game()
+        gameStack = [self.game]
         TMGameRequest.updateGameAndStats(game: game) { _ in
             if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
                 self.titleView.text = NSLocalizedString("Live", comment: "")
@@ -794,9 +788,7 @@ class TMRecordView: TMScalableView {
         game.endDate = Date().timeIntervalSince1970
         game.player1Stats = player1Stats
         game.player2Stats = player2Stats
-        resultStack = [game.result]
-        player1StatsStack = [game.player1Stats]
-        player2StatsStack = [game.player2Stats]
+        gameStack = [self.game]
         TMGameRequest.updateGameAndStats(game: game) { [self] _ in
             if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
                 titleView.text = NSLocalizedString("Live", comment: "")
@@ -1365,15 +1357,13 @@ class TMRecordView: TMScalableView {
     }
 
     func pushStateStack() {
-        var liveResult = game.result
-        liveResult[game.result.count - 1].append(livePoint)
-        resultStack.append(liveResult)
-        player1StatsStack.append(player1Stats)
-        player2StatsStack.append(player2Stats)
+        game.result[game.result.count - 1].append(livePoint)
+        gameStack.append(game)
+        game.result[game.result.count - 1].removeLast()
     }
 
     func popStateStack() {
-        if resultStack.count < 2 || player1StatsStack.count < 2 || player2StatsStack.count < 2 {
+        if gameStack.count < 2 {
             let toastView = UILabel()
             toastView.text = "Can not Undo"
             toastView.numberOfLines = 2
@@ -1384,13 +1374,10 @@ class TMRecordView: TMScalableView {
             showToast(toastView, duration: 1, point: CGPoint(x: bounds.width / 2, y: bounds.height / 2)) { _ in
             }
         } else {
-            resultStack.removeLast()
-            player1StatsStack.removeLast()
-            player2StatsStack.removeLast()
-            var liveResult = resultStack.last ?? []
-            recordPointView.updateData(liveScore: liveResult, isPlayer1Serving: game.isPlayer1Serving, isPlayer1Left: game.isPlayer1Left, isGameCompleted: false, setConfigNum: game.setNum, gameConfigNum: game.gameNum)
-            player1Stats = player1StatsStack.last ?? Stats()
-            player2Stats = player2StatsStack.last ?? Stats()
+            gameStack.removeLast()
+            let game = gameStack.last ?? Game()
+            setData(game: game)
+            startRecord()
         }
     }
 }
