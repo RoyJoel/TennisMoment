@@ -102,11 +102,11 @@ class TMEventGameCell: UITableViewCell {
         recordPointView.setup(with: pointRecordViewConfig)
         // 说明player1在左侧⬅️
         if game.isPlayer1Left {
-            leftBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
-            rightBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
+            leftBasicInfoView.updateInfo(with: game.player1.icon.toPng(), named: game.player1.name)
+            rightBasicInfoView.updateInfo(with: game.player2.icon.toPng(), named: game.player2.name)
         } else {
-            leftBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
-            rightBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
+            leftBasicInfoView.updateInfo(with: game.player2.icon.toPng(), named: game.player2.name)
+            rightBasicInfoView.updateInfo(with: game.player1.icon.toPng(), named: game.player1.name)
         }
         if Date().timeIntervalSince1970 < game.endDate || game.endDate == 0 {
             titleView.text = NSLocalizedString("Live", comment: "")

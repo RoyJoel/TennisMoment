@@ -10,7 +10,7 @@ import SwiftyJSON
 
 struct Event: Codable, Equatable {
     var id: Int
-    var icon: Data
+    var icon: String
     var name: String
     var startDate: TimeInterval
     var endDate: TimeInterval
@@ -18,7 +18,7 @@ struct Event: Codable, Equatable {
     var draw: [Player]
     var schedule: [[Game]]
 
-    init(id: Int, icon: Data, name: String, startDate: TimeInterval, endDate: TimeInterval, level: EventLevel, draw: [Player], schedule: [[Game]]) {
+    init(id: Int, icon: String, name: String, startDate: TimeInterval, endDate: TimeInterval, level: EventLevel, draw: [Player], schedule: [[Game]]) {
         self.id = id
         self.icon = icon
         self.name = name
@@ -31,8 +31,7 @@ struct Event: Codable, Equatable {
 
     init(json: JSON) {
         id = json["id"].intValue
-        let iconData = try? json["icon"].rawData()
-        icon = iconData ?? Data()
+        icon = json["icon"].stringValue
         name = json["name"].stringValue
         startDate = json["startDate"].doubleValue
         endDate = json["endDate"].doubleValue
@@ -47,7 +46,7 @@ struct Event: Codable, Equatable {
 
     init?(dict: [String: Any]) {
         guard let id = dict["id"] as? Int,
-            let icon = dict["icon"] as? Data,
+            let icon = dict["icon"] as? String,
             let name = dict["name"] as? String,
             let startDate = dict["startDate"] as? TimeInterval,
             let endDate = dict["endDate"] as? TimeInterval,

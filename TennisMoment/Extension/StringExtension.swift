@@ -24,4 +24,9 @@ extension String {
             return 5
         }
     }
+
+    func toPng() -> Data {
+        let pngData = Data(base64Encoded: self)
+        return pngData ?? Data()
+    }
 }

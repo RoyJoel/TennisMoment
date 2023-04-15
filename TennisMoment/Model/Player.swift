@@ -12,7 +12,7 @@ struct Player: Codable, Equatable {
     var id: Int
     var loginName: String
     var name: String
-    var icon: Data
+    var icon: String
     var sex: Sex
     var age: Int
     var yearsPlayed: Int
@@ -24,7 +24,7 @@ struct Player: Codable, Equatable {
     var isAdult: Bool
     var careerStats: Stats
 
-    init(id: Int, loginName: String, name: String, icon: Data, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats) {
+    init(id: Int, loginName: String, name: String, icon: String, sex: Sex, age: Int, yearsPlayed: Int, height: Float, width: Float, grip: Grip, backhand: Backhand, points: Int, isAdult: Bool, careerStats: Stats) {
         self.id = id
         self.loginName = loginName
         self.name = name
@@ -45,8 +45,7 @@ struct Player: Codable, Equatable {
         id = json["id"].intValue
         loginName = json["loginName"].stringValue
         name = json["name"].stringValue
-        let iconData = try? json["icon"].rawData()
-        icon = iconData ?? Data()
+        icon = json["icon"].stringValue
         sex = Sex(rawValue: json["sex"].stringValue) ?? .Man
         age = json["age"].intValue
         yearsPlayed = json["yearsPlayed"].intValue
@@ -63,7 +62,7 @@ struct Player: Codable, Equatable {
         guard let id = dictionary["id"] as? Int,
             let loginName = dictionary["loginName"] as? String,
             let name = dictionary["name"] as? String,
-            let icon = dictionary["icon"] as? Data,
+            let icon = dictionary["icon"] as? String,
             let sexRawValue = dictionary["sex"] as? String,
             let sex = Sex(rawValue: sexRawValue),
             let age = dictionary["age"] as? Int,

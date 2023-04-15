@@ -118,10 +118,25 @@ class TMSettingViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     @objc func signOut() {
-        if let window = signOutBtn.window {
-            UserDefaults.standard.set(nil, forKey: TMUDKeys.JSONWebToken.rawValue)
-            UserDefaults.standard.set(nil, forKey: TMUDKeys.UserInfo.rawValue)
-            window.rootViewController = TMSignInViewController()
+        let sheetCtrl = UIAlertController(title: "Sign out?", message: nil, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in
+            if let window = self.signOutBtn.window {
+                UserDefaults.standard.set(nil, forKey: TMUDKeys.JSONWebToken.rawValue)
+                UserDefaults.standard.set(nil, forKey: TMUDKeys.UserInfo.rawValue)
+                window.rootViewController = TMSignInViewController()
+            }
+            self.navigationController?.popViewController(animated: true)
         }
+        sheetCtrl.addAction(action)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+            sheetCtrl.dismiss(animated: true)
+        }
+        sheetCtrl.addAction(cancelAction)
+
+        sheetCtrl.popoverPresentationController?.sourceView = view
+        sheetCtrl.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.width / 2 - 144, y: view.bounds.height / 2 - 69, width: 288, height: 138)
+        present(sheetCtrl, animated: true, completion: nil)
     }
 }

@@ -198,11 +198,11 @@ class TMRecordView: TMScalableView {
 
         // 说明player1在左侧⬅️
         if game.isPlayer1Left {
-            leftBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
-            rightBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
+            leftBasicInfoView.updateInfo(with: game.player1.icon.toPng(), named: game.player1.name)
+            rightBasicInfoView.updateInfo(with: game.player2.icon.toPng(), named: game.player2.name)
         } else {
-            leftBasicInfoView.updateInfo(with: game.player2.icon, named: game.player2.name)
-            rightBasicInfoView.updateInfo(with: game.player1.icon, named: game.player1.name)
+            leftBasicInfoView.updateInfo(with: game.player2.icon.toPng(), named: game.player2.name)
+            rightBasicInfoView.updateInfo(with: game.player1.icon.toPng(), named: game.player1.name)
         }
         if Date().timeIntervalSince1970 < game.endDate || game.endDate == 0 {
             titleView.text = NSLocalizedString("Live", comment: "")
@@ -769,6 +769,19 @@ class TMRecordView: TMScalableView {
     func saveGame() {
         game = gameStack.last ?? Game()
         gameStack = [self.game]
+        let localGamesDatas = UserDefaults.standard.array(forKey: TMUDKeys.LocalGames.rawValue) as? [[String: Any]]
+        var localGames = localGamesDatas?.compactMap { Game(dictionary: $0) } ?? []
+        localGames.removeAll(where: { $0.id == game.id })
+        localGames.append(game)
+        var datas: [[String: Any]] = []
+        for localGame in localGames {
+            datas.append(localGame.toDictionary())
+        }
+        UserDefaults.standard.set(datas, forKey: TMUDKeys.LocalGames.rawValue)
+        UserDefaults.standard.set(game.toDictionary(), forKey: TMUDKeys.liveMatch.rawValue)
+        if !TMUser.user.allUnfinishedGames.contains(where: { $0.id == game.id }) {
+            TMUser.user.allUnfinishedGames.append(game)
+        }
         TMGameRequest.updateGameAndStats(game: game) { _ in
             if Date().timeIntervalSince1970 < self.game.endDate || self.game.endDate == 0 {
                 self.titleView.text = NSLocalizedString("Live", comment: "")
@@ -788,7 +801,12 @@ class TMRecordView: TMScalableView {
         game.endDate = Date().timeIntervalSince1970
         game.player1Stats = player1Stats
         game.player2Stats = player2Stats
-        gameStack = [self.game]
+        gameStack = []
+        var localGames = (UserDefaults.standard.array(forKey: TMUDKeys.LocalGames.rawValue) ?? []) as? [[String: Any]]
+        localGames?.append(game.toDictionary())
+        UserDefaults.standard.set(localGames, forKey: TMUDKeys.LocalGames.rawValue)
+        TMUser.user.allUnfinishedGames.removeAll(where: { $0.id == game.id })
+        TMUser.user.allHistoryGames.append(game)
         TMGameRequest.updateGameAndStats(game: game) { _ in
             if TMUser.user.allUnfinishedGames.count > 0 {
                 self.refreshData(game: TMUser.user.allUnfinishedGames[0])

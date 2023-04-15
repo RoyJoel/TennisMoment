@@ -19,6 +19,23 @@ class TMLocationManager: NSObject {
     func startPositioning(completionHandler: @escaping (CLLocation, String) -> Void) {
         if locationManager != nil, CLLocationManager.authorizationStatus() == .denied {
             // 定位提示
+            let alert = UIAlertController(title: "打开定位开关", message: "定位服务未开启,请进入系统设置>隐私>定位服务中打开开关,并允许TennisMoment使用定位服务", preferredStyle: .alert)
+            let tempAction = UIAlertAction(title: "取消", style: .cancel) { _ in
+            }
+            let callAction = UIAlertAction(title: "前往设置", style: .default) { _ in
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    if UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            }
+            alert.addAction(tempAction)
+            alert.addAction(callAction)
+
+            if let window = UIApplication.shared.windows.first {
+                viewController = window.rootViewController
+                viewController?.present(alert, animated: true, completion: nil)
+            }
         } else {
             requestLocationServicesAuthorization(completionHandler: { location, description in
                 completionHandler(location, description)
@@ -36,9 +53,7 @@ class TMLocationManager: NSObject {
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
 
-        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
-            locationManager?.requestWhenInUseAuthorization()
-        }
+        locationManager?.requestWhenInUseAuthorization()
 
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -55,10 +70,7 @@ class TMLocationManager: NSObject {
 
     // 获取定位代理返回状态进行处理
     private func reportLocationServicesAuthorizationStatus(status: CLAuthorizationStatus) {
-        if status == .notDetermined {
-            // 未决定,继续请求授权
-            requestLocationServicesAuthorization(completionHandler: { _, _ in })
-        } else if status == .restricted {} else if status == .denied {}
+        if status == .notDetermined {} else if status == .restricted {} else if status == .denied {}
     }
 
     func getLocationDescription(location: CLLocation, completionHandler: @escaping (CLLocation, String) -> Void) {

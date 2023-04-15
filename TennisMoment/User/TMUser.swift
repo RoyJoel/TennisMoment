@@ -139,8 +139,9 @@ class TMUser {
         }
     }
 
-    static func addSchedule(startDate: TimeInterval, place: String, OpponentId: Int, completionHandler: @escaping (Schedule) -> Void) {
+    static func addSchedule(id: Int, startDate: TimeInterval, place: String, OpponentId: Int, completionHandler: @escaping (Schedule) -> Void) {
         TMNetWork.post("/schedule/add", dataParameters: [
+            "id": id,
             "startDate": startDate,
             "place": place,
             "player1Id": user.id,

@@ -140,7 +140,7 @@ class TMPlayerSearchingView: TMView, UISearchBarDelegate, UITableViewDelegate, U
             return cell
         } else {
             let cell = TMplayerSelectionCell()
-            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+            cell.setupEvent(imageName: players[indexPath.row].icon.toPng(), playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
             return cell
         }
     }

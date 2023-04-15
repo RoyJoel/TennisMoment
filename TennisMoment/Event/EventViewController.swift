@@ -13,7 +13,7 @@ import TMComponent
 import UIKit
 
 class EventViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var clubs: [Club] = []
+    var clubs: [Club] = [Club(), Club(), Club(), Club(), Club(), Club()]
     lazy var clubListView: UITableView = {
         let tableView = UITableView()
         return tableView
@@ -58,7 +58,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
             TMClubRequest.getInfos(ids: TMUser.user.allClubs) { clubs in
                 self.clubs = clubs
                 self.clubListView.reloadData()
-                self.clubListView.tab_endAnimation()
+                self.clubListView.tab_endAnimationEaseOut()
             }
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
@@ -96,7 +96,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = TMClubTableViewCell()
         cell.setupUI()
         cell.selectionStyle = .none
-        cell.setupEvent(clubIcon: clubs[indexPath.row].icon, clubName: clubs[indexPath.row].name)
+        cell.setupEvent(clubIcon: clubs[indexPath.row].icon.toPng(), clubName: clubs[indexPath.row].name)
         return cell
     }
 
@@ -105,7 +105,7 @@ class EventViewController: UIViewController, UITableViewDataSource, UITableViewD
             TMClubRequest.getInfos(ids: TMUser.user.allClubs) { clubs in
                 self.clubs = clubs
                 self.clubListView.reloadData()
-                self.clubListView.tab_endAnimation()
+                self.clubListView.tab_endAnimationEaseOut()
             }
         }
     }

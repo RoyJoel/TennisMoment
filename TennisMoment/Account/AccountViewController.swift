@@ -17,6 +17,11 @@ class AccountViewController: UIViewController {
         return imageView
     }()
 
+    lazy var allHistoryGamesNavBtn: TMButton = {
+        let btn = TMButton()
+        return btn
+    }()
+
     lazy var iconView: TMIconView = {
         let iconView = TMIconView()
         return iconView
@@ -49,6 +54,7 @@ class AccountViewController: UIViewController {
 
         view.backgroundColor = UIColor(named: "BackgroundGray")
         view.addSubview(settingView)
+        view.addSubview(allHistoryGamesNavBtn)
         view.addSubview(iconView)
         view.addSubview(basicInfoView)
         view.addSubview(userDataView)
@@ -56,7 +62,7 @@ class AccountViewController: UIViewController {
         iconView.setupUI()
 
         basicInfoView.setupUI()
-        let iconConfig = TMIconViewConfig(icon: TMUser.user.icon, name: TMUser.user.name)
+        let iconConfig = TMIconViewConfig(icon: TMUser.user.icon.toPng(), name: TMUser.user.name)
         iconView.setupEvent(config: iconConfig)
         basicInfoView.setupEvent()
         userDataView.setupUI()
@@ -72,6 +78,12 @@ class AccountViewController: UIViewController {
             make.left.equalTo(44)
             make.width.equalTo(40)
             make.height.equalTo(40)
+        }
+        allHistoryGamesNavBtn.snp.makeConstraints { make in
+            make.left.equalTo(settingView.snp.right).offset(12)
+            make.top.equalTo(settingView.snp.top)
+            make.width.equalTo(188)
+            make.height.equalTo(settingView.snp.height)
         }
         iconView.snp.makeConstraints { make in
             make.top.equalTo(settingView.snp.bottom).offset(24)
@@ -97,6 +109,8 @@ class AccountViewController: UIViewController {
         settingView.isUserInteractionEnabled = true
         settingView.addTapGesture(self, #selector(settingViewUp))
         NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
+        let navBtnConfig = TMButtonConfig(title: "View All Games", action: #selector(viewAllGames), actionTarget: self)
+        allHistoryGamesNavBtn.setUp(with: navBtnConfig)
     }
 
     @objc func enterLeftDetailStatsView() {
@@ -124,8 +138,15 @@ class AccountViewController: UIViewController {
     }
 
     @objc func refreshData() {
+        let iconConfig = TMIconViewConfig(icon: TMUser.user.icon.toPng(), name: TMUser.user.name)
+        iconView.setupEvent(config: iconConfig)
         basicInfoView.setupEvent()
         userDataView.setupEventForCareerStatsView()
         userDataView.setupEventForGameStatsView(games: TMUser.user.allHistoryGames)
+    }
+
+    @objc func viewAllGames() {
+        let vc = TMUserAllHistoryGamesViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

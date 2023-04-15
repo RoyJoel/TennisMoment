@@ -92,6 +92,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         NotificationCenter.default.addObserver(self, selector: #selector(toastUp(_:)), name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: Notification.Name(ToastNotification.AddGameToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: Notification.Name(ToastNotification.DataFreshToast.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(saveData), name: Notification.Name(ToastNotification.DataSavingToast.rawValue), object: nil)
 
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
 
@@ -129,6 +130,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         gameSearchingView.scheduleList.reloadData()
         configGameView.refreshData()
         scheduleView.refreshData()
+    }
+
+    @objc func saveData() {
+        recordView.saveGame()
     }
 
     @objc private func startRecord() {
@@ -214,7 +219,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             return
         }
         let gameConfig = configGameView.getData()
-        guard gameConfig.player1Id != gameConfig.player2Id else {
+        guard gameConfig.player1.id != gameConfig.player2.id else {
             let toastView = UILabel()
             toastView.text = "Player1 and player2 should not be same"
             toastView.bounds = configGameView.bounds
@@ -226,24 +231,28 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             return
         }
         configGameView.scaleTo(configGameView.toggle)
-        var newGame = GameRequest(id: 0, place: "", surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: nil, player1Id: gameConfig.player1Id, player1StatsId: 0, player2Id: gameConfig.player2Id, player2StatsId: 0, isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
+        var newGame = GameRequest(id: 0, place: "", surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: nil, player1Id: gameConfig.player1.id, player1StatsId: 0, player2Id: gameConfig.player2.id, player2StatsId: 0, isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
         TMUser.getLocationdescription(completionHandler: { location in
             newGame.place = location
-            TMGameRequest.addGame(game: newGame) { game in
-                guard let game = game else {
+            let game = Game(id: 0, place: location, surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: 0, player1: gameConfig.player1, player1Stats: Stats(), player2: gameConfig.player2, player2Stats: Stats(), isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
+            self.recordView.setNewGame(game: game)
+            self.navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(self.endRecord)), animated: true)
+            self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(self.confirmCompleteGame)), animated: true)
+            self.navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
+
+            self.recordView.scaleTo(self.recordView.toggle, completionHandler: {})
+            self.configGameView.isHidden = true
+            self.gameSearchingView.isHidden = true
+            self.playerSearchingView.isHidden = true
+            self.scheduleView.isHidden = true
+            TMGameRequest.addGame(game: newGame) { res in
+                guard let res = res else {
                     return
                 }
-                self.recordView.setNewGame(game: game)
-                self.navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(self.endRecord)), animated: true)
-                self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "stop"), style: .plain, target: self, action: #selector(self.confirmCompleteGame)), animated: true)
-                self.navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
-                self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "ContentBackground")
-
-                self.recordView.scaleTo(self.recordView.toggle, completionHandler: {})
-                self.configGameView.isHidden = true
-                self.gameSearchingView.isHidden = true
-                self.playerSearchingView.isHidden = true
-                self.scheduleView.isHidden = true
+                self.recordView.game.id = res.id
+                self.recordView.game.player1Stats.id = res.player1Stats.id
+                self.recordView.game.player2Stats.id = res.player2Stats.id
             }
         })
     }

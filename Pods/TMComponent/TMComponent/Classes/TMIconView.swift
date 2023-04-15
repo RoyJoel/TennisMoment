@@ -57,7 +57,7 @@ open class TMIconView: TMView {
         nameView.isUserInteractionEnabled = true
     }
 
-   public func setupEvent(config: TMIconViewConfig) {
+    public func setupEvent(config: TMIconViewConfig) {
         iconImage.image = UIImage(data: config.icon)
         if config.name == "" {
             nameView.isHidden = true

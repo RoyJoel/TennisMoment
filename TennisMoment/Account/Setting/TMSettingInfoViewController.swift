@@ -35,16 +35,17 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TMsettingTableViewCell.self, forCellReuseIdentifier: "TMsettingTableViewCell")
-        infoVC.setUserInfo(name: TMUser.user.name, icon: TMUser.user.icon, sex: TMUser.user.sex, age: TMUser.user.age, yearsPlayed: TMUser.user.yearsPlayed, height: TMUser.user.height, width: TMUser.user.width, grip: TMUser.user.grip, backhand: TMUser.user.backhand)
+        let pngData = Data(base64Encoded: TMUser.user.icon)
+        infoVC.setUserInfo(name: TMUser.user.name, icon: pngData ?? Data(), sex: TMUser.user.sex, age: TMUser.user.age, yearsPlayed: TMUser.user.yearsPlayed, height: TMUser.user.height, width: TMUser.user.width, grip: TMUser.user.grip, backhand: TMUser.user.backhand)
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 1 {
             let cell = TMSettingUserIconCell()
             let indexTitle = titleSettingConfig[indexPath.row]
-            cell.setupEvent(title: indexTitle, icon: TMUser.user.icon)
+            let pngData = Data(base64Encoded: TMUser.user.icon)
+            cell.setupEvent(title: indexTitle, icon: pngData ?? Data())
             cell.selectionStyle = .none
-            cell.isUserInteractionEnabled = false
             return cell
         } else {
             let cell = TMsettingTableViewCell()
@@ -59,6 +60,9 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
         infoVC.showSubView(tag: indexPath.row + 200)
         infoVC.completionHandler = { result in
             (self.tableView.cellForRow(at: indexPath) as? TMsettingTableViewCell)?.setupEvent(title: self.titleSettingConfig[indexPath.row], info: result)
+        }
+        infoVC.iconCompletionHandler = { icon in
+            (self.tableView.cellForRow(at: indexPath) as? TMSettingUserIconCell)?.setupEvent(title: self.titleSettingConfig[indexPath.row], icon: icon)
         }
         navigationController?.pushViewController(infoVC, animated: true)
     }
@@ -90,11 +94,17 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     @objc func updateUserInfo() {
-        let sheetCtrl = UIAlertController(title: "Cancel changes", message: nil, preferredStyle: .alert)
-
+        let sheetCtrl = UIAlertController(title: "Save changes", message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default) { _ in
             self.infoVC.getUserInfo()
-            TMUser.updateInfo { _ in
+            let usericonData = TMUser.user.icon
+            TMUser.updateInfo { user in
+                guard let user = user else {
+                    return
+                }
+                print(usericonData.count == user.icon.count)
+                let userInfo = try? PropertyListEncoder().encode(TMUser.user)
+                UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)
                 self.navigationController?.popViewController(animated: true)
             }

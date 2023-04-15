@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 open class TMTableView: UITableView {
-    
     public var originalBounds: CGRect = .init()
 
     public var originalPoint: CGPoint = .init()
@@ -61,4 +60,3 @@ open class TMTableView: UITableView {
         layer.position = originalPoint
     }
 }
-

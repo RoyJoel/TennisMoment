@@ -1,5 +1,5 @@
 //
-//  TMGameBookingView.swift
+//  TMScheduleBookingView.swift
 //  TennisMoment
 //
 //  Created by Jason Zhang on 2023/3/28.
@@ -10,7 +10,7 @@ import MapKit
 import TMComponent
 import UIKit
 
-class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITableViewDataSource {
+class TMScheduleBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITableViewDataSource {
     var players: [Player] = TMUser.user.friends
     var selectedMapItem: MKMapItem?
     var isDatePickerUp = false
@@ -155,7 +155,7 @@ class TMGameBookingView: TMView, UISearchBarDelegate, MKMapViewDelegate, UITable
             return cell
         } else {
             let cell = TMplayerSelectionCell()
-            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+            cell.setupEvent(imageName: players[indexPath.row].icon.toPng(), playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
             return cell
         }
     }

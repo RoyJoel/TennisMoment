@@ -11,6 +11,7 @@ import UIKit
 
 class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
     var modifiRow: Int = -1
+    var modifiSchedule: Schedule = Schedule()
     lazy var opponentLabel: UILabel = {
         let iconView = UILabel()
         return iconView
@@ -31,8 +32,8 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         return tableView
     }()
 
-    lazy var scheduleConfigView: TMGameBookingView = {
-        let configView = TMGameBookingView()
+    lazy var scheduleConfigView: TMScheduleBookingView = {
+        let configView = TMScheduleBookingView()
         return configView
     }()
 
@@ -154,6 +155,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let modifyAction = UIContextualAction(style: .destructive, title: NSLocalizedString("Modify", comment: "")) { _, _, completion in
             self.modifiRow = indexPath.row
+            self.modifiSchedule = TMUser.user.allSchedules[indexPath.row]
             self.scheduleConfigView.setupEvent(date: TMUser.user.allSchedules[indexPath.row].startDate, place: TMUser.user.allSchedules[indexPath.row].place)
             self.scheduleConfigView.scaleTo(self.scheduleConfigView.toggle)
             let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "paperplane")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(self.modifySchedule), actionTarget: self)
@@ -219,13 +221,13 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         if let place = scheduleConfigView.placeSearchBar.text, place != "" {
             if scheduleConfigView.players[0].id != TMUser.user.id {
                 scheduleConfigView.scaleTo(scheduleConfigView.toggle)
-                let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
+                let newSchedule = Schedule(id: 0, startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
                 TMUser.user.allSchedules.append(newSchedule)
                 refreshData()
                 let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
                 addScheduleButton.setUp(with: addScheduleButtonConfig)
                 DispatchQueue.main.async {
-                    TMUser.addSchedule(startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
+                    TMUser.addSchedule(id: newSchedule.id, startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
                 }
             } else {
                 let toastView = UILabel()
@@ -253,13 +255,13 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         if let place = scheduleConfigView.placeSearchBar.text, place != "" {
             if scheduleConfigView.players[0].id != TMUser.user.id {
                 scheduleConfigView.scaleTo(scheduleConfigView.toggle)
-                let newSchedule = Schedule(startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
+                let newSchedule = Schedule(id: modifiSchedule.id, startDate: scheduleConfigView.datePicker.date.timeIntervalSince1970, place: place, opponent: scheduleConfigView.players[0])
                 TMUser.user.allSchedules[modifiRow] = newSchedule
                 refreshData()
                 let addScheduleButtonConfig = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
                 addScheduleButton.setUp(with: addScheduleButtonConfig)
                 DispatchQueue.main.async {
-                    TMUser.addSchedule(startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
+                    TMUser.addSchedule(id: newSchedule.id, startDate: newSchedule.startDate, place: newSchedule.place, OpponentId: newSchedule.opponent.id, completionHandler: { _ in })
                 }
             } else {
                 let toastView = UILabel()

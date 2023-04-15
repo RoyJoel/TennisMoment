@@ -97,7 +97,7 @@ class TMClubContentView: TMView, UITableViewDelegate, UITableViewDataSource {
 
     func setupEvent(club: Club) {
         events = club.events
-        let iconConfig = TMImageViewConfig(image: club.icon, contentMode: .scaleAspectFill)
+        let iconConfig = TMImageViewConfig(image: club.icon.toPng(), contentMode: .scaleAspectFill)
         let nameConfig = TMLabelConfig(title: club.name, font: 20)
         let introConfig = TMLabelConfig(title: club.intro, font: 15)
         let addressConfig = TMLabelConfig(title: club.address, font: 17)

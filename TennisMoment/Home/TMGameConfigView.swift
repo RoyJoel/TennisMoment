@@ -264,13 +264,13 @@ class TMGameConfigView: TMScalableView {
 
     /// 返回用户填写的比赛数据
     /// - Returns: 0：player1LoginName，1: player2LoginName，2：setNum，3: gameNum， 4: isGoldenGoal
-    func getData() -> (player1Id: Int, player2Id: Int, surfaceType: SurfaceType, setNum: Int, gameNum: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool) {
-        let player1Id = player1Selections.players[0].id
-        let player2Id = player2Selections.players[0].id
+    func getData() -> (player1: Player, player2: Player, surfaceType: SurfaceType, setNum: Int, gameNum: Int, isGoldenGoal: Bool, isPlayer1Serving: Bool) {
+        let player1 = player1Selections.players[0]
+        let player2 = player2Selections.players[0]
         let setConfig = setNumSelections.numConfig[0]
         let gameConfig = gameNumSelections.numConfig[0]
         let surfaceConfig = surfaceTypeSelections.surfaceConfig[0].rawValue
-        return (player1Id, player2Id, SurfaceType(rawValue: surfaceConfig) ?? .hard, setConfig, gameConfig, isGoldenGoalConfigView.isOn, serverView.isPlayer1Serving)
+        return (player1, player2, SurfaceType(rawValue: surfaceConfig) ?? .hard, setConfig, gameConfig, isGoldenGoalConfigView.isOn, serverView.isPlayer1Serving)
     }
 
     @objc func configGameViewUp() {
@@ -305,7 +305,7 @@ class Player1SelectViewDataSource: NSObject, UITableViewDataSource {
             return cell
         } else {
             let cell = TMplayerSelectionCell()
-            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+            cell.setupEvent(imageName: players[indexPath.row].icon.toPng(), playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
             return cell
         }
     }
@@ -331,7 +331,7 @@ class Player2SelectViewDataSource: NSObject, UITableViewDataSource {
             return cell
         } else {
             let cell = TMplayerSelectionCell()
-            cell.setupEvent(imageName: players[indexPath.row].icon, playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
+            cell.setupEvent(imageName: players[indexPath.row].icon.toPng(), playerName: players[indexPath.row].name, playerId: players[indexPath.row].id)
             return cell
         }
     }

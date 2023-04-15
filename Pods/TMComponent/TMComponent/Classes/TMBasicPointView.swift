@@ -54,7 +54,7 @@ open class TMBasicPointView: TMView {
         if let iconImage = config.iconName {
             highLightImage.image = UIImage(named: iconImage)
             highLightImage.isHidden = false
-        }else {
+        } else {
             highLightImage.isHidden = true
         }
         if !config.isServing {

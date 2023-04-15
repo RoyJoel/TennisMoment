@@ -202,7 +202,7 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
     }
 
     func setupEvent(player: Player) {
-        let player1IconConfig = TMIconViewConfig(icon: player.icon, name: player.name)
+        let player1IconConfig = TMIconViewConfig(icon: player.icon.toPng(), name: player.name)
 
         let firstServeIn = TMDataConvert.Divide(player.careerStats.firstServePointsIn, by: player.careerStats.firstServePoints)
         let firstServeWon = TMDataConvert.Divide(player.careerStats.firstServePointsWon, by: player.careerStats.firstServePointsIn)

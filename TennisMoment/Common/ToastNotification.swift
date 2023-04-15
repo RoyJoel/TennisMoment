@@ -13,6 +13,7 @@ enum ToastNotification: String {
     case HomeViewToast
     case AddGameToast
     case ContinueGameToast
+    case DataSavingToast
 
     /// 通知名称
     var notificationName: NSNotification.Name {

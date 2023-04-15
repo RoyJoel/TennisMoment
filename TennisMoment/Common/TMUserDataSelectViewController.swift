@@ -85,13 +85,13 @@ class TMUserDataSelectViewController: UIViewController {
 
         localDataView.setupUI()
         netDataView.setupUI()
-        if localUserInfo.allHistoryGames.count != 0 {
-            localDataView.setupEvent(game: localUserInfo.allHistoryGames[0])
+        if localUserInfo.allUnfinishedGames.count != 0 {
+            localDataView.setupEvent(game: localUserInfo.allUnfinishedGames[localUserInfo.allUnfinishedGames.count - 1])
         } else {
             localDataView.setupAlart()
         }
-        if netUserInfo.allHistoryGames.count != 0 {
-            netDataView.setupEvent(game: netUserInfo.allHistoryGames[0])
+        if netUserInfo.allUnfinishedGames.count != 0 {
+            netDataView.setupEvent(game: netUserInfo.allUnfinishedGames[localUserInfo.allUnfinishedGames.count - 1])
         } else {
             netDataView.setupAlart()
         }

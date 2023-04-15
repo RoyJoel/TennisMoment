@@ -57,6 +57,10 @@ class TMSignInViewController: AVPlayerViewController {
             player?.seek(to: .zero)
             player?.play()
         }
+        // 设置音频会话并激活它
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+        try? session.setActive(true)
 
         contentOverlayView?.addSubview(loginNameTextField)
         contentOverlayView?.addSubview(passwordTextField)

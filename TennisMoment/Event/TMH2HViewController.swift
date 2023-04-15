@@ -74,8 +74,8 @@ class TMH2HViewController: UIViewController, UITableViewDelegate, UITableViewDat
         alartView.snp.makeConstraints { make in
             make.edges.equalTo(H2HRecordView.snp.edges)
         }
-        let player1Config = TMIconViewConfig(icon: player1.icon, name: player1.name)
-        let player2Config = TMIconViewConfig(icon: player2.icon, name: player2.name)
+        let player1Config = TMIconViewConfig(icon: player1.icon.toPng(), name: player1.name)
+        let player2Config = TMIconViewConfig(icon: player2.icon.toPng(), name: player2.name)
         player1IconView.setup(with: player1Config)
         player2IconView.setup(with: player2Config)
 

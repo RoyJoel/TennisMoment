@@ -16,6 +16,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     var currentIndex = 0
 
     var completionHandler: (String) -> Void = { _ in }
+    var iconCompletionHandler: (Data) -> Void = { _ in }
 
     lazy var progressView: UIProgressView = {
         let view = UIProgressView()
@@ -309,7 +310,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
         TMUser.user.loginName = accountTextField.textField.text ?? ""
         TMUser.user.password = passwordTextField.textField.text ?? ""
         TMUser.user.name = nameTextField.textField.text ?? ""
-        TMUser.user.icon = iconImageView.image?.pngData() ?? Data()
+        TMUser.user.icon = (iconImageView.image?.pngData() ?? Data()).base64EncodedString()
         TMUser.user.sex = sexTextField.isLeft ? .Man : .Woman
         TMUser.user.age = Int(ageTextField.textField.text ?? "0") ?? 0
         TMUser.user.yearsPlayed = Int(yearsPlayedTextField.textField.text ?? "0") ?? 0
@@ -446,6 +447,8 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
             completionHandler(selectedString)
         } else if let selectedString = (view.viewWithTag(tag) as? TMSelectionView)?.isLeft {
             completionHandler(selectedString == true ? Sex.Man.rawValue : Sex.Woman.rawValue)
+        } else if let selectedIcon = (view.viewWithTag(tag) as? UIImageView)?.image?.pngData() {
+            iconCompletionHandler(selectedIcon)
         } else {
             if tag == 207 {
                 completionHandler(gripConfig.gripConfig[0].rawValue)

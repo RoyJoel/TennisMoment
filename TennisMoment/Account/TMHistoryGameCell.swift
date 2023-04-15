@@ -2,7 +2,7 @@
 //  TMHistoryGameCell.swift
 //  TennisMoment
 //
-//  Created by Jason Zhang on 2023/4/10.
+//  Created by Jason Zhang on 2023/4/15.
 //
 import CoreLocation
 import Foundation
@@ -25,7 +25,12 @@ class TMHistoryGameCell: UITableViewCell {
         return label
     }()
 
-    lazy var lastRecordLabel: UILabel = {
+    lazy var placeLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+
+    lazy var resultLabel: UILabel = {
         let label = UILabel()
         return label
     }()
@@ -34,9 +39,10 @@ class TMHistoryGameCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(opponentIcon)
         contentView.addSubview(opponentLabel)
+        contentView.addSubview(placeLabel)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(lastRecordLabel)
-        contentView.backgroundColor = UIColor(named: "ComponentBackground")
+        contentView.addSubview(resultLabel)
+        contentView.backgroundColor = UIColor(named: "BackgroundGray")
         layoutSubviews()
     }
 
@@ -47,24 +53,30 @@ class TMHistoryGameCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         opponentIcon.snp.makeConstraints { make in
-            make.left.equalTo(dateLabel.snp.right)
+            make.right.equalTo(opponentLabel.snp.left)
             make.top.equalToSuperview().offset(6)
             make.bottom.equalToSuperview().offset(-6)
             make.width.equalTo(30)
         }
         opponentLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.left.equalTo(opponentIcon.snp.right).offset(6)
-            make.width.equalTo(116)
+            make.right.equalTo(resultLabel.snp.left).offset(6)
+            make.width.equalTo(148)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.left.equalToSuperview()
             make.width.equalTo(158)
         }
-        lastRecordLabel.snp.makeConstraints { make in
+        placeLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.left.equalTo(opponentLabel.snp.right)
+            make.left.equalTo(dateLabel.snp.right)
+            make.right.equalTo(opponentLabel.snp.left)
+        }
+        resultLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(228)
+            make.right.equalToSuperview()
         }
         opponentIcon.contentMode = .scaleAspectFill
         opponentIcon.setCorner(radii: 5)
@@ -72,22 +84,16 @@ class TMHistoryGameCell: UITableViewCell {
     }
 
     func setupEvent(game: Game) {
-        opponentIcon.image = UIImage(data: game.player1.id == TMUser.user.id ? game.player2.icon : game.player1.icon)
+        opponentIcon.image = UIImage(data: game.player1.id == TMUser.user.id ? game.player2.icon.toPng() : game.player1.icon.toPng())
         opponentLabel.text = game.player1.id == TMUser.user.id ? game.player2.name : game.player1.name
         dateLabel.text = game.startDate.convertToString(formatterString: "yyyy MM-dd HH:mm")
+        placeLabel.text = game.place
         let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: false)
         var lastRecord = ""
         for set in liveResult {
             lastRecord += " \(set[0]) \(set[1]) "
         }
-        lastRecordLabel.text = lastRecord
-        lastRecordLabel.sizeToFit()
-    }
-
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if CGRectContainsPoint(lastRecordLabel.frame, point) {
-            return lastRecordLabel
-        }
-        return super.hitTest(point, with: event)
+        resultLabel.text = lastRecord
+        resultLabel.sizeToFit()
     }
 }

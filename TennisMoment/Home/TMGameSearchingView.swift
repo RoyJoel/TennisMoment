@@ -103,7 +103,7 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
         scheduleList.allowsSelectionDuringEditing = true
         scheduleList.backgroundColor = UIColor(named: "ComponentBackground")
 
-        if TMUser.user.allHistoryGames.count == 0 {
+        if TMUser.user.allUnfinishedGames.count == 0 {
             setupAlart()
         } else {
             opponentLabel.isHidden = false
@@ -172,7 +172,7 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TMHistoryGameCell()
+        let cell = TMUnfinishedGameCell()
         cell.selectionStyle = .none
         cell.showsReorderControl = true // 显示移动编辑样式
         cell.editingAccessoryType = .disclosureIndicator // 显示向右箭头的编辑样式

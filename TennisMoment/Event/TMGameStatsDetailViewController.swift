@@ -326,8 +326,8 @@ class TMGameStatsDetailViewController: UIViewController {
         placeLabel.text = NSLocalizedString("Place", comment: "") + ": \(game.place)"
         eventLabel.text = NSLocalizedString("Event", comment: "") + ": "
         roundLabel.text = NSLocalizedString("Round", comment: "") + ": \(game.round)"
-        let player1IconConfig = TMIconViewConfig(icon: game.player1.icon, name: game.player1.name)
-        let player2IconConfig = TMIconViewConfig(icon: game.player2.icon, name: game.player2.name)
+        let player1IconConfig = TMIconViewConfig(icon: game.player1.icon.toPng(), name: game.player1.name)
+        let player2IconConfig = TMIconViewConfig(icon: game.player2.icon.toPng(), name: game.player2.name)
         let result = TMDataConvert.gameResult(from: game.result, isGameCompleted: true)
         var multiConfig: [TMPointComparingViewConfig] = []
         for setResult in result.indices {
@@ -417,17 +417,15 @@ class TMGameStatsDetailViewController: UIViewController {
             self.H2HRecordView.updateLeftViewData(isServingOnLeft: false, newNum: "\(player1WinningNum)")
             self.H2HRecordView.updateRightViewData(isServingOnRight: false, newNum: "\(player2WinningNum)")
             self.progressView.progress = Float(player1WinningNum) / (Float(player2WinningNum) + Float(player1WinningNum))
-            if self.progressView.progress == 0 || self.progressView.progress == 1 {
-                self.progressView.progressTintColor = UIColor(named: "BackgroundGray") // 已有进度颜色
-                self.progressView.trackTintColor = UIColor(named: "BackgroundGray")
-            } else if self.progressView.progress > 0.5 {
+            if self.progressView.progress >= 0.5 {
                 self.progressView.progressTintColor = UIColor(named: "Tennis") // 已有进度颜色
                 self.progressView.trackTintColor = .gray
             } else if self.progressView.progress < 0.5 {
-                self.progressView.progressTintColor = .gray
-                self.progressView.trackTintColor = UIColor(named: "Tennis") // 已有进度颜色
-            } else {
-                self.progressView.progressTintColor = UIColor(named: "Tennis")
+                let newProgress = 1 - self.progressView.progress
+                self.progressView.progress = newProgress
+                self.progressView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi) // 已有进度颜色
+                self.progressView.progressTintColor =
+                    .gray // 已有进度颜色
                 self.progressView.trackTintColor = UIColor(named: "Tennis")
             }
         }

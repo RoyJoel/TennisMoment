@@ -45,9 +45,10 @@ class TMSettingUserIconCell: UITableViewCell {
             make.width.equalTo(188)
         }
         navigationBar.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.right.equalToSuperview()
-            make.width.equalTo(44)
+            make.top.equalToSuperview().offset(35)
+            make.bottom.equalToSuperview().offset(-35)
+            make.right.equalToSuperview().offset(-24)
+            make.width.equalTo(25)
         }
         iconView.snp.makeConstraints { make in
             make.right.equalTo(navigationBar.snp.left)
@@ -55,7 +56,7 @@ class TMSettingUserIconCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-12)
             make.width.equalTo(74)
         }
-        navigationBar.image = UIImage(named: "chevron.backward")
+        navigationBar.image = UIImage(systemName: "chevron.forward")
         titleView.font = UIFont.systemFont(ofSize: 20)
         iconView.contentMode = .scaleAspectFill
         iconView.setCorner(radii: 15)

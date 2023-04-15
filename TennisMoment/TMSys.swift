@@ -10,6 +10,7 @@ import Reachability
 import TABAnimated
 
 class TMSys {
+    var reachability: Reachability?
     static let shard = TMSys()
     private init() {}
 
@@ -18,37 +19,48 @@ class TMSys {
         window.backgroundColor = .white
         window.overrideUserInterfaceStyle = initStyle()
         window.rootViewController = initRootViewController()
-
         window.makeKeyAndVisible()
         return window
     }
 
     func observeNetState() {
-        let reachability: Reachability!
-        do {
-            reachability = try Reachability()
-        } catch {
-            print("Unable to create Reachability")
-            return
-        }
-        // 检测网络连接状态
-        if reachability.connection != .unavailable {
-            auth()
-        } else {
-            if let userInfo = UserDefaults.standard.data(forKey: TMUDKeys.UserInfo.rawValue) {
-                do {
-                    TMUser.user = try PropertyListDecoder().decode(User.self, from: userInfo)
-                } catch {
+        if reachability == nil {
+            do {
+                reachability = try Reachability()
+            } catch {
+                print("Unable to create Reachability")
+                return
+            }
+
+            reachability?.whenReachable = { _ in
+                let localGamesDatas = UserDefaults.standard.array(forKey: TMUDKeys.LocalGames.rawValue) as? [[String: Any]]
+                var localGames = localGamesDatas?.compactMap { Game(dictionary: $0) } ?? []
+                for game in localGames {
+                    TMGameRequest.updateGameAndStats(game: game) { updatedGame in
+                        if updatedGame == game {
+                            localGames.removeAll(where: { $0.id == updatedGame.id })
+                        }
+                    }
+                }
+                self.auth()
+            }
+            reachability?.whenUnreachable = { _ in
+                if let userInfo = UserDefaults.standard.data(forKey: TMUDKeys.UserInfo.rawValue) {
+                    do {
+                        TMUser.user = try PropertyListDecoder().decode(User.self, from: userInfo)
+                    } catch {
+                        if let window = UIApplication.shared.windows.first {
+                            window.rootViewController = TMSignInViewController()
+                        }
+                    }
+                } else {
                     if let window = UIApplication.shared.windows.first {
                         window.rootViewController = TMSignInViewController()
                     }
                 }
-            } else {
-                if let window = UIApplication.shared.windows.first {
-                    window.rootViewController = TMSignInViewController()
-                }
             }
         }
+        try? reachability?.startNotifier()
     }
 
     func initRootViewController() -> UIViewController {
@@ -92,6 +104,7 @@ class TMSys {
         if UserDefaults.standard.string(forKey: TMUDKeys.JSONWebToken.rawValue) != nil {
             let userInfo = try? PropertyListEncoder().encode(TMUser.user)
             UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
+            NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataSavingToast.notificationName.rawValue), object: nil)
             UserDefaults.standard.synchronize()
         }
     }
