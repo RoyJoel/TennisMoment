@@ -515,20 +515,21 @@ class TMUserStatsView: UIView {
     }
 
     func setupEvent(stats: Stats) {
-        let firstServeIn = TMDataConvert.Divide(stats.firstServePointsIn, by: stats.firstServePoints)
-        let firstServeWon = TMDataConvert.Divide(stats.firstServePointsWon, by: stats.firstServePointsIn)
-        let secondServeIn = TMDataConvert.Divide(stats.secondServePointsIn, by: stats.servePoints - stats.firstServePoints)
-        let secondServeWon = TMDataConvert.Divide(stats.secondServePointsWon, by: stats.secondServePointsIn)
-        let firstReturnServeIn = TMDataConvert.Divide(stats.firstServeReturnPointsIn, by: stats.firstServeReturnPoints)
-        let firstReturnServeWon = TMDataConvert.Divide(stats.firstServeReturnPointsWon, by: stats.firstServeReturnPointsIn)
-        let secondReturnServeIn = TMDataConvert.Divide(stats.secondServeReturnPointsIn, by: stats.returnServePoints - stats.firstServeReturnPoints)
-        let secondReturnServeWon = TMDataConvert.Divide(stats.secondServeReturnPointsWon, by: stats.secondServeReturnPointsIn)
-        let breakPointSaved = TMDataConvert.Divide(stats.breakPointsSaved, by: stats.breakPointsFaced)
-        let breakPointConvert = TMDataConvert.Divide(stats.breakPointsConverted, by: stats.breakPointsOpportunities)
-        let serveGameWon = TMDataConvert.Divide(stats.serveGamesWon, by: stats.serveGamesPlayed)
-        let returnGameWon = TMDataConvert.Divide(stats.returnGamesWon, by: stats.returnGamesPlayed)
-        let servePointWon = TMDataConvert.Divide(stats.firstServePointsWon + stats.secondServePointsWon, by: stats.firstServePointsIn + stats.secondServePointsIn)
-        let returnPointWon = TMDataConvert.Divide(stats.firstServeReturnPointsWon + stats.secondServeReturnPointsWon, by: stats.firstServeReturnPointsIn + stats.secondServeReturnPointsIn)
+        let firstServeIn = stats.convertToRealStats().firstServeIn
+        let firstServeWon = stats.convertToRealStats().firstServeWon
+        let secondServeIn = stats.convertToRealStats().secondServeIn
+        let secondServeWon = stats.convertToRealStats().secondServeWon
+        let firstReturnServeIn = stats.convertToRealStats().firstReturnServeIn
+        let firstReturnServeWon = stats.convertToRealStats().firstReturnServeWon
+        let secondReturnServeIn = stats.convertToRealStats().secondReturnServeIn
+        let secondReturnServeWon = stats.convertToRealStats().secondReturnServeWon
+        let breakPointSaved = stats.convertToRealStats().breakPointSaved
+        let breakPointConvert = stats.convertToRealStats().breakPointConvert
+        let serveGameWon = stats.convertToRealStats().serveGameWon
+        let returnGameWon = stats.convertToRealStats().returnGameWon
+        let servePointWon = stats.convertToRealStats().servePointWon
+        let returnPointWon = stats.convertToRealStats().returnPointWon
+
         firstServeInView.startAnimation(radii: firstServeIn)
         firstServeWonView.startAnimation(radii: firstServeWon)
         secondServeInView.startAnimation(radii: secondServeIn)

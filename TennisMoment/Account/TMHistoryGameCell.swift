@@ -91,7 +91,7 @@ class TMHistoryGameCell: UITableViewCell {
         let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: false)
         var lastRecord = ""
         for set in liveResult {
-            lastRecord += " \(set[0]) \(set[1]) "
+            lastRecord += " \(set[0]) : \(set[1]) "
         }
         resultLabel.text = lastRecord
         resultLabel.sizeToFit()

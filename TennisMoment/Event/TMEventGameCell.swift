@@ -76,21 +76,20 @@ class TMEventGameCell: UITableViewCell {
         }
         leftBasicInfoView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(18)
+            make.right.equalTo(recordPointView.snp.left).offset(-6)
             make.top.equalTo(titleView.snp.bottom).offset(6)
-            make.width.equalTo(UIStandard.shared.screenWidth * 0.06)
-            make.height.equalTo(UIStandard.shared.screenHeight * 0.12)
+            make.bottom.equalTo(recordPointView.snp.bottom).offset(28)
         }
         rightBasicInfoView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-18)
             make.top.equalTo(leftBasicInfoView.snp.top)
-            make.width.equalTo(UIStandard.shared.screenWidth * 0.06)
-            make.height.equalTo(UIStandard.shared.screenHeight * 0.12)
+            make.left.equalTo(recordPointView.snp.right).offset(6)
+            make.bottom.equalTo(recordPointView.snp.bottom).offset(28)
         }
         recordPointView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.width.equalTo(UIStandard.shared.screenWidth * 0.08)
-            make.height.equalTo(60)
+            make.center.equalToSuperview()
+            make.width.equalTo(bounds.width * 0.3)
+            make.height.equalTo(84)
         }
         leftBasicInfoView.setupUI()
         rightBasicInfoView.setupUI()
@@ -98,7 +97,7 @@ class TMEventGameCell: UITableViewCell {
     }
 
     func setupEvent(game: Game) {
-        let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 20, rowSpacing: 0, font: UIFont.systemFont(ofSize: 13), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, isGameCompleted: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
+        let pointRecordViewConfig = TMPointRecordViewConfig(rowHeight: 28, rowSpacing: 0, font: UIFont.systemFont(ofSize: 13), isTitleHidden: true, isPlayer1Serving: true, isPlayer1Left: true, isGameCompleted: true, player1SetNum: 0, player2SetNum: 0, player1GameNum: 0, player2GameNum: 0, player1PointNum: "0", player2PointNum: "0")
         recordPointView.setup(with: pointRecordViewConfig)
         // 说明player1在左侧⬅️
         if game.isPlayer1Left {

@@ -75,11 +75,11 @@ class TMUserDataSelectViewController: UIViewController {
             make.height.equalTo(288)
         }
 
-        titleView.text = "Choose Your Account"
+        titleView.text = NSLocalizedString("Choose Your Account", comment: "")
         titleView.textAlignment = .center
         titleView.font = UIFont.systemFont(ofSize: 32)
-        localDataLabel.text = "Local Recent Game"
-        netDataLabel.text = "Online Recent Game"
+        localDataLabel.text = NSLocalizedString("Local Recent Game", comment: "")
+        netDataLabel.text = NSLocalizedString("Online Recent Game", comment: "")
         localDataLabel.font = UIFont.systemFont(ofSize: 25)
         netDataLabel.font = UIFont.systemFont(ofSize: 25)
 
@@ -91,7 +91,7 @@ class TMUserDataSelectViewController: UIViewController {
             localDataView.setupAlart()
         }
         if netUserInfo.allUnfinishedGames.count != 0 {
-            netDataView.setupEvent(game: netUserInfo.allUnfinishedGames[localUserInfo.allUnfinishedGames.count - 1])
+            netDataView.setupEvent(game: netUserInfo.allUnfinishedGames[netUserInfo.allUnfinishedGames.count - 1])
         } else {
             netDataView.setupAlart()
         }

@@ -20,7 +20,7 @@ class TMSignInBtn: UILabel {
         font = UIFont.boldSystemFont(ofSize: 20)
         textColor = UIColor(named: "ContentBackground")
         textAlignment = .center
-        text = "SignIn"
+        text = NSLocalizedString("SignIn", comment: "")
         isUserInteractionEnabled = true
         // 添加点击手势
         addTapGesture(self, #selector(handleTapGesture))

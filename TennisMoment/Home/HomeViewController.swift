@@ -44,6 +44,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         return view
     }()
 
+    lazy var rankingView: TMRankingView = {
+        let view = TMRankingView()
+        return view
+    }()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = ""
@@ -51,17 +66,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         view.backgroundColor = UIColor(named: "BackgroundGray")
 
         view.addSubview(recordView)
-        view.addSubview(configGameView)
+        view.addSubview(rankingView)
+        view.insertSubview(configGameView, aboveSubview: rankingView)
         view.addSubview(scheduleView)
-        view.addSubview(playerSearchingView)
-        view.addSubview(gameSearchingView)
+        view.insertSubview(playerSearchingView, aboveSubview: rankingView)
+        view.insertSubview(gameSearchingView, aboveSubview: rankingView)
 
-        recordView.frame = CGRect(x: 24, y: 72, width: UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.35)
-        configGameView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 72, width: 68, height: 68)
-        playerSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 158, width: 68, height: 68)
-        gameSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 244, width: 68, height: 68)
-
-        scheduleView.frame = CGRect(x: 24, y: 84 + UIStandard.shared.screenHeight * 0.35, width: 80 + UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.44)
+        recordView.frame = CGRect(x: 24, y: 32, width: UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.35)
+        configGameView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: 32, width: 68, height: 68)
+        playerSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: UIStandard.shared.screenHeight * 0.175 - 2, width: 68, height: 68)
+        gameSearchingView.frame = CGRect(x: 36 + UIStandard.shared.screenWidth * 0.44, y: UIStandard.shared.screenHeight * 0.35 - 36, width: 68, height: 68)
+        scheduleView.frame = CGRect(x: 24, y: 44 + UIStandard.shared.screenHeight * 0.35, width: 80 + UIStandard.shared.screenWidth * 0.44, height: UIStandard.shared.screenHeight * 0.65 - 142)
+        rankingView.frame = CGRect(x: 116 + UIStandard.shared.screenWidth * 0.44, y: 32, width: UIStandard.shared.screenWidth * 0.56 - 72 - 68, height: UIStandard.shared.screenHeight - 130)
 
         recordView.setupUI()
         let tabAnimation = TABViewAnimated()
@@ -88,6 +104,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         gameSearchingView.setupUI()
         gameSearchingView.isHidden = false
 
+        rankingView.setupUI()
+        rankingView.isHidden = false
+
         NotificationCenter.default.addObserver(self, selector: #selector(startHistoryGame(_:)), name: Notification.Name(ToastNotification.ContinueGameToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(toastUp(_:)), name: Notification.Name(ToastNotification.HomeViewToast.notificationName.rawValue), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: Notification.Name(ToastNotification.AddGameToast.notificationName.rawValue), object: nil)
@@ -96,40 +115,49 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
 
         recordView.setup(recordView.bounds, recordView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth, height: UIStandard.shared.screenHeight), CGPoint(x: UIStandard.shared.screenWidth / 2, y: UIStandard.shared.screenHeight / 2), 0.3)
 
-        configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
-        playerSearchingView.setup(playerSearchingView.bounds, playerSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
-        gameSearchingView.setup(gameSearchingView.bounds, gameSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 72 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        configGameView.setup(configGameView.bounds, configGameView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 32 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        playerSearchingView.setup(playerSearchingView.bounds, playerSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 32 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        gameSearchingView.setup(gameSearchingView.bounds, gameSearchingView.layer.position, CGRect(x: 0, y: 0, width: UIStandard.shared.screenWidth * 0.5, height: UIStandard.shared.screenHeight * 0.35), CGPoint(x: 36 + UIStandard.shared.screenWidth * 0.69, y: 32 + UIStandard.shared.screenHeight * 0.175), 0.3)
+        rankingView.setup(rankingView.bounds, rankingView.layer.position, CGRect(x: 0, y: 0, width: rankingView.bounds.size.width, height: UIStandard.shared.screenHeight * 0.65 - 142), CGPoint(x: rankingView.layer.position.x, y: UIStandard.shared.screenHeight * 0.675 - 27), 0.3)
+
         configGameView.viewUpCompletionHandler = {
             self.playerSearchingView.isHidden = true
             self.gameSearchingView.isHidden = true
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         configGameView.viewDownCompletionHandler = {
             self.playerSearchingView.isHidden = false
             self.gameSearchingView.isHidden = false
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         gameSearchingView.viewUpCompletionHandler = {
             self.playerSearchingView.isHidden = true
             self.configGameView.isHidden = true
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         gameSearchingView.viewDownCompletionHandler = {
             self.playerSearchingView.isHidden = false
             self.configGameView.isHidden = false
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         playerSearchingView.viewUpCompletionHandler = {
             self.gameSearchingView.isHidden = true
             self.configGameView.isHidden = true
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         playerSearchingView.viewDownCompletionHandler = {
             self.gameSearchingView.isHidden = false
             self.configGameView.isHidden = false
+            self.rankingView.scaleTo(self.rankingView.toggle)
         }
         scheduleView.setupUI()
     }
 
     @objc func refreshData() {
-        gameSearchingView.scheduleList.reloadData()
+        gameSearchingView.refreshData()
         configGameView.refreshData()
         scheduleView.refreshData()
+        rankingView.refreshData()
     }
 
     @objc func saveData() {
@@ -148,6 +176,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         playerSearchingView.isHidden = true
         gameSearchingView.isHidden = true
         scheduleView.isHidden = true
+        rankingView.isHidden = true
     }
 
     @objc private func endRecord() {
@@ -160,6 +189,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             self.gameSearchingView.isHidden = false
             self.playerSearchingView.isHidden = false
             self.scheduleView.isHidden = false
+            self.rankingView.isHidden = false
         })
     }
 
@@ -190,6 +220,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         gameSearchingView.isHidden = false
         playerSearchingView.isHidden = false
         scheduleView.isHidden = false
+        rankingView.isHidden = false
         UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: TMUDKeys.lastGameTime.rawValue)
     }
 
@@ -209,28 +240,29 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     @objc func startGame() {
         guard TMUser.user.friends.count > 0 else {
             let toastView = UILabel()
-            toastView.text = "The Game Should Not start without player"
+            toastView.text = NSLocalizedString("The Game Should Not start without player", comment: "")
             toastView.bounds = configGameView.bounds
             toastView.backgroundColor = UIColor(named: "ComponentBackground")
             toastView.textAlignment = .center
             toastView.setCorner(radii: 15)
-            configGameView.showToast(toastView, position: .center) { _ in
+            configGameView.showToast(toastView, duration: 1, position: .center) { _ in
             }
             return
         }
         let gameConfig = configGameView.getData()
         guard gameConfig.player1.id != gameConfig.player2.id else {
             let toastView = UILabel()
-            toastView.text = "Player1 and player2 should not be same"
+            toastView.text = NSLocalizedString("Player1 and player2 should not be same", comment: "")
             toastView.bounds = configGameView.bounds
             toastView.backgroundColor = UIColor(named: "ComponentBackground")
             toastView.textAlignment = .center
             toastView.setCorner(radii: 15)
-            configGameView.showToast(toastView, position: .center) { _ in
+            configGameView.showToast(toastView, duration: 1, position: .center) { _ in
             }
             return
         }
         configGameView.scaleTo(configGameView.toggle)
+        rankingView.scaleTo(rankingView.toggle)
         var newGame = GameRequest(id: 0, place: "", surface: gameConfig.surfaceType, setNum: gameConfig.setNum, gameNum: gameConfig.gameNum, round: 0, isGoldenGoal: gameConfig.isGoldenGoal, isPlayer1Serving: gameConfig.isPlayer1Serving, isPlayer1Left: true, isChangePosition: false, startDate: Date().timeIntervalSince1970, endDate: nil, player1Id: gameConfig.player1.id, player1StatsId: 0, player2Id: gameConfig.player2.id, player2StatsId: 0, isPlayer1FirstServe: true, isPlayer2FirstServe: true, result: [[[0, 0]]])
         TMUser.getLocationdescription(completionHandler: { location in
             newGame.place = location
@@ -246,14 +278,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             self.gameSearchingView.isHidden = true
             self.playerSearchingView.isHidden = true
             self.scheduleView.isHidden = true
-            TMGameRequest.addGame(game: newGame) { res in
-                guard let res = res else {
-                    return
-                }
-                self.recordView.game.id = res.id
-                self.recordView.game.player1Stats.id = res.player1Stats.id
-                self.recordView.game.player2Stats.id = res.player2Stats.id
-            }
+            self.rankingView.isHidden = true
         })
     }
 
@@ -272,6 +297,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         playerSearchingView.isHidden = true
         gameSearchingView.isHidden = true
         scheduleView.isHidden = true
+        rankingView.isHidden = true
+        rankingView.scaleTo(rankingView.toggle)
         recordView.refreshData(game: game)
         recordView.startRecord()
     }

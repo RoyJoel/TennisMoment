@@ -346,7 +346,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
                             if res {
                                 self.currentIndex -= 1
                                 let toastView = UILabel()
-                                toastView.text = "Account already exists"
+                                toastView.text = NSLocalizedString("Account already exists", comment: "")
                                 toastView.numberOfLines = 2
                                 toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -378,7 +378,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
                 } else {
                     currentIndex -= 1
                     let toastView = UILabel()
-                    toastView.text = "No Content Input"
+                    toastView.text = NSLocalizedString("No Content Input", comment: "")
                     toastView.numberOfLines = 2
                     toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                     toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -402,7 +402,7 @@ class TMSignUpViewController: UIViewController, UIImagePickerControllerDelegate,
                 guard error == nil else {
                     if self.view.window != nil {
                         let toastView = UILabel()
-                        toastView.text = "login failed"
+                        toastView.text = NSLocalizedString("login failed", comment: "")
                         toastView.numberOfLines = 2
                         toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                         toastView.backgroundColor = UIColor(named: "ComponentBackground")

@@ -63,9 +63,7 @@ class TMGameView: UIView {
         rightBasicInfoView.isHidden = true
         recordPointView.isHidden = true
         alartView.isHidden = false
-
-        alartView.text = "You have no Recent Game in this Account"
-
+        alartView.text = NSLocalizedString("You have no Recent Game", comment: "")
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }

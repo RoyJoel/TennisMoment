@@ -191,11 +191,17 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
 
         if TMUser.user.friends.contains(where:
             { $0.id == player.id }) {
-            let addFriendBtnConfig = TMButtonConfig(title: "you are friend", actionTarget: self)
-            addFriendBtn.setUp(with: addFriendBtnConfig)
+            let deleteFriendBtnConfig = TMButtonConfig(title: "Delete Friend", action: #selector(self.deleteFriend), actionTarget: self)
+            self.addFriendBtn.setUp(with: deleteFriendBtnConfig)
+            self.addFriendBtn.backgroundColor = UIColor(named: "AlartBackground")
         } else {
             let addFriendBtnConfig = TMButtonConfig(title: "Add Friend", action: #selector(addFriend), actionTarget: self)
             addFriendBtn.setUp(with: addFriendBtnConfig)
+            addFriendBtn.backgroundColor = UIColor(named: "ComponentBackground")
+        }
+
+        if TMUser.user.id == player.id {
+            addFriendBtn.isHidden = true
         }
 
         setupEvent(player: player)
@@ -204,36 +210,36 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
     func setupEvent(player: Player) {
         let player1IconConfig = TMIconViewConfig(icon: player.icon.toPng(), name: player.name)
 
-        let firstServeIn = TMDataConvert.Divide(player.careerStats.firstServePointsIn, by: player.careerStats.firstServePoints)
-        let firstServeWon = TMDataConvert.Divide(player.careerStats.firstServePointsWon, by: player.careerStats.firstServePointsIn)
-        let secondServeIn = TMDataConvert.Divide(player.careerStats.secondServePointsIn, by: player.careerStats.servePoints - player.careerStats.firstServePoints)
-        let secondServeWon = TMDataConvert.Divide(player.careerStats.secondServePointsWon, by: player.careerStats.secondServePointsIn)
-        let firstReturnServeIn = TMDataConvert.Divide(player.careerStats.firstServeReturnPointsIn, by: player.careerStats.firstServeReturnPoints)
-        let firstReturnServeWon = TMDataConvert.Divide(player.careerStats.firstServeReturnPointsWon, by: player.careerStats.firstServeReturnPointsIn)
-        let secondReturnServeIn = TMDataConvert.Divide(player.careerStats.secondServeReturnPointsIn, by: player.careerStats.returnServePoints - player.careerStats.firstServeReturnPoints)
-        let secondReturnServeWon = TMDataConvert.Divide(player.careerStats.secondServeReturnPointsWon, by: player.careerStats.secondServeReturnPointsIn)
-        let breakPointSaved = TMDataConvert.Divide(player.careerStats.breakPointsSaved, by: player.careerStats.breakPointsFaced)
-        let breakPointConvert = TMDataConvert.Divide(player.careerStats.breakPointsConverted, by: player.careerStats.breakPointsOpportunities)
-        let serveGameWon = TMDataConvert.Divide(player.careerStats.serveGamesWon, by: player.careerStats.serveGamesPlayed)
-        let returnGameWon = TMDataConvert.Divide(player.careerStats.returnGamesWon, by: player.careerStats.returnGamesPlayed)
-        let servePointWon = TMDataConvert.Divide(player.careerStats.firstServePointsWon + player.careerStats.secondServePointsWon, by: player.careerStats.firstServePointsIn + player.careerStats.secondServePointsIn)
-        let returnPointWon = TMDataConvert.Divide(player.careerStats.firstServeReturnPointsWon + player.careerStats.secondServeReturnPointsWon, by: player.careerStats.firstServeReturnPointsIn + player.careerStats.secondServeReturnPointsIn)
+        let firstServeIn = player.careerStats.convertToRealStats().firstServeIn
+        let firstServeWon = player.careerStats.convertToRealStats().firstServeWon
+        let secondServeIn = player.careerStats.convertToRealStats().secondServeIn
+        let secondServeWon = player.careerStats.convertToRealStats().secondServeWon
+        let firstReturnServeIn = player.careerStats.convertToRealStats().firstReturnServeIn
+        let firstReturnServeWon = player.careerStats.convertToRealStats().firstReturnServeWon
+        let secondReturnServeIn = player.careerStats.convertToRealStats().secondReturnServeIn
+        let secondReturnServeWon = player.careerStats.convertToRealStats().secondReturnServeWon
+        let breakPointSaved = player.careerStats.convertToRealStats().breakPointSaved
+        let breakPointConvert = player.careerStats.convertToRealStats().breakPointConvert
+        let serveGameWon = player.careerStats.convertToRealStats().serveGameWon
+        let returnGameWon = player.careerStats.convertToRealStats().returnGameWon
+        let servePointWon = player.careerStats.convertToRealStats().servePointWon
+        let returnPointWon = player.careerStats.convertToRealStats().returnPointWon
 
-        let firstServeInConfig = [NSLocalizedString("1ST Serve In", comment: ""), "\(firstServeIn.TwoBitsRem())%"]
-        let firstServeWonConfig = [NSLocalizedString("1ST Serve Won", comment: ""), "\(firstServeWon.TwoBitsRem())%"]
-        let secondServeInConfig = [NSLocalizedString("2ND Serve In", comment: ""), "\(secondServeIn.TwoBitsRem())%"]
-        let secondServeWonConfig = [NSLocalizedString("2ND Serve Won", comment: ""), "\(secondServeWon.TwoBitsRem())%"]
-        let breakPointSavedConfig = [NSLocalizedString("Break Point Saved", comment: ""), "\(breakPointSaved.TwoBitsRem())%"]
-        let servePointWonConfig = [NSLocalizedString("Serve Point Won", comment: ""), "\(servePointWon.TwoBitsRem())%"]
-        let serveGameWonConfig = [NSLocalizedString("Serve Game Won", comment: ""), "\(serveGameWon.TwoBitsRem())%"]
+        let firstServeInConfig = [NSLocalizedString("1ST Serve In", comment: ""), "\(firstServeIn)%"]
+        let firstServeWonConfig = [NSLocalizedString("1ST Serve Won", comment: ""), "\(firstServeWon)%"]
+        let secondServeInConfig = [NSLocalizedString("2ND Serve In", comment: ""), "\(secondServeIn)%"]
+        let secondServeWonConfig = [NSLocalizedString("2ND Serve Won", comment: ""), "\(secondServeWon)%"]
+        let breakPointSavedConfig = [NSLocalizedString("Break Point Saved", comment: ""), "\(breakPointSaved)%"]
+        let servePointWonConfig = [NSLocalizedString("Serve Point Won", comment: ""), "\(servePointWon)%"]
+        let serveGameWonConfig = [NSLocalizedString("Serve Game Won", comment: ""), "\(serveGameWon)%"]
 
-        let firstReturnServeInConfig = [NSLocalizedString("1ST Return In", comment: ""), "\(firstReturnServeIn.TwoBitsRem())%"]
-        let firstReturnServeWonConfig = [NSLocalizedString("1ST Return Won", comment: ""), "\(firstReturnServeWon.TwoBitsRem())%"]
-        let secondReturnServeInConfig = [NSLocalizedString("2ND Return In", comment: ""), "\(secondReturnServeIn.TwoBitsRem())%"]
-        let secondReturnServeWonConfig = [NSLocalizedString("2ND Return Won", comment: ""), "\(secondReturnServeWon.TwoBitsRem())%"]
-        let breakPointConvertConfig = [NSLocalizedString("Break Point Convert", comment: ""), "\(breakPointConvert.TwoBitsRem())%"]
-        let returnPointWonConfig = [NSLocalizedString("Return Point Won", comment: ""), "\(returnPointWon.TwoBitsRem())%"]
-        let returnGameWonConfig = [NSLocalizedString("Return Game Won", comment: ""), "\(returnGameWon.TwoBitsRem())%"]
+        let firstReturnServeInConfig = [NSLocalizedString("1ST Return In", comment: ""), "\(firstReturnServeIn)%"]
+        let firstReturnServeWonConfig = [NSLocalizedString("1ST Return Won", comment: ""), "\(firstReturnServeWon)%"]
+        let secondReturnServeInConfig = [NSLocalizedString("2ND Return In", comment: ""), "\(secondReturnServeIn)%"]
+        let secondReturnServeWonConfig = [NSLocalizedString("2ND Return Won", comment: ""), "\(secondReturnServeWon)%"]
+        let breakPointConvertConfig = [NSLocalizedString("Break Point Convert", comment: ""), "\(breakPointConvert)%"]
+        let returnPointWonConfig = [NSLocalizedString("Return Point Won", comment: ""), "\(returnPointWon)%"]
+        let returnGameWonConfig = [NSLocalizedString("Return Game Won", comment: ""), "\(returnGameWon)%"]
 
         let acesConfig = [NSLocalizedString("Aces", comment: ""), "\(player.careerStats.aces)"]
         let doubleFaultsConfig = [NSLocalizedString("Double Faults", comment: ""), "\(player.careerStats.doubleFaults)"]
@@ -268,17 +274,8 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
     }
 
     @objc func addFriend() {
-        guard player.id != TMUser.user.id else {
-            let toastView = UILabel()
-            toastView.text = "Can not add youself to your friend list"
-            toastView.bounds = view.bounds
-            toastView.backgroundColor = UIColor(named: "ComponentBackground")
-            toastView.textAlignment = .center
-            toastView.setCorner(radii: 15)
-            view.showToast(toastView, position: .center) { _ in
-            }
-            return
-        }
+        TMUser.user.friends.append(player)
+        NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)
         TMUser.addFriend(player.id) { res in
             if res {
                 let toastView = UILabel()
@@ -289,11 +286,12 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
                 toastView.setCorner(radii: 15)
                 self.view.showToast(toastView, position: .center) { _ in
                 }
-                let addFriendBtnConfig = TMButtonConfig(title: "you are friend", actionTarget: self)
-                self.addFriendBtn.setupEvent(config: addFriendBtnConfig)
+                let deleteFriendBtnConfig = TMButtonConfig(title: "Delete Friend", action: #selector(self.deleteFriend), actionTarget: self)
+                self.addFriendBtn.setUp(with: deleteFriendBtnConfig)
+                self.addFriendBtn.backgroundColor = UIColor(named: "AlartBackground")
             } else {
                 let toastView = UILabel()
-                toastView.text = "add friend fail"
+                toastView.text = NSLocalizedString("add friend fail", comment: "")
                 toastView.bounds = self.view.bounds
                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
                 toastView.textAlignment = .center
@@ -301,6 +299,16 @@ class TMCommonPlayerInfoViewController: UIViewController, UITableViewDelegate {
                 self.view.showToast(toastView, position: .center) { _ in
                 }
             }
+        }
+    }
+
+    @objc func deleteFriend() {
+        TMUser.user.friends.removeAll(where: { $0.id == player.id })
+        NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)
+        TMUser.deleteFriend(player.id) { _ in
+            let addFriendBtnConfig = TMButtonConfig(title: "Add Friend", action: #selector(self.addFriend), actionTarget: self)
+            self.addFriendBtn.setUp(with: addFriendBtnConfig)
+            self.addFriendBtn.backgroundColor = UIColor(named: "ComponentBackground")
         }
     }
 }

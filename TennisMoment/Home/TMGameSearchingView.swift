@@ -121,7 +121,7 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
         scheduleList.isHidden = true
         alartView.isHidden = false
 
-        alartView.text = "You don't have any game to finish"
+        alartView.text = NSLocalizedString("You don't have any game to finish", comment: "")
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }
@@ -131,21 +131,30 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
             viewUpCompletionHandler()
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
+            super.scaleTo(isEnlarge) {
+                if TMUser.user.allUnfinishedGames.count != 0 {
+                    self.opponentLabel.isHidden = false
+                    self.dateLabel.isHidden = false
+                    self.lastResultLabel.isHidden = false
+                    self.scheduleList.isHidden = false
+                    self.alartView.isHidden = true
+                } else {
+                    self.opponentLabel.isHidden = true
+                    self.dateLabel.isHidden = true
+                    self.lastResultLabel.isHidden = true
+                    self.scheduleList.isHidden = true
+                    self.alartView.isHidden = false
+                }
+            }
         } else {
             opponentLabel.isHidden = true
             dateLabel.isHidden = true
             lastResultLabel.isHidden = true
             scheduleList.isHidden = true
+            alartView.isHidden = true
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "clock")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(scheduleGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
-        }
-        super.scaleTo(isEnlarge) {
-            if self.toggle {
-                self.opponentLabel.isHidden = false
-                self.dateLabel.isHidden = false
-                self.lastResultLabel.isHidden = false
-                self.scheduleList.isHidden = false
-            } else {
+            super.scaleTo(isEnlarge) {
                 self.viewDownCompletionHandler()
             }
         }
@@ -189,6 +198,19 @@ class TMGameSearchingView: TMView, UITableViewDataSource, UITableViewDelegate {
             scaleTo(toggle, completionHandler: {})
         }
         return super.hitTest(point, with: event)
+    }
+
+    func refreshData() {
+        if TMUser.user.allUnfinishedGames.count == 0 {
+            setupAlart()
+        } else {
+            opponentLabel.isHidden = false
+            dateLabel.isHidden = false
+            lastResultLabel.isHidden = false
+            scheduleList.isHidden = false
+            alartView.isHidden = true
+        }
+        scheduleList.reloadData()
     }
 
     @objc func scheduleGameViewUp() {

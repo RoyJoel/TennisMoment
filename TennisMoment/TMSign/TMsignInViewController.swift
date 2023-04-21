@@ -113,7 +113,7 @@ class TMSignInViewController: AVPlayerViewController {
                         guard error == nil else {
                             if let window = self.signInBtn.window {
                                 let toastView = UILabel()
-                                toastView.text = "login failed"
+                                toastView.text = NSLocalizedString("login failed", comment: "")
                                 toastView.numberOfLines = 2
                                 toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -128,7 +128,7 @@ class TMSignInViewController: AVPlayerViewController {
                         guard let user = user else {
                             if let window = self.signInBtn.window {
                                 let toastView = UILabel()
-                                toastView.text = "login failed"
+                                toastView.text = NSLocalizedString("login failed", comment: "")
                                 toastView.numberOfLines = 2
                                 toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -157,7 +157,7 @@ class TMSignInViewController: AVPlayerViewController {
                 } else {
                     if let window = self.signInBtn.window {
                         let toastView = UILabel()
-                        toastView.text = "loginName can not be null"
+                        toastView.text = NSLocalizedString("loginName can not be null", comment: "")
                         toastView.numberOfLines = 2
                         toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                         toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -171,7 +171,7 @@ class TMSignInViewController: AVPlayerViewController {
             } else {
                 if let window = self.signInBtn.window {
                     let toastView = UILabel()
-                    toastView.text = "loginName can not be null"
+                    toastView.text = NSLocalizedString("loginName can not be null", comment: "")
                     toastView.numberOfLines = 2
                     toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                     toastView.backgroundColor = UIColor(named: "ComponentBackground")

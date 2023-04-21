@@ -94,7 +94,7 @@ class TMH2HViewController: UIViewController, UITableViewDelegate, UITableViewDat
             H2HRecordView.isHidden = true
             alartView.isHidden = false
 
-            alartView.text = "No Game Record"
+            alartView.text = NSLocalizedString("No Game Record", comment: "")
             alartView.font = UIFont.systemFont(ofSize: 22)
             alartView.textAlignment = .center
         } else {

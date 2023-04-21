@@ -148,27 +148,30 @@ class TMDataConvert {
         }
     }
 
-    static func datesInRangeString(startDate: TimeInterval, endDate: TimeInterval) -> [String] {
+    static func datesInRangeString(startDate: TimeInterval, endDate: TimeInterval) -> (schedules: [String], nowIndex: Int) {
         let calendar = Calendar.current
         let startDate = Date(timeIntervalSince1970: startDate)
         var currentDate = startDate
         let endDate = Date(timeIntervalSince1970: endDate).startOfDay.adding(days: 1)
 
         var dates: [String] = []
+        var index: Int = 0
+        var res: Int = 0
         while currentDate < endDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM-dd"
             let dateString = dateFormatter.string(from: currentDate)
             if currentDate.endOfDay >= Date(), Date() >= currentDate.startOfDay {
                 dates.insert(dateString, at: 0)
+                res = index
             } else {
                 dates.append(dateString)
             }
-
+            index += 1
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
         }
 
-        return dates
+        return (dates, res)
     }
 
     static func union<T: Any>(_ array1: [T], to array2: [T]) -> [T] {

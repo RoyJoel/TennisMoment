@@ -32,6 +32,8 @@
 		A87D6B4E29A5AC4D0001C59F /* TMScalableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87D6B4D29A5AC4D0001C59F /* TMScalableView.swift */; };
 		A890D7F529EA418500F50536 /* TMUserAllHistoryGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890D7F429EA418500F50536 /* TMUserAllHistoryGamesViewController.swift */; };
 		A890D7F729EA436500F50536 /* TMHistoryGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890D7F629EA436500F50536 /* TMHistoryGameCell.swift */; };
+		A890D7F929EB9E5700F50536 /* TMRankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890D7F829EB9E5700F50536 /* TMRankingView.swift */; };
+		A890D7FB29EBA7B600F50536 /* TMRankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890D7FA29EBA7B600F50536 /* TMRankingCell.swift */; };
 		A8ABA0AC29B027C3002F1632 /* TMRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABA0AB29B027C3002F1632 /* TMRecordView.swift */; };
 		A8ABA11729B059AB002F1632 /* TMGameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABA11629B059AB002F1632 /* TMGameRequest.swift */; };
 		A8ABA11929B05BAD002F1632 /* TMGameConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABA11829B05BAD002F1632 /* TMGameConfigView.swift */; };
@@ -154,6 +156,8 @@
 		A87D6B4D29A5AC4D0001C59F /* TMScalableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMScalableView.swift; sourceTree = "<group>"; };
 		A890D7F429EA418500F50536 /* TMUserAllHistoryGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMUserAllHistoryGamesViewController.swift; sourceTree = "<group>"; };
 		A890D7F629EA436500F50536 /* TMHistoryGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMHistoryGameCell.swift; sourceTree = "<group>"; };
+		A890D7F829EB9E5700F50536 /* TMRankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMRankingView.swift; sourceTree = "<group>"; };
+		A890D7FA29EBA7B600F50536 /* TMRankingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMRankingCell.swift; sourceTree = "<group>"; };
 		A8ABA0AB29B027C3002F1632 /* TMRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMRecordView.swift; sourceTree = "<group>"; };
 		A8ABA11629B059AB002F1632 /* TMGameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameRequest.swift; sourceTree = "<group>"; };
 		A8ABA11829B05BAD002F1632 /* TMGameConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMGameConfigView.swift; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 				A83AAA1D29A769870020483A /* TMPointRecordViewConfig.swift */,
 				A8C1051C29D27EF8003E225E /* TMScheduleBookingView.swift */,
 				A8C1051E29D28BE3003E225E /* TMUserScheduleView.swift */,
+				A890D7F829EB9E5700F50536 /* TMRankingView.swift */,
+				A890D7FA29EBA7B600F50536 /* TMRankingCell.swift */,
 				A8C1052429D31432003E225E /* TMMarkerAnnotationView.swift */,
 				A8EC716829E4F5BF009A5D51 /* TMCommonPlayerInfoTableViewCell.swift */,
 				A8EC716A29E4F648009A5D51 /* TMCommonPlayerInfoViewController.swift */,
@@ -819,6 +825,7 @@
 				A8C6923329E3C65E0000DB0B /* TMGameSearchingView.swift in Sources */,
 				A8EC716729E40653009A5D51 /* TMUnfinishedGameCell.swift in Sources */,
 				A8C1052129D2BAB5003E225E /* Schedule.swift in Sources */,
+				A890D7F929EB9E5700F50536 /* TMRankingView.swift in Sources */,
 				A850A94629E6B045000AC80C /* TMUserDataSelectViewController.swift in Sources */,
 				A879B09B29E2C94F006F48FE /* TMH2HViewController.swift in Sources */,
 				A8C19E15299E8CE50011F37A /* AccountViewController.swift in Sources */,
@@ -876,6 +883,7 @@
 				A8C19E03299E854E0011F37A /* UIViewExtension.swift in Sources */,
 				A8C19E07299E854E0011F37A /* TMNavigationController.swift in Sources */,
 				A8C1051F29D28BE3003E225E /* TMUserScheduleView.swift in Sources */,
+				A890D7FB29EBA7B600F50536 /* TMRankingCell.swift in Sources */,
 				A8FE6E0D29DD776B0007C7C2 /* TMProgressView.swift in Sources */,
 				A8C359FD29C6B56E009338A4 /* Event.swift in Sources */,
 				A8ED766229D68483005A6F23 /* TMSettingSelectionViewController.swift in Sources */,

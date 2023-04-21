@@ -164,7 +164,7 @@ class TMRecordView: TMScalableView {
 
         let lastGameTime = UserDefaults.standard.double(forKey: "LastGameTime")
         if lastGameTime == 0 {
-            alartView.text = "Tap the add button to start your career"
+            alartView.text = NSLocalizedString("Tap the add button to start your career", comment: "")
         } else {
             let gap = Date().timeIntervalSince1970 - lastGameTime
             let days = Int(gap / (24 * 3600))
@@ -241,6 +241,9 @@ class TMRecordView: TMScalableView {
 
             leftScoreControllerView.isHidden = true
             rightScoreControllerView.isHidden = true
+            if let vc = getParentViewController() {
+                vc.navigationController?.navigationBar.isHidden = true
+            }
         } else {
             backgroundColor = UIColor(named: "BackgroundGray")
             titleView.isHidden = true
@@ -262,6 +265,9 @@ class TMRecordView: TMScalableView {
 
             leftScoreControllerView.isHidden = false
             rightScoreControllerView.isHidden = false
+            if let vc = getParentViewController() {
+                vc.navigationController?.navigationBar.isHidden = false
+            }
         }
         completionHandler()
     }
@@ -779,7 +785,10 @@ class TMRecordView: TMScalableView {
         }
         UserDefaults.standard.set(datas, forKey: TMUDKeys.LocalGames.rawValue)
         UserDefaults.standard.set(game.toDictionary(), forKey: TMUDKeys.liveMatch.rawValue)
-        if !TMUser.user.allUnfinishedGames.contains(where: { $0.id == game.id }) {
+        if TMUser.user.allUnfinishedGames.contains(where: { $0.startDate == game.startDate }) {
+            TMUser.user.allUnfinishedGames.removeAll(where: { $0.startDate == game.startDate })
+            TMUser.user.allUnfinishedGames.append(game)
+        } else if game.player1.id == TMUser.user.id || game.player2.id == TMUser.user.id {
             TMUser.user.allUnfinishedGames.append(game)
         }
         TMGameRequest.updateGameAndStats(game: game) { _ in
@@ -807,16 +816,16 @@ class TMRecordView: TMScalableView {
         UserDefaults.standard.set(localGames, forKey: TMUDKeys.LocalGames.rawValue)
         TMUser.user.allUnfinishedGames.removeAll(where: { $0.id == game.id })
         TMUser.user.allHistoryGames.append(game)
+        if TMUser.user.allUnfinishedGames.count > 0 {
+            refreshData(game: TMUser.user.allUnfinishedGames[0])
+            scaleTo(toggle, completionHandler: {})
+            isUserInteractionEnabled = true
+        } else {
+            scaleTo(toggle, completionHandler: {
+                self.setupAlart()
+            })
+        }
         TMGameRequest.updateGameAndStats(game: game) { _ in
-            if TMUser.user.allUnfinishedGames.count > 0 {
-                self.refreshData(game: TMUser.user.allUnfinishedGames[0])
-                self.scaleTo(self.toggle, completionHandler: {})
-                self.isUserInteractionEnabled = true
-            } else {
-                self.scaleTo(self.toggle, completionHandler: {
-                    self.setupAlart()
-                })
-            }
         }
     }
 
@@ -1381,7 +1390,7 @@ class TMRecordView: TMScalableView {
     func popStateStack() {
         if gameStack.count < 2 {
             let toastView = UILabel()
-            toastView.text = "Can not Undo"
+            toastView.text = NSLocalizedString("Can not Undo", comment: "")
             toastView.numberOfLines = 2
             toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
             toastView.backgroundColor = UIColor(named: "ComponentBackground")

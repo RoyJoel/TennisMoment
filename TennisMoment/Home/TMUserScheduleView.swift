@@ -131,7 +131,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
         scheduleList.isHidden = true
         alartView.isHidden = false
 
-        alartView.text = "You don't have any schedule"
+        alartView.text = NSLocalizedString("You don't have any schedule", comment: "")
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }
@@ -231,7 +231,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
             } else {
                 let toastView = UILabel()
-                toastView.text = "The opponent can not be yourself"
+                toastView.text = NSLocalizedString("The opponent can not be yourself", comment: "")
                 toastView.bounds = bounds
                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
                 toastView.textAlignment = .center
@@ -241,7 +241,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             let toastView = UILabel()
-            toastView.text = "The Place Should Not Be Null"
+            toastView.text = NSLocalizedString("The Place Should Not Be Null", comment: "")
             toastView.bounds = bounds
             toastView.backgroundColor = UIColor(named: "ComponentBackground")
             toastView.textAlignment = .center
@@ -265,7 +265,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
             } else {
                 let toastView = UILabel()
-                toastView.text = "The opponent can not be yourself"
+                toastView.text = NSLocalizedString("The opponent can not be yourself", comment: "")
                 toastView.bounds = bounds
                 toastView.backgroundColor = UIColor(named: "ComponentBackground")
                 toastView.textAlignment = .center
@@ -275,7 +275,7 @@ class TMUserScheduleView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             let toastView = UILabel()
-            toastView.text = "The Place Should Not Be Null"
+            toastView.text = NSLocalizedString("The Place Should Not Be Null", comment: "")
             toastView.bounds = bounds
             toastView.backgroundColor = UIColor(named: "ComponentBackground")
             toastView.textAlignment = .center

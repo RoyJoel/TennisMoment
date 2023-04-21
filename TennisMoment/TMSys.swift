@@ -63,6 +63,12 @@ class TMSys {
         try? reachability?.startNotifier()
     }
 
+    func enterForeground() {
+        if reachability?.connection != .unavailable {
+            auth()
+        }
+    }
+
     func initRootViewController() -> UIViewController {
         let isNotFirstDownload = UserDefaults.standard.bool(forKey: TMUDKeys.isNotFirstDownload.rawValue)
         if !isNotFirstDownload {
@@ -106,6 +112,8 @@ class TMSys {
             UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
             NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataSavingToast.notificationName.rawValue), object: nil)
             UserDefaults.standard.synchronize()
+            TMUser.updateInfo { _ in
+            }
         }
     }
 
@@ -117,7 +125,7 @@ class TMSys {
                         let signInVC = TMSignInViewController()
                         window.rootViewController = signInVC
                         let toastView = UILabel()
-                        toastView.text = "The login information has expired\n please log in again"
+                        toastView.text = NSLocalizedString("The login information has expired\n please log in again", comment: "")
                         toastView.numberOfLines = 2
                         toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                         toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -141,7 +149,7 @@ class TMSys {
                     guard error == nil else {
                         if let window = UIApplication.shared.windows.first {
                             let toastView = UILabel()
-                            toastView.text = "No such loginname or password"
+                            toastView.text = NSLocalizedString("No such loginname or password", comment: "")
                             toastView.numberOfLines = 2
                             toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                             toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -156,7 +164,7 @@ class TMSys {
                     guard let user = user else {
                         if let window = UIApplication.shared.windows.first {
                             let toastView = UILabel()
-                            toastView.text = "Login Failed"
+                            toastView.text = NSLocalizedString("Login Failed", comment: "")
                             toastView.numberOfLines = 2
                             toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                             toastView.backgroundColor = UIColor(named: "ComponentBackground")

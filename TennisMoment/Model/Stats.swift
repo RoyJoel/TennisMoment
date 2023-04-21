@@ -8,6 +8,30 @@
 import Foundation
 import SwiftyJSON
 
+struct statsData {
+    var aces: Int
+    var doubleFaults: Int
+    var returnAces: Int
+    var netPoints: Int
+    var unforcedErrors: Int
+    var forehandWinners: Int
+    var backhandWinners: Int
+    var firstServeIn: Int
+    var firstServeWon: Int
+    var secondServeIn: Int
+    var secondServeWon: Int
+    var firstReturnServeIn: Int
+    var firstReturnServeWon: Int
+    var secondReturnServeIn: Int
+    var secondReturnServeWon: Int
+    var breakPointSaved: Int
+    var breakPointConvert: Int
+    var serveGameWon: Int
+    var returnGameWon: Int
+    var servePointWon: Int
+    var returnPointWon: Int
+}
+
 struct Stats: Codable, Equatable {
     var id: Int
     var aces: Int
@@ -263,5 +287,24 @@ struct Stats: Codable, Equatable {
             lhs.unforcedErrors == rhs.unforcedErrors &&
             lhs.forehandWinners == rhs.forehandWinners &&
             lhs.backhandWinners == rhs.backhandWinners
+    }
+
+    func convertToRealStats() -> statsData {
+        let firstServeIn = TMDataConvert.Divide(firstServePointsIn, by: firstServePoints)
+        let firstServeWon = TMDataConvert.Divide(firstServePointsWon, by: firstServePointsIn)
+        let secondServeIn = TMDataConvert.Divide(secondServePointsIn, by: servePoints - firstServePoints)
+        let secondServeWon = TMDataConvert.Divide(secondServePointsWon, by: secondServePointsIn)
+        let firstReturnServeIn = TMDataConvert.Divide(firstServeReturnPointsIn, by: firstServeReturnPoints)
+        let firstReturnServeWon = TMDataConvert.Divide(firstServeReturnPointsWon, by: firstServeReturnPointsIn)
+        let secondReturnServeIn = TMDataConvert.Divide(secondServeReturnPointsIn, by: returnServePoints - firstServeReturnPoints)
+        let secondReturnServeWon = TMDataConvert.Divide(secondServeReturnPointsWon, by: secondServeReturnPointsIn)
+        let breakPointSaved = TMDataConvert.Divide(breakPointsSaved, by: breakPointsFaced)
+        let breakPointConvert = TMDataConvert.Divide(breakPointsConverted, by: breakPointsOpportunities)
+        let serveGameWon = TMDataConvert.Divide(serveGamesWon, by: serveGamesPlayed)
+        let returnGameWon = TMDataConvert.Divide(returnGamesWon, by: returnGamesPlayed)
+        let servePointWon = TMDataConvert.Divide(firstServePointsWon + secondServePointsWon, by: firstServePointsIn + secondServePointsIn)
+        let returnPointWon = TMDataConvert.Divide(firstServeReturnPointsWon + secondServeReturnPointsWon, by: firstServeReturnPointsIn + secondServeReturnPointsIn)
+
+        return statsData(aces: aces, doubleFaults: doubleFaults, returnAces: returnAces, netPoints: netPoints, unforcedErrors: unforcedErrors, forehandWinners: forehandWinners, backhandWinners: backhandWinners, firstServeIn: firstServeIn.TwoBitsRem(), firstServeWon: firstServeWon.TwoBitsRem(), secondServeIn: secondServeIn.TwoBitsRem(), secondServeWon: secondServeWon.TwoBitsRem(), firstReturnServeIn: firstReturnServeIn.TwoBitsRem(), firstReturnServeWon: firstReturnServeWon.TwoBitsRem(), secondReturnServeIn: secondReturnServeIn.TwoBitsRem(), secondReturnServeWon: secondReturnServeWon.TwoBitsRem(), breakPointSaved: breakPointSaved.TwoBitsRem(), breakPointConvert: breakPointConvert.TwoBitsRem(), serveGameWon: serveGameWon.TwoBitsRem(), returnGameWon: returnGameWon.TwoBitsRem(), servePointWon: servePointWon.TwoBitsRem(), returnPointWon: returnPointWon.TwoBitsRem())
     }
 }

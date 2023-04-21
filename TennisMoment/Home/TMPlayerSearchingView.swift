@@ -67,18 +67,16 @@ class TMPlayerSearchingView: TMView, UISearchBarDelegate, UITableViewDelegate, U
             viewUpCompletionHandler()
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
             startGameBtn.setUp(with: config)
+            super.scaleTo(isEnlarge) {
+                self.playerSearchBar.isHidden = false
+            }
         } else {
             playerSearchBar.isHidden = true
             PlayerSelectView.isHidden = true
             playerSearchBar.resignFirstResponder()
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(gameSearchingViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
-        }
-        super.scaleTo(isEnlarge) {
-            if self.toggle {
-                self.viewUpCompletionHandler()
-                self.playerSearchBar.isHidden = false
-            } else {
+            super.scaleTo(isEnlarge) {
                 self.viewDownCompletionHandler()
             }
         }
@@ -108,7 +106,7 @@ class TMPlayerSearchingView: TMView, UISearchBarDelegate, UITableViewDelegate, U
             }
         } else {
             let toastView = UILabel()
-            toastView.text = "The LoginName Should Not Be Null"
+            toastView.text = NSLocalizedString("The LoginName Should Not Be Null", comment: "")
             toastView.bounds = bounds
             toastView.backgroundColor = UIColor(named: "ComponentBackground")
             toastView.textAlignment = .center

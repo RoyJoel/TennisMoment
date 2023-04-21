@@ -111,13 +111,13 @@ class TMResetPasswordViewController: UIViewController {
         }
         let reauthBtnConfig = TMButtonConfig(title: "Verification failed, tap to try again", action: #selector(authenticateUserTapped), actionTarget: self)
         reauthBtn.setUp(with: reauthBtnConfig)
-        accountLabel.text = "Account"
+        accountLabel.text = NSLocalizedString("Account", comment: "")
         let accountTFConfig = TMTextFieldConfig(placeholderText: "Enter account")
         accountTextField.setup(with: accountTFConfig)
-        resetLabel.text = "Reset Password"
+        resetLabel.text = NSLocalizedString("Reset Password", comment: "")
         let resetTFConfig = TMTextFieldConfig(placeholderText: "Reset Password")
         resetTextField.setup(with: resetTFConfig)
-        confirmLabel.text = "Confirm Password"
+        confirmLabel.text = NSLocalizedString("Confirm Password", comment: "")
         let confirmTFConfig = TMTextFieldConfig(placeholderText: "Confirm Password")
         confirmTextField.setup(with: confirmTFConfig)
         let submitBtnConfig = TMButtonConfig(title: "Submit", action: #selector(submitPassword), actionTarget: self)
@@ -148,7 +148,7 @@ class TMResetPasswordViewController: UIViewController {
                     }
                 } else {
                     let toastView = UILabel()
-                    toastView.text = "Confirm password should match the password entered"
+                    toastView.text = NSLocalizedString("Confirm password should match the password entered", comment: "")
                     toastView.numberOfLines = 2
                     toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                     toastView.backgroundColor = UIColor(named: "ComponentBackground")
@@ -158,7 +158,7 @@ class TMResetPasswordViewController: UIViewController {
                 }
             } else {
                 let toastView = UILabel()
-                toastView.text = "You Have Not Signed In This Account Successfully"
+                toastView.text = NSLocalizedString("You Have Not Signed In This Account Successfully", comment: "")
                 toastView.numberOfLines = 2
                 toastView.bounds = CGRect(x: 0, y: 0, width: 350, height: 150)
                 toastView.backgroundColor = UIColor(named: "ComponentBackground")

@@ -106,7 +106,8 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
                 joinConfig = TMButtonConfig(title: NSLocalizedString("ONGOING", comment: ""), action: nil, actionTarget: self)
             }
         }
-        scheduleSelections.schedules = TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate)
+        let tourSchedules = TMDataConvert.datesInRangeString(startDate: event.startDate, endDate: event.endDate)
+        scheduleSelections.schedules = tourSchedules.schedules
         scheduleView.dataSource = scheduleSelections
         scheduleView.delegate = scheduleView
         scheduleView.selectedCompletionHandler = { index in
@@ -123,6 +124,8 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         DateLabel.setupEvent(config: dateConfig)
         joinBtn.setupEvent(config: joinConfig)
         liveGameView.reloadData()
+        let nowSchedule = schedules.remove(at: tourSchedules.nowIndex)
+        schedules.insert(nowSchedule, at: 0)
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -138,7 +141,7 @@ class TMTourView: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
         let cell = liveGameView.cellForRow(at: indexPath)
         if let currentViewController = cell?.getParentViewController() {
             let vc = TMGameStatsDetailViewController()
-            vc.game = event.schedule[0][indexPath.row]
+            vc.setupEvent(game: event.schedule[0][indexPath.row])
             currentViewController.navigationController?.pushViewController(vc, animated: true)
         }
     }

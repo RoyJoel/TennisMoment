@@ -80,7 +80,7 @@ class TMUserActivityView: UIView {
         }
         let lastGameTime = UserDefaults.standard.double(forKey: TMUDKeys.lastGameTime.rawValue)
         if lastGameTime == 0 {
-            alartView.text = "Your history matches will be here"
+            alartView.text = NSLocalizedString("Your history matches will be here", comment: "")
         } else {
             let gap = Date().timeIntervalSince1970 - lastGameTime
             let days = Int(gap / (24 * 3600))

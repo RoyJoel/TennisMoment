@@ -89,7 +89,7 @@ class TMUserAllHistoryGamesViewController: UIViewController, UITableViewDataSour
 
         opponentLabel.text = NSLocalizedString("Opponent", comment: "")
         dateLabel.text = NSLocalizedString("Date", comment: "")
-        resultLabel.text = NSLocalizedString("Last Result", comment: "")
+        resultLabel.text = NSLocalizedString("Result", comment: "")
         placeLabel.text = NSLocalizedString("Place", comment: "")
         opponentLabel.font = UIFont.systemFont(ofSize: 21)
         dateLabel.font = UIFont.systemFont(ofSize: 21)
@@ -122,7 +122,7 @@ class TMUserAllHistoryGamesViewController: UIViewController, UITableViewDataSour
         scheduleList.isHidden = true
         alartView.isHidden = false
 
-        alartView.text = "You don't have any game to finish"
+        alartView.text = NSLocalizedString("You don't have any game to finish", comment: "")
         alartView.font = UIFont.systemFont(ofSize: 22)
         alartView.textAlignment = .center
     }

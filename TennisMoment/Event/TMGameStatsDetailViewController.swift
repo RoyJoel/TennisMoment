@@ -318,7 +318,6 @@ class TMGameStatsDetailViewController: UIViewController {
         player2IconView.addTapGesture(self, #selector(seePlayerInfo(sender:)))
 
         setupEvent(game: game)
-        searchH2H(player1: game.player1.id, player2: game.player2.id)
     }
 
     func setupEvent(game: Game) {
@@ -335,51 +334,51 @@ class TMGameStatsDetailViewController: UIViewController {
             multiConfig.append(config)
         }
 
-        let firstServeIn = TMDataConvert.Divide(game.player1Stats.firstServePointsIn, by: game.player1Stats.firstServePoints)
-        let firstServeWon = TMDataConvert.Divide(game.player1Stats.firstServePointsWon, by: game.player1Stats.firstServePointsIn)
-        let secondServeIn = TMDataConvert.Divide(game.player1Stats.secondServePointsIn, by: game.player1Stats.servePoints - game.player1Stats.firstServePoints)
-        let secondServeWon = TMDataConvert.Divide(game.player1Stats.secondServePointsWon, by: game.player1Stats.secondServePointsIn)
-        let firstReturnServeIn = TMDataConvert.Divide(game.player1Stats.firstServeReturnPointsIn, by: game.player1Stats.firstServeReturnPoints)
-        let firstReturnServeWon = TMDataConvert.Divide(game.player1Stats.firstServeReturnPointsWon, by: game.player1Stats.firstServeReturnPointsIn)
-        let secondReturnServeIn = TMDataConvert.Divide(game.player1Stats.secondServeReturnPointsIn, by: game.player1Stats.returnServePoints - game.player1Stats.firstServeReturnPoints)
-        let secondReturnServeWon = TMDataConvert.Divide(game.player1Stats.secondServeReturnPointsWon, by: game.player1Stats.secondServeReturnPointsIn)
-        let breakPointSaved = TMDataConvert.Divide(game.player1Stats.breakPointsSaved, by: game.player1Stats.breakPointsFaced)
-        let breakPointConvert = TMDataConvert.Divide(game.player1Stats.breakPointsConverted, by: game.player1Stats.breakPointsOpportunities)
-        let serveGameWon = TMDataConvert.Divide(game.player1Stats.serveGamesWon, by: game.player1Stats.serveGamesPlayed)
-        let returnGameWon = TMDataConvert.Divide(game.player1Stats.returnGamesWon, by: game.player1Stats.returnGamesPlayed)
-        let servePointWon = TMDataConvert.Divide(game.player1Stats.firstServePointsWon + game.player1Stats.secondServePointsWon, by: game.player1Stats.firstServePointsIn + game.player1Stats.secondServePointsIn)
-        let returnPointWon = TMDataConvert.Divide(game.player1Stats.firstServeReturnPointsWon + game.player1Stats.secondServeReturnPointsWon, by: game.player1Stats.firstServeReturnPointsIn + game.player1Stats.secondServeReturnPointsIn)
+        let firstServeIn = game.player1Stats.convertToRealStats().firstServeIn
+        let firstServeWon = game.player1Stats.convertToRealStats().firstServeWon
+        let secondServeIn = game.player1Stats.convertToRealStats().secondServeIn
+        let secondServeWon = game.player1Stats.convertToRealStats().secondServeWon
+        let firstReturnServeIn = game.player1Stats.convertToRealStats().firstReturnServeIn
+        let firstReturnServeWon = game.player1Stats.convertToRealStats().firstReturnServeWon
+        let secondReturnServeIn = game.player1Stats.convertToRealStats().secondReturnServeIn
+        let secondReturnServeWon = game.player1Stats.convertToRealStats().secondReturnServeWon
+        let breakPointSaved = game.player1Stats.convertToRealStats().breakPointSaved
+        let breakPointConvert = game.player1Stats.convertToRealStats().breakPointConvert
+        let serveGameWon = game.player1Stats.convertToRealStats().serveGameWon
+        let returnGameWon = game.player1Stats.convertToRealStats().returnGameWon
+        let servePointWon = game.player1Stats.convertToRealStats().servePointWon
+        let returnPointWon = game.player1Stats.convertToRealStats().returnPointWon
 
-        let firstServeIn2 = TMDataConvert.Divide(game.player2Stats.firstServePointsIn, by: game.player2Stats.firstServePoints)
-        let firstServeWon2 = TMDataConvert.Divide(game.player2Stats.firstServePointsWon, by: game.player2Stats.firstServePointsIn)
-        let secondServeIn2 = TMDataConvert.Divide(game.player2Stats.secondServePointsIn, by: game.player2Stats.servePoints - game.player2Stats.firstServePoints)
-        let secondServeWon2 = TMDataConvert.Divide(game.player2Stats.secondServePointsWon, by: game.player2Stats.secondServePointsIn)
-        let firstReturnServeIn2 = TMDataConvert.Divide(game.player2Stats.firstServeReturnPointsIn, by: game.player2Stats.firstServeReturnPoints)
-        let firstReturnServeWon2 = TMDataConvert.Divide(game.player2Stats.firstServeReturnPointsWon, by: game.player2Stats.firstServeReturnPointsIn)
-        let secondReturnServeIn2 = TMDataConvert.Divide(game.player2Stats.secondServeReturnPointsIn, by: game.player2Stats.returnServePoints - game.player2Stats.firstServeReturnPoints)
-        let secondReturnServeWon2 = TMDataConvert.Divide(game.player2Stats.secondServeReturnPointsWon, by: game.player2Stats.secondServeReturnPointsIn)
-        let breakPointSaved2 = TMDataConvert.Divide(game.player2Stats.breakPointsSaved, by: game.player2Stats.breakPointsFaced)
-        let breakPointConvert2 = TMDataConvert.Divide(game.player2Stats.breakPointsConverted, by: game.player2Stats.breakPointsOpportunities)
-        let serveGameWon2 = TMDataConvert.Divide(game.player2Stats.serveGamesWon, by: game.player2Stats.serveGamesPlayed)
-        let returnGameWon2 = TMDataConvert.Divide(game.player2Stats.returnGamesWon, by: game.player2Stats.returnGamesPlayed)
-        let servePointWon2 = TMDataConvert.Divide(game.player2Stats.firstServePointsWon + game.player2Stats.secondServePointsWon, by: game.player2Stats.firstServePointsIn + game.player2Stats.secondServePointsIn)
-        let returnPointWon2 = TMDataConvert.Divide(game.player2Stats.firstServeReturnPointsWon + game.player2Stats.secondServeReturnPointsWon, by: game.player2Stats.firstServeReturnPointsIn + game.player2Stats.secondServeReturnPointsIn)
+        let firstServeIn2 = game.player2Stats.convertToRealStats().firstServeIn
+        let firstServeWon2 = game.player2Stats.convertToRealStats().firstServeWon
+        let secondServeIn2 = game.player2Stats.convertToRealStats().secondServeIn
+        let secondServeWon2 = game.player2Stats.convertToRealStats().secondServeWon
+        let firstReturnServeIn2 = game.player2Stats.convertToRealStats().firstReturnServeIn
+        let firstReturnServeWon2 = game.player2Stats.convertToRealStats().firstReturnServeWon
+        let secondReturnServeIn2 = game.player2Stats.convertToRealStats().secondReturnServeIn
+        let secondReturnServeWon2 = game.player2Stats.convertToRealStats().secondReturnServeWon
+        let breakPointSaved2 = game.player2Stats.convertToRealStats().breakPointSaved
+        let breakPointConvert2 = game.player2Stats.convertToRealStats().breakPointConvert
+        let serveGameWon2 = game.player2Stats.convertToRealStats().serveGameWon
+        let returnGameWon2 = game.player2Stats.convertToRealStats().returnGameWon
+        let servePointWon2 = game.player2Stats.convertToRealStats().servePointWon
+        let returnPointWon2 = game.player2Stats.convertToRealStats().returnPointWon
 
-        let firstServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Serve In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstServeIn > firstServeIn2 ? true : false, areBothServing: false, isComparing: firstServeIn != firstServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(firstServeIn * 100))%", rightNum: "\(lrint(firstServeIn2 * 100))%")
-        let firstServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Serve Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstServeWon > firstServeWon2 ? true : false, areBothServing: false, isComparing: firstServeWon != firstServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(firstServeWon * 100))%", rightNum: "\(lrint(firstServeWon2 * 100))%")
-        let secondServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Serve In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondServeIn > secondServeIn2 ? true : false, areBothServing: false, isComparing: secondServeIn != secondServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(secondServeIn * 100))%", rightNum: "\(lrint(secondServeIn2 * 100))%")
-        let secondServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Serve Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondServeWon > secondServeWon2 ? true : false, areBothServing: false, isComparing: secondServeWon != secondServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(secondServeWon * 100))%", rightNum: "\(lrint(secondServeWon2 * 100))%")
-        let breakPointSavedConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Break Point Saved", comment: ""), iconName: "checkmark.circle", isServingOnLeft: breakPointSaved > breakPointSaved2 ? true : false, areBothServing: false, isComparing: breakPointSaved != breakPointSaved2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(breakPointSaved * 100))%", rightNum: "\(lrint(breakPointSaved2 * 100))%")
-        let servePointWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Serve Point Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: servePointWon > servePointWon2 ? true : false, areBothServing: false, isComparing: servePointWon != servePointWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(servePointWon * 100))%", rightNum: "\(lrint(servePointWon2 * 100))%")
-        let serveGameWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Serve Game Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: serveGameWon > serveGameWon2 ? true : false, areBothServing: false, isComparing: serveGameWon != serveGameWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(serveGameWon * 100))%", rightNum: "\(lrint(serveGameWon2 * 100))%")
+        let firstServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Serve In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstServeIn > firstServeIn2 ? true : false, areBothServing: false, isComparing: firstServeIn != firstServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(firstServeIn)%", rightNum: "\(firstServeIn2)%")
+        let firstServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Serve Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstServeWon > firstServeWon2 ? true : false, areBothServing: false, isComparing: firstServeWon != firstServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(firstServeWon)%", rightNum: "\(firstServeWon2)%")
+        let secondServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Serve In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondServeIn > secondServeIn2 ? true : false, areBothServing: false, isComparing: secondServeIn != secondServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(secondServeIn)%", rightNum: "\(secondServeIn2)%")
+        let secondServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Serve Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondServeWon > secondServeWon2 ? true : false, areBothServing: false, isComparing: secondServeWon != secondServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(secondServeWon)%", rightNum: "\(secondServeWon2)%")
+        let breakPointSavedConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Break Point Saved", comment: ""), iconName: "checkmark.circle", isServingOnLeft: breakPointSaved > breakPointSaved2 ? true : false, areBothServing: false, isComparing: breakPointSaved != breakPointSaved2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(breakPointSaved)%", rightNum: "\(breakPointSaved2)%")
+        let servePointWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Serve Point Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: servePointWon > servePointWon2 ? true : false, areBothServing: false, isComparing: servePointWon != servePointWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(servePointWon)%", rightNum: "\(servePointWon2)%")
+        let serveGameWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Serve Game Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: serveGameWon > serveGameWon2 ? true : false, areBothServing: false, isComparing: serveGameWon != serveGameWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(serveGameWon)%", rightNum: "\(serveGameWon2)%")
 
-        let firstReturnServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Return In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstReturnServeIn > firstReturnServeIn2 ? true : false, areBothServing: false, isComparing: firstReturnServeIn != firstReturnServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(firstReturnServeIn * 100))%", rightNum: "\(lrint(firstReturnServeIn2 * 100))%")
-        let firstReturnServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Return Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstReturnServeWon > firstReturnServeWon2 ? true : false, areBothServing: false, isComparing: firstReturnServeWon != firstReturnServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(firstReturnServeWon * 100))%", rightNum: "\(lrint(firstReturnServeWon2 * 100))%")
-        let secondReturnServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Return In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondReturnServeIn > secondReturnServeIn2 ? true : false, areBothServing: false, isComparing: secondReturnServeIn != secondReturnServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(secondReturnServeIn * 100))%", rightNum: "\(lrint(secondReturnServeIn2 * 100))%")
-        let secondReturnServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Return Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondReturnServeWon > secondReturnServeWon2 ? true : false, areBothServing: false, isComparing: secondReturnServeWon != secondReturnServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(secondReturnServeWon * 100))%", rightNum: "\(lrint(secondReturnServeWon2 * 100))%")
-        let breakPointConvertConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Break Point Convert", comment: ""), iconName: "checkmark.circle", isServingOnLeft: breakPointConvert > breakPointConvert2 ? true : false, areBothServing: false, isComparing: breakPointConvert != breakPointConvert2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(breakPointConvert * 100))%", rightNum: "\(lrint(breakPointConvert2 * 100))%")
-        let returnPointWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Return Point Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: returnPointWon > returnPointWon2 ? true : false, areBothServing: false, isComparing: returnPointWon != returnPointWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(returnPointWon * 100))%", rightNum: "\(lrint(returnPointWon2 * 100))%")
-        let returnGameWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Return Game Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: returnGameWon > returnGameWon2 ? true : false, areBothServing: false, isComparing: returnGameWon != returnGameWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(lrint(returnGameWon * 100))%", rightNum: "\(lrint(returnGameWon2 * 100))%")
+        let firstReturnServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Return In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstReturnServeIn > firstReturnServeIn2 ? true : false, areBothServing: false, isComparing: firstReturnServeIn != firstReturnServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(firstReturnServeIn)%", rightNum: "\(firstReturnServeIn2)%")
+        let firstReturnServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("1ST Return Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: firstReturnServeWon > firstReturnServeWon2 ? true : false, areBothServing: false, isComparing: firstReturnServeWon != firstReturnServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(firstReturnServeWon)%", rightNum: "\(firstReturnServeWon2)%")
+        let secondReturnServeInConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Return In", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondReturnServeIn > secondReturnServeIn2 ? true : false, areBothServing: false, isComparing: secondReturnServeIn != secondReturnServeIn2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(secondReturnServeIn)%", rightNum: "\(secondReturnServeIn2)%")
+        let secondReturnServeWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("2ND Return Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: secondReturnServeWon > secondReturnServeWon2 ? true : false, areBothServing: false, isComparing: secondReturnServeWon != secondReturnServeWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(secondReturnServeWon)%", rightNum: "\(secondReturnServeWon2)%")
+        let breakPointConvertConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Break Point Convert", comment: ""), iconName: "checkmark.circle", isServingOnLeft: breakPointConvert > breakPointConvert2 ? true : false, areBothServing: false, isComparing: breakPointConvert != breakPointConvert2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(breakPointConvert)%", rightNum: "\(breakPointConvert2)%")
+        let returnPointWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Return Point Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: returnPointWon > returnPointWon2 ? true : false, areBothServing: false, isComparing: returnPointWon != returnPointWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(returnPointWon)%", rightNum: "\(returnPointWon2)%")
+        let returnGameWonConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Return Game Won", comment: ""), iconName: "checkmark.circle", isServingOnLeft: returnGameWon > returnGameWon2 ? true : false, areBothServing: false, isComparing: returnGameWon != returnGameWon2 ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(returnGameWon)%", rightNum: "\(returnGameWon2)%")
 
         let acesConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Aces", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.aces > game.player2Stats.aces ? true : false, areBothServing: false, isComparing: game.player1Stats.aces != game.player2Stats.aces ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.aces)", rightNum: "\(game.player2Stats.aces)")
         let doubleFaultsConfig = TMPointComparingViewConfig(isTitleViewAbovePointView: false, isTitleHidden: false, title: NSLocalizedString("Double Faults", comment: ""), iconName: "checkmark.circle", isServingOnLeft: game.player1Stats.doubleFaults > game.player2Stats.doubleFaults ? true : false, areBothServing: false, isComparing: game.player1Stats.doubleFaults != game.player2Stats.doubleFaults ? true : false, font: UIFont.systemFont(ofSize: 17), leftNum: "\(game.player1Stats.doubleFaults)", rightNum: "\(game.player2Stats.doubleFaults)")
@@ -399,36 +398,55 @@ class TMGameStatsDetailViewController: UIViewController {
         commonStatsView.setupEvent(config: commonStatsViewConfig)
         serveStatsView.setupEvent(config: serveStatsViewConfig)
         returnStatsView.setupEvent(config: returnStatsViewConfig)
+
+        searchH2H(player1: game.player1.id, player2: game.player2.id)
     }
 
     func searchH2H(player1: Int, player2: Int) {
         var player1WinningNum = 0
         var player2WinningNum = 0
-        TMGameRequest.searchh2h(for: player1, and: player2) { games in
-            self.games = games
-            for game in games {
-                let result = TMDataConvert.setResult(from: game.result, isGameCompleted: true)
-                if (result[0] > result[1]) == game.isPlayer1Left {
-                    player1WinningNum += 1
-                } else {
-                    player2WinningNum += 1
-                }
+
+        games = searchH2H(for: player1, and: player2)
+        for game in games {
+            let result = TMDataConvert.setResult(from: game.result, isGameCompleted: true)
+            if (result[0] > result[1]) == game.isPlayer1Left {
+                player1WinningNum += 1
+            } else {
+                player2WinningNum += 1
             }
-            self.H2HRecordView.updateLeftViewData(isServingOnLeft: false, newNum: "\(player1WinningNum)")
-            self.H2HRecordView.updateRightViewData(isServingOnRight: false, newNum: "\(player2WinningNum)")
-            self.progressView.progress = Float(player1WinningNum) / (Float(player2WinningNum) + Float(player1WinningNum))
-            if self.progressView.progress >= 0.5 {
-                self.progressView.progressTintColor = UIColor(named: "Tennis") // 已有进度颜色
-                self.progressView.trackTintColor = .gray
-            } else if self.progressView.progress < 0.5 {
-                let newProgress = 1 - self.progressView.progress
-                self.progressView.progress = newProgress
-                self.progressView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi) // 已有进度颜色
-                self.progressView.progressTintColor =
+
+            H2HRecordView.updateLeftViewData(isServingOnLeft: false, newNum: "\(player1WinningNum)")
+            H2HRecordView.updateRightViewData(isServingOnRight: false, newNum: "\(player2WinningNum)")
+            progressView.progress = Float(player1WinningNum) / (Float(player2WinningNum) + Float(player1WinningNum))
+            if progressView.progress == 0 {
+                progressView.progressTintColor = UIColor(named: "Tennis") // 已有进度颜色
+                progressView.trackTintColor = .gray
+            } else if progressView.progress >= 0.5 {
+                progressView.progressTintColor = UIColor(named: "Tennis") // 已有进度颜色
+                progressView.trackTintColor = .gray
+            } else if progressView.progress < 0.5 {
+                let newProgress = 1 - progressView.progress
+                progressView.progress = newProgress
+                progressView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi) // 已有进度颜色
+                progressView.progressTintColor =
                     .gray // 已有进度颜色
-                self.progressView.trackTintColor = UIColor(named: "Tennis")
+                progressView.trackTintColor = UIColor(named: "Tennis")
             }
         }
+    }
+
+    func searchH2H(for player1Id: Int, and player2Id: Int) -> [Game] {
+        var res: [Game] = []
+
+        for game in TMUser.user.allHistoryGames {
+            if game.player1.id == player1Id, game.player2.id == player2Id {
+                res.append(game)
+            }
+            if game.player2.id == player1Id, game.player1.id == player2Id {
+                res.append(game)
+            }
+        }
+        return res
     }
 
     @objc func seePlayerInfo(sender: UITapGestureRecognizer) {

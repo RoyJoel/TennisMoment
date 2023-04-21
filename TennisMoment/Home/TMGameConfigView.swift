@@ -143,9 +143,9 @@ class TMGameConfigView: TMScalableView {
         serverView.setupEvent(config: TMServeViewConfig(selectedImage: "tennisball.fill", unSelectedImage: "tennisball", selectedTitle: "To Serve", unselectedTitle: "To Return"))
         isGoldenGoalLabel.text = NSLocalizedString("GoldenGoal", comment: "")
         isGoldenGoalLabel.textAlignment = .center
-        setConfigLabel.text = "Sets (Best Of)"
-        gameConfigLabel.text = "Games"
-        surfaceConfigLabel.text = "Surface Type"
+        setConfigLabel.text = NSLocalizedString("Sets (Best Of)", comment: "")
+        gameConfigLabel.text = NSLocalizedString("Games", comment: "")
+        surfaceConfigLabel.text = NSLocalizedString("Surface Type", comment: "")
         setConfigLabel.textAlignment = .center
         gameConfigLabel.textAlignment = .center
         surfaceConfigLabel.textAlignment = .center
@@ -198,6 +198,19 @@ class TMGameConfigView: TMScalableView {
             viewUpCompletionHandler()
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "figure.table.tennis")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(startGame), actionTarget: self)
             startGameBtn.setUp(with: config)
+            super.scaleTo(isEnlarge) {
+                self.Player1SelectView.isHidden = false
+                self.Player2SelectView.isHidden = false
+                self.serverView.isHidden = false
+                self.isGoldenGoalLabel.isHidden = false
+                self.isGoldenGoalConfigView.isHidden = false
+                self.setConfigView.isHidden = false
+                self.setConfigLabel.isHidden = false
+                self.gameConfigView.isHidden = false
+                self.gameConfigLabel.isHidden = false
+                self.surfaceConfigView.isHidden = false
+                self.surfaceConfigLabel.isHidden = false
+            }
         } else {
             Player1SelectView.isHidden = true
             Player2SelectView.isHidden = true
@@ -212,21 +225,7 @@ class TMGameConfigView: TMScalableView {
             surfaceConfigLabel.isHidden = true
             let config = TMTitleOrImageButtonConfig(image: UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), action: #selector(configGameViewUp), actionTarget: self)
             startGameBtn.setUp(with: config)
-        }
-        super.scaleTo(isEnlarge) {
-            if self.toggle {
-                self.Player1SelectView.isHidden = false
-                self.Player2SelectView.isHidden = false
-                self.serverView.isHidden = false
-                self.isGoldenGoalLabel.isHidden = false
-                self.isGoldenGoalConfigView.isHidden = false
-                self.setConfigView.isHidden = false
-                self.setConfigLabel.isHidden = false
-                self.gameConfigView.isHidden = false
-                self.gameConfigLabel.isHidden = false
-                self.surfaceConfigView.isHidden = false
-                self.surfaceConfigLabel.isHidden = false
-            } else {
+            super.scaleTo(isEnlarge) {
                 self.viewDownCompletionHandler()
             }
         }

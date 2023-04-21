@@ -78,7 +78,7 @@ class TMUnfinishedGameCell: UITableViewCell {
         let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: false)
         var lastRecord = ""
         for set in liveResult {
-            lastRecord += " \(set[0]) \(set[1]) "
+            lastRecord += " \(set[0]):\(set[1]) "
         }
         lastRecordLabel.text = lastRecord
         lastRecordLabel.sizeToFit()

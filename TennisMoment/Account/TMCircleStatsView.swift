@@ -72,14 +72,14 @@ class TMCircleStatsView: TMView {
         dataLabel.textColor = .black
     }
 
-    func startAnimation(radii: Double) {
-        self.radii = radii
-        smallCircle.setCorner(radii: sideLen * radii / 2)
+    func startAnimation(radii: Int) {
+        self.radii = Double(radii) / 100
+        smallCircle.setCorner(radii: sideLen * self.radii / 2)
         smallCircle.snp.makeConstraints { make in
             make.center.equalTo(bigCircle.snp.center)
-            make.width.height.equalTo(sideLen * radii)
+            make.width.height.equalTo(sideLen * self.radii)
         }
-        dataLabel.text = "\(radii.TwoBitsRem())%"
+        dataLabel.text = "\(radii)%"
     }
 }
 
