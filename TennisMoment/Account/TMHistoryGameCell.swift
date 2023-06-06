@@ -88,7 +88,7 @@ class TMHistoryGameCell: UITableViewCell {
         opponentLabel.text = game.player1.id == TMUser.user.id ? game.player2.name : game.player1.name
         dateLabel.text = game.startDate.convertToString(formatterString: "yyyy MM-dd HH:mm")
         placeLabel.text = game.place
-        let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: false)
+        let liveResult = TMDataConvert.gameResult(from: game.result, isGameCompleted: true)
         var lastRecord = ""
         for set in liveResult {
             lastRecord += " \(set[0]) : \(set[1]) "

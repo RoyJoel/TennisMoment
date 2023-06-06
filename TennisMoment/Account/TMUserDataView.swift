@@ -100,17 +100,3 @@ extension TMUserDataView: JXSegmentedViewDelegate {
         }
     }
 }
-
-class ListBaseViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = UIColor(named: "blurGray")
-    }
-}
-
-extension ListBaseViewController: JXSegmentedListContainerViewListDelegate {
-    func listView() -> UIView {
-        return view
-    }
-}

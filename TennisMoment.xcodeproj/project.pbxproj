@@ -235,7 +235,7 @@
 		A8FE6DFB29D95CCA0007C7C2 /* TMUDKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMUDKeys.swift; sourceTree = "<group>"; };
 		A8FE6DFE29D974480007C7C2 /* TMsignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMsignInViewController.swift; sourceTree = "<group>"; };
 		A8FE6E0029D974CC0007C7C2 /* TMSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSignUpViewController.swift; sourceTree = "<group>"; };
-		A8FE6E0429D9A4C00007C7C2 /* loginViewVideo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = loginViewVideo.mov; path = ../../../Desktop/loginViewVideo.mov; sourceTree = "<group>"; };
+		A8FE6E0429D9A4C00007C7C2 /* loginViewVideo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = loginViewVideo.mov; path = "../../../Desktop/桌面 - Jason的MacBook Pro/loginViewVideo.mov"; sourceTree = "<group>"; };
 		A8FE6E0629DA780B0007C7C2 /* TMSignInBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSignInBtn.swift; sourceTree = "<group>"; };
 		A8FE6E0A29DD0B030007C7C2 /* TMResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMResetPasswordViewController.swift; sourceTree = "<group>"; };
 		A8FE6E0C29DD776B0007C7C2 /* TMProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProgressView.swift; sourceTree = "<group>"; };
