@@ -2621,8 +2621,8 @@
             filePath = "TennisMoment/Account/Setting/TMSettingInfoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "updateUserInfo()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2720,6 +2720,36 @@
                   endingLineNumber = "788"
                   offsetFromSymbolStart = "44">
                </Location>
+               <Location
+                  uuid = "AD86B98C-F677-4543-A992-8B6BE0C2F96B - e5258be7687258a2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TennisMoment.TMRecordView.saveGame() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/TMRecordView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "788"
+                  endingLineNumber = "788"
+                  offsetFromSymbolStart = "23870">
+               </Location>
+               <Location
+                  uuid = "AD86B98C-F677-4543-A992-8B6BE0C2F96B - ca53192ebcbd8b44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (TennisMoment.Game) -&gt; Swift.Bool in TennisMoment.TMRecordView.saveGame() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/Home/TMRecordView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "788"
+                  endingLineNumber = "788"
+                  offsetFromSymbolStart = "54">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2767,6 +2797,36 @@
                   startingLineNumber = "124"
                   endingLineNumber = "124"
                   offsetFromSymbolStart = "732">
+               </Location>
+               <Location
+                  uuid = "3AAD7A1A-AABA-4EA4-963D-460C974B63D8 - 51a7ebdf3ffd2e9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TennisMoment.TMSys.auth() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/TMSys.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "780">
+               </Location>
+               <Location
+                  uuid = "3AAD7A1A-AABA-4EA4-963D-460C974B63D8 - 51a7ebdf3ffd2e9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TennisMoment.TMSys.auth() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/TMSys.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "1044">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2832,6 +2892,36 @@
                   endingLineNumber = "36"
                   offsetFromSymbolStart = "116">
                </Location>
+               <Location
+                  uuid = "DA0104A8-0483-4D2B-941E-AC2DAB671E16 - 6ee84e6198c933b8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TennisMoment.TMSys.observeNetState() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/TMSys.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "263">
+               </Location>
+               <Location
+                  uuid = "DA0104A8-0483-4D2B-941E-AC2DAB671E16 - 432d196d35f66642"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Reachability.Reachability) -&gt; () in TennisMoment.TMSys.observeNetState() -&gt; ()"
+                  moduleName = "TennisMoment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jasonzhang/TennisMoment/TennisMoment_app/TennisMoment/TMSys.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "104">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2848,6 +2938,38 @@
             startingLineNumber = "197"
             endingLineNumber = "197"
             landmarkName = "hitTest(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "97328261-C8BA-4EC7-8EA2-052D94B654A5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/TMSign/TMSignUpViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9B9CC267-6355-4685-9104-A174344206EE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TennisMoment/TMSign/TMSignUpViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "setUserInfo(name:icon:sex:age:yearsPlayed:height:width:grip:backhand:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

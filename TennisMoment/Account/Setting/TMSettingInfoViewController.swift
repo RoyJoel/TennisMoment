@@ -97,12 +97,10 @@ class TMSettingInfoViewController: UIViewController, UITableViewDelegate, UITabl
         let sheetCtrl = UIAlertController(title: "Save changes", message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default) { _ in
             self.infoVC.getUserInfo()
-            let usericonData = TMUser.user.icon
             TMUser.updateInfo { user in
                 guard let user = user else {
                     return
                 }
-                print(usericonData.count == user.icon.count)
                 let userInfo = try? PropertyListEncoder().encode(TMUser.user)
                 UserDefaults.standard.set(userInfo, forKey: TMUDKeys.UserInfo.rawValue)
                 NotificationCenter.default.post(name: Notification.Name(ToastNotification.DataFreshToast.notificationName.rawValue), object: nil)

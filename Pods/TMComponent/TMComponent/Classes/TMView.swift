@@ -36,18 +36,18 @@ open class TMView: UIView {
         if !isEnlarge {
             toggle.toggle()
             addAnimation(originalPoint, newPoint, duration, "position", completionHandler: {})
-            addAnimation(originalBounds, newBounds, duration, "bounds", completionHandler: {})
+                       addAnimation(originalBounds, newBounds, duration, "bounds", completionHandler: {})
             bounds = newBounds
             layer.position = newPoint
         } else {
             toggle.toggle()
             addAnimation(newBounds, originalBounds, duration, "bounds", completionHandler: {})
-            addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {})
+             addAnimation(newPoint, originalPoint, duration, "position", completionHandler: {})
             bounds = originalBounds
             layer.position = originalPoint
         }
     }
-
+    
     open func scaleTo(_ isEnlarge: Bool, completionHandler: @escaping () -> Void) {
         if !isEnlarge {
             toggle.toggle()

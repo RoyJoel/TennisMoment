@@ -9,7 +9,7 @@ target 'TennisMoment' do
 
   pod 'SnapKit', '~> 5.0.0'
   pod 'TABAnimated', '2.5.1'
-  pod 'TMComponent', :git => 'https://github.com/RoyJoel/TMComponent.git', :tag => '0.6.0'
+  pod 'TMComponent', :git => 'https://github.com/RoyJoel/TMComponent.git', :tag => '0.8.7'
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'SwiftyJSON'
@@ -18,6 +18,7 @@ target 'TennisMoment' do
   pod 'JXSegmentedView'
   pod 'Starscream'
   pod 'ReachabilitySwift'
+  pod 'MJRefresh'
 
 
   target 'TennisMomentTests' do
@@ -30,13 +31,4 @@ target 'TennisMoment' do
   end
 
 end
-
-    post_install do |installer|
-      installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
-          end
-        end
-      end
-    end
 
